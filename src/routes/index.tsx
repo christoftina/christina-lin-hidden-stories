@@ -1,16 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef, useState, type MouseEvent } from "react";
-import { ArrowUpRight, Plus, Minus } from "lucide-react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { ArrowUpRight, Plus, Minus, X } from "lucide-react";
 import heroFront from "@/assets/hero-front.jpg";
 import heroReveal from "@/assets/hero-reveal.jpg";
+import packdMockups from "@/assets/packd_mockups.png.asset.json";
+import packdHiFi from "@/assets/packd_hifi_prototype.png.asset.json";
+import packdCompetitive from "@/assets/packd_competitive_analysis.png.asset.json";
+import packdUserTesting from "@/assets/packd_user_testing.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Christina Lin — Product Designer" },
-      { name: "description", content: "Christina Lin is a product designer studying Cognitive Science at UC San Diego, designing accessible digital experiences." },
+      { name: "description", content: "Christina Lin is a product designer studying Cognitive Science at UC San Diego. Selected work includes PackD, a group travel planning app." },
       { property: "og:title", content: "Christina Lin — Product Designer" },
-      { property: "og:description", content: "Selected work and experience from a product designer focused on accessibility and real behavior." },
+      { property: "og:description", content: "Selected work and experience from a product designer focused on research, accessibility and real behavior." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -18,9 +22,62 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const CASES = [
+type CaseImage = { src: string; alt: string; caption: string };
+
+type Case = {
+  n: string;
+  title: string;
+  org: string;
+  role: string;
+  timeline?: string;
+  tags: string[];
+  summary: string;
+  contributions: string[];
+  images?: CaseImage[];
+};
+
+const CASES: Case[] = [
   {
     n: "01",
+    title: "PackD — planning large group trips in one place",
+    org: "Travel planning app",
+    role: "UI/UX Designer & Researcher",
+    tags: ["User research", "UI/UX design", "Prototyping", "Mobile"],
+    summary:
+      "Planning large group trips is difficult. PackD helps you discover trending destinations, save money and time, and communicate with ease — all in one app.",
+    contributions: [
+      "Designed and created the home page",
+      "Designed and created the messaging page",
+      "Designed and created the smart search features",
+      "Led the showcase presentation",
+      "Ran a competitive analysis across Notion AI, TripIt, Google Travel and Roadtrippers",
+      "Ran user testing with a survey on what people expect from a travel itinerary app",
+    ],
+    images: [
+      {
+        src: packdMockups.url,
+        alt: "Three PackD phone screens: an activity detail page for a Tokyo tour, a group chat, and the home page with a destination card",
+        caption: "Activity, messaging and home screens",
+      },
+      {
+        src: packdHiFi.url,
+        alt: "High-fidelity PackD screens with callouts for the home screen, messaging pages and smart search features",
+        caption: "High-fidelity screens and the smart search prototype",
+      },
+      {
+        src: packdCompetitive.url,
+        alt: "Competitive analysis slide comparing pros and cons of Notion AI, TripIt, Google Travel and Roadtrippers",
+        caption: "Competitive analysis: pros and cons across four travel products",
+      },
+      {
+        src: packdUserTesting.url,
+        alt: "User testing survey results with two participant quotes and a clustered bar chart of expected features",
+        caption: "User testing survey results",
+      },
+    ],
+  },
+  {
+    n: "02",
     title: "Designing calmer check-ins for student mental health",
     org: "Mental Health in Design Lab · UC San Diego",
     role: "UX Researcher & Designer",
@@ -30,7 +87,7 @@ const CASES = [
     contributions: ["Ran 8 semi-structured interviews", "Synthesized insights into an affinity map", "Designed and tested mid-fi prototypes"],
   },
   {
-    n: "02",
+    n: "03",
     title: "A clearer events hub for an engineering community",
     org: "CSES · UC San Diego",
     role: "Project Designer",
@@ -40,7 +97,7 @@ const CASES = [
     contributions: ["Audited existing touchpoints", "Built a small component library", "Partnered with engineers on handoff"],
   },
   {
-    n: "03",
+    n: "04",
     title: "Streamlining event planning at MixBash",
     org: "MixBash",
     role: "Product Design Intern",
@@ -99,8 +156,166 @@ function RevealImage() {
   );
 }
 
+function Lightbox({ image, onClose }: { image: CaseImage; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={image.caption}
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/80 p-4 backdrop-blur-sm md:p-10"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="max-h-full w-full max-w-5xl overflow-auto rounded-2xl bg-card p-4 shadow-soft"
+      >
+        <img src={image.src} alt={image.alt} className="mx-auto max-h-[70vh] w-auto rounded-lg" />
+        <div className="mt-3 flex items-center justify-between gap-4 px-2">
+          <p className="text-sm text-muted-foreground">{image.caption}</p>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="shrink-0 rounded-full border border-border p-2 transition hover:bg-secondary"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Figure({ image, onZoom }: { image: CaseImage; onZoom: (image: CaseImage) => void }) {
+  return (
+    <button
+      type="button"
+      onClick={() => onZoom(image)}
+      className="cursor-zoom-in rounded-xl border border-border bg-secondary p-4 text-left transition hover:shadow-soft"
+    >
+      <img src={image.src} alt={image.alt} className="w-full rounded-lg" />
+      <span className="mt-3 block text-sm text-muted-foreground">{image.caption}</span>
+    </button>
+  );
+}
+
+function CaseCard({
+  data,
+  open,
+  onToggle,
+  onZoom,
+}: {
+  data: Case;
+  open: boolean;
+  onToggle: () => void;
+  onZoom: (image: CaseImage) => void;
+}) {
+  const images = data.images ?? [];
+  const hero = images[0];
+  const [wide, ...more] = images.slice(1);
+
+  return (
+    <article className="group overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition hover:-translate-y-1">
+      {hero && (
+        <button
+          type="button"
+          onClick={() => onZoom(hero)}
+          className="block w-full cursor-zoom-in border-b border-border bg-secondary p-6 text-left md:p-10"
+        >
+          <img src={hero.src} alt={hero.alt} className="mx-auto w-full max-w-3xl" />
+        </button>
+      )}
+
+      <div className="grid gap-8 p-8 md:grid-cols-[1fr_1.2fr] md:p-10">
+        <div className="flex flex-col justify-center gap-10 rounded-xl bg-accent p-8">
+          <span className="font-display text-6xl text-accent-foreground">{data.n}</span>
+          <div className="flex flex-wrap gap-2">
+            {data.tags.map((t) => (
+              <span key={t} className="rounded-full bg-card px-3 py-1 text-xs font-medium">
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <p className="text-sm text-muted-foreground">{data.org}</p>
+          <h3 className="font-display mt-2 text-3xl leading-tight transition-colors group-hover:text-primary md:text-4xl">
+            {data.title}
+          </h3>
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{data.summary}</p>
+
+          <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4 border-y border-border py-4 text-sm">
+            <div>
+              <dt className="text-muted-foreground">My role</dt>
+              <dd className="mt-1 font-medium">{data.role}</dd>
+            </div>
+            {data.timeline && (
+              <div>
+                <dt className="text-muted-foreground">Timeline</dt>
+                <dd className="mt-1 font-medium">{data.timeline}</dd>
+              </div>
+            )}
+          </dl>
+
+          <button
+            onClick={onToggle}
+            aria-expanded={open}
+            className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary"
+          >
+            {open ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />} What I did
+          </button>
+          {open && (
+            <ul className="animate-rise mt-4 space-y-2">
+              {data.contributions.map((x) => (
+                <li key={x} className="flex gap-3 text-muted-foreground">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  {x}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+
+      {wide && (
+        <div className="border-t border-border p-8 md:p-10">
+          <p className="mb-5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            Research &amp; prototype
+          </p>
+          <div className="grid gap-6">
+            <Figure image={wide} onZoom={onZoom} />
+            {more.length > 0 && (
+              <div className="grid gap-6 sm:grid-cols-2">
+                {more.map((img) => (
+                  <Figure key={img.src} image={img} onZoom={onZoom} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </article>
+  );
+}
+
 function Index() {
   const [open, setOpen] = useState<number | null>(null);
+  const [zoom, setZoom] = useState<CaseImage | null>(null);
+
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur">
@@ -137,39 +352,17 @@ function Index() {
       <section id="work" className="mx-auto max-w-6xl px-6 py-20">
         <div className="mb-12 flex items-end justify-between">
           <h2 className="font-display text-4xl md:text-5xl">Case studies</h2>
-          <span className="text-sm text-muted-foreground">{CASES.length} projects</span>
+          <span className="text-sm text-muted-foreground">{CASES.length} projects · click any image to enlarge</span>
         </div>
         <div className="space-y-10">
           {CASES.map((c, i) => (
-            <article key={c.n} className="group grid gap-8 rounded-2xl border border-border bg-card p-8 shadow-soft transition hover:-translate-y-1 md:grid-cols-[1fr_1.2fr] md:p-10">
-              <div className="flex flex-col justify-between gap-8 rounded-xl bg-accent p-8">
-                <span className="font-display text-6xl text-accent-foreground">{c.n}</span>
-                <div className="flex flex-wrap gap-2">
-                  {c.tags.map((t) => (
-                    <span key={t} className="rounded-full bg-card px-3 py-1 text-xs font-medium">{t}</span>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">{c.org}</p>
-                <h3 className="font-display mt-2 text-3xl leading-tight transition-colors group-hover:text-primary md:text-4xl">{c.title}</h3>
-                <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{c.summary}</p>
-                <dl className="mt-6 grid grid-cols-2 gap-4 border-y border-border py-4 text-sm">
-                  <div><dt className="text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{c.role}</dd></div>
-                  <div><dt className="text-muted-foreground">Timeline</dt><dd className="mt-1 font-medium">{c.timeline}</dd></div>
-                </dl>
-                <button onClick={() => setOpen(open === i ? null : i)} className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary">
-                  {open === i ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />} What I did
-                </button>
-                {open === i && (
-                  <ul className="animate-rise mt-4 space-y-2">
-                    {c.contributions.map((x) => (
-                      <li key={x} className="flex gap-3 text-muted-foreground"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{x}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </article>
+            <CaseCard
+              key={c.n}
+              data={c}
+              open={open === i}
+              onToggle={() => setOpen(open === i ? null : i)}
+              onZoom={setZoom}
+            />
           ))}
         </div>
       </section>
@@ -215,6 +408,8 @@ function Index() {
           </a>
         </div>
       </footer>
+
+      {zoom && <Lightbox image={zoom} onClose={() => setZoom(null)} />}
     </div>
   );
 }
