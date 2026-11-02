@@ -1,8 +1,41 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { CASES } from "@/routes/index";
+import { CASES, type StorySection } from "@/routes/index";
 import { Button } from "@/components/ui/button";
 import { CaseImageViewer } from "@/components/case-image-viewer";
+
+function StoryBlock({ section }: { section: StorySection }) {
+  return (
+    <section id={section.id} className="scroll-mt-24 border-b border-border py-12 md:py-16">
+      <h2 className="font-display text-3xl md:text-4xl">{section.title}</h2>
+      {section.problem && (
+        <p className="font-display mt-6 max-w-3xl border-l-2 border-primary pl-6 text-2xl leading-snug md:text-3xl">{section.paragraphs?.[0]}</p>
+      )}
+      {section.paragraphs?.slice(section.problem ? 1 : 0).map((paragraph) => (
+        <p key={paragraph} className="mt-5 max-w-3xl text-lg leading-relaxed text-muted-foreground">{paragraph}</p>
+      ))}
+      {section.bullets && (
+        <ul className="mt-6 max-w-3xl space-y-3">
+          {section.bullets.map((bullet) => (
+            <li key={bullet} className="flex gap-3 text-lg leading-relaxed text-muted-foreground">
+              <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />{bullet}
+            </li>
+          ))}
+        </ul>
+      )}
+      {section.items && (
+        <div className="mt-6 max-w-3xl space-y-4">
+          {section.items.map((item) => (
+            <div key={item.text} className="rounded-lg border border-border bg-card p-5">
+              <p className="text-xs font-medium tracking-wide text-primary uppercase">{item.label}</p>
+              <p className="mt-2 leading-relaxed text-muted-foreground">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
 
 export const Route = createFileRoute("/case-studies/$slug")({
   loader: ({ params }) => {
@@ -29,6 +62,10 @@ function CaseStudyPage() {
   const index = CASES.findIndex((item) => item.slug === study.slug);
   const next = CASES[(index + 1) % CASES.length];
   const sections = [...new Set((study.images ?? []).slice(1).map((image) => image.section))];
+  const nav = [
+    ...(study.story ?? []).map((section) => ({ href: `#${section.id}`, label: section.title })),
+    ...sections.map((section, i) => ({ href: `#process-${i}`, label: section })),
+  ];
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
@@ -54,8 +91,20 @@ function CaseStudyPage() {
               <ul className="space-y-3">{study.contributions.map((item) => <li key={item} className="flex gap-3 text-muted-foreground"><span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />{item}</li>)}</ul>
             </div>
           </div>
-          {sections.length > 0 && <nav aria-label="Case study sections" className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6 text-sm text-muted-foreground">{sections.map((section, i) => <a key={section} href={`#process-${i}`} className="hover:text-primary">{section}</a>)}</nav>}
+          {study.prototype && (
+            <a href={study.prototype} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium transition hover:bg-secondary">
+              Open the Figma prototype <ArrowUpRight className="size-4" />
+            </a>
+          )}
+          {nav.length > 0 && (
+            <nav aria-label="Case study sections" className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6 text-sm text-muted-foreground">
+              {nav.map((item) => <a key={item.href} href={item.href} className="hover:text-primary">{item.label}</a>)}
+            </nav>
+          )}
         </section>
+        <div className="mx-auto max-w-6xl px-6">
+          {(study.story ?? []).map((section) => <StoryBlock key={section.id} section={section} />)}
+        </div>
         {study.images && <CaseImageViewer images={study.images} />}
       </main>
       <footer className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-16 sm:flex-row sm:items-center sm:justify-between">
