@@ -245,7 +245,7 @@ function CaseCard({
           </h3>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{data.summary}</p>
 
-          <dl className="mt-6 grid grid-cols-2 gap-4 border-y border-border py-4 text-sm">
+          <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4 border-y border-border py-4 text-sm">
             <div>
               <dt className="text-muted-foreground">My role</dt>
               <dd className="mt-1 font-medium">{data.role}</dd>
@@ -278,23 +278,20 @@ function CaseCard({
         </div>
       </div>
 
-      {rest.length > 0 && (
+      {wide && (
         <div className="border-t border-border p-8 md:p-10">
           <p className="mb-5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Research &amp; prototype
           </p>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {rest.map((img) => (
-              <button
-                key={img.src}
-                type="button"
-                onClick={() => onZoom(img)}
-                className="cursor-zoom-in rounded-xl border border-border bg-secondary p-4 text-left transition hover:shadow-soft"
-              >
-                <img src={img.src} alt={img.alt} className="w-full rounded-lg" />
-                <span className="mt-3 block text-sm text-muted-foreground">{img.caption}</span>
-              </button>
-            ))}
+          <div className="grid gap-6">
+            <Figure image={wide} onZoom={onZoom} />
+            {more.length > 0 && (
+              <div className="grid gap-6 sm:grid-cols-2">
+                {more.map((img) => (
+                  <Figure key={img.src} image={img} onZoom={onZoom} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -342,7 +339,7 @@ function Index() {
       <section id="work" className="mx-auto max-w-6xl px-6 py-20">
         <div className="mb-12 flex items-end justify-between">
           <h2 className="font-display text-4xl md:text-5xl">Case studies</h2>
-          <span className="text-sm text-muted-foreground">{CASES.length} projects</span>
+          <span className="text-sm text-muted-foreground">{CASES.length} projects · click any image to enlarge</span>
         </div>
         <div className="space-y-10">
           {CASES.map((c, i) => (
