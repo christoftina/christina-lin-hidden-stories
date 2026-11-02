@@ -199,6 +199,19 @@ function Lightbox({ image, onClose }: { image: CaseImage; onClose: () => void })
   );
 }
 
+function Figure({ image, onZoom }: { image: CaseImage; onZoom: (image: CaseImage) => void }) {
+  return (
+    <button
+      type="button"
+      onClick={() => onZoom(image)}
+      className="cursor-zoom-in rounded-xl border border-border bg-secondary p-4 text-left transition hover:shadow-soft"
+    >
+      <img src={image.src} alt={image.alt} className="w-full rounded-lg" />
+      <span className="mt-3 block text-sm text-muted-foreground">{image.caption}</span>
+    </button>
+  );
+}
+
 function CaseCard({
   data,
   open,
@@ -212,7 +225,7 @@ function CaseCard({
 }) {
   const images = data.images ?? [];
   const hero = images[0];
-  const rest = images.slice(1);
+  const [wide, ...more] = images.slice(1);
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition hover:-translate-y-1">
