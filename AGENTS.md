@@ -13,4 +13,5 @@
 
 - Store app-displayed images as Lovable Assets `.asset.json` pointers and import the pointer's `url`; do not keep binary image files in the repo. (Keeps the checkout light and serves images from the CDN.)
 - Case study content comes from Christina only. Keep each case's copy in the `CASES` array in `src/routes/index.tsx` so real and placeholder entries are easy to tell apart.
+- Home case cards link to `/case-studies/$slug`; detail pages read the same CASES entries and use a separate asset gallery module so summaries and full stories stay consistent.
 
