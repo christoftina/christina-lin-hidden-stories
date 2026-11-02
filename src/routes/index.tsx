@@ -240,7 +240,7 @@ function CaseCard({
       )}
 
       <div className="grid gap-8 p-8 md:grid-cols-[1fr_1.2fr] md:p-10">
-        <div className="flex flex-col justify-between gap-8 rounded-xl bg-accent p-8">
+        <div className="flex flex-col justify-center gap-10 rounded-xl bg-accent p-8">
           <span className="font-display text-6xl text-accent-foreground">{data.n}</span>
           <div className="flex flex-wrap gap-2">
             {data.tags.map((t) => (
