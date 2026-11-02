@@ -1,12 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { ArrowUpRight, Plus, Minus, X } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useRef, useState, type MouseEvent } from "react";
+import { ArrowUpRight } from "lucide-react";
 import heroFront from "@/assets/hero-front.jpg";
 import heroReveal from "@/assets/hero-reveal.jpg";
 import packdMockups from "@/assets/packd_mockups.png.asset.json";
-import packdHiFi from "@/assets/packd_hifi_prototype.png.asset.json";
-import packdCompetitive from "@/assets/packd_competitive_analysis.png.asset.json";
-import packdUserTesting from "@/assets/packd_user_testing.png.asset.json";
+import { Button } from "@/components/ui/button";
+import { PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -22,9 +21,9 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type CaseImage = { src: string; alt: string; caption: string };
-
-type Case = {
+export type Case = {
+  slug: string;
+  placeholder?: boolean;
   n: string;
   title: string;
   org: string;
@@ -36,48 +35,28 @@ type Case = {
   images?: CaseImage[];
 };
 
-const CASES: Case[] = [
+export const CASES: Case[] = [
   {
     n: "01",
+    slug: "packd",
     title: "PackD — planning large group trips in one place",
     org: "Travel planning app",
     role: "UI/UX Designer & Researcher",
     tags: ["User research", "UI/UX design", "Prototyping", "Mobile"],
     summary:
-      "Planning large group trips is difficult. PackD helps you discover trending destinations, save money and time, and communicate with ease — all in one app.",
+      "Planning large group trips are difficult, discover trending destinations, save money, time and communicate with ease using PackD.",
     contributions: [
       "Designed and created the home page",
       "Designed and created the messaging page",
       "Designed and created the smart search features",
       "Led the showcase presentation",
-      "Ran a competitive analysis across Notion AI, TripIt, Google Travel and Roadtrippers",
-      "Ran user testing with a survey on what people expect from a travel itinerary app",
     ],
-    images: [
-      {
-        src: packdMockups.url,
-        alt: "Three PackD phone screens: an activity detail page for a Tokyo tour, a group chat, and the home page with a destination card",
-        caption: "Activity, messaging and home screens",
-      },
-      {
-        src: packdHiFi.url,
-        alt: "High-fidelity PackD screens with callouts for the home screen, messaging pages and smart search features",
-        caption: "High-fidelity screens and the smart search prototype",
-      },
-      {
-        src: packdCompetitive.url,
-        alt: "Competitive analysis slide comparing pros and cons of Notion AI, TripIt, Google Travel and Roadtrippers",
-        caption: "Competitive analysis: pros and cons across four travel products",
-      },
-      {
-        src: packdUserTesting.url,
-        alt: "User testing survey results with two participant quotes and a clustered bar chart of expected features",
-        caption: "User testing survey results",
-      },
-    ],
+    images: PACKD_IMAGES,
   },
   {
     n: "02",
+    slug: "mid-lab",
+    placeholder: true,
     title: "Designing calmer check-ins for student mental health",
     org: "Mental Health in Design Lab · UC San Diego",
     role: "UX Researcher & Designer",
@@ -88,6 +67,8 @@ const CASES: Case[] = [
   },
   {
     n: "03",
+    slug: "cses",
+    placeholder: true,
     title: "A clearer events hub for an engineering community",
     org: "CSES · UC San Diego",
     role: "Project Designer",
@@ -98,6 +79,8 @@ const CASES: Case[] = [
   },
   {
     n: "04",
+    slug: "mixbash",
+    placeholder: true,
     title: "Streamlining event planning at MixBash",
     org: "MixBash",
     role: "Product Design Intern",
@@ -128,7 +111,8 @@ function RevealImage() {
   const ref = useRef<HTMLDivElement>(null);
   const [p, setP] = useState({ x: 50, y: 50, on: false });
   const move = (e: MouseEvent) => {
-    const r = ref.current!.getBoundingClientRect();
+    if (!ref.current) return;
+    const r = ref.current.getBoundingClientRect();
     setP({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
   };
   const size = p.on ? 160 : 0;
@@ -156,165 +140,35 @@ function RevealImage() {
   );
 }
 
-function Lightbox({ image, onClose }: { image: CaseImage; onClose: () => void }) {
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [onClose]);
-
+function CaseCard({ data }: { data: Case }) {
+  const hero = data.images?.[0];
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={image.caption}
-      onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/80 p-4 backdrop-blur-sm md:p-10"
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className="max-h-full w-full max-w-5xl overflow-auto rounded-2xl bg-card p-4 shadow-soft"
-      >
-        <img src={image.src} alt={image.alt} className="mx-auto max-h-[70vh] w-auto rounded-lg" />
-        <div className="mt-3 flex items-center justify-between gap-4 px-2">
-          <p className="text-sm text-muted-foreground">{image.caption}</p>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="shrink-0 rounded-full border border-border p-2 transition hover:bg-secondary"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Figure({ image, onZoom }: { image: CaseImage; onZoom: (image: CaseImage) => void }) {
-  return (
-    <button
-      type="button"
-      onClick={() => onZoom(image)}
-      className="cursor-zoom-in rounded-xl border border-border bg-secondary p-4 text-left transition hover:shadow-soft"
-    >
-      <img src={image.src} alt={image.alt} className="w-full rounded-lg" />
-      <span className="mt-3 block text-sm text-muted-foreground">{image.caption}</span>
-    </button>
-  );
-}
-
-function CaseCard({
-  data,
-  open,
-  onToggle,
-  onZoom,
-}: {
-  data: Case;
-  open: boolean;
-  onToggle: () => void;
-  onZoom: (image: CaseImage) => void;
-}) {
-  const images = data.images ?? [];
-  const hero = images[0];
-  const [wide, ...more] = images.slice(1);
-
-  return (
-    <article className="group overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition hover:-translate-y-1">
-      {hero && (
-        <button
-          type="button"
-          onClick={() => onZoom(hero)}
-          className="block w-full cursor-zoom-in border-b border-border bg-secondary p-6 text-left md:p-10"
-        >
-          <img src={hero.src} alt={hero.alt} className="mx-auto w-full max-w-3xl" />
-        </button>
-      )}
-
-      <div className="grid gap-8 p-8 md:grid-cols-[1fr_1.2fr] md:p-10">
-        <div className="flex flex-col justify-center gap-10 rounded-xl bg-accent p-8">
-          <span className="font-display text-6xl text-accent-foreground">{data.n}</span>
-          <div className="flex flex-wrap gap-2">
-            {data.tags.map((t) => (
-              <span key={t} className="rounded-full bg-card px-3 py-1 text-xs font-medium">
-                {t}
-              </span>
-            ))}
+    <Link to="/case-studies/$slug" params={{ slug: data.slug }} aria-label={`View ${data.org} case study`} className="group block overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+      <article>
+        {hero && <div className="border-b border-border bg-secondary p-6 md:p-10"><img src={hero.src} alt={hero.alt} className="mx-auto w-full max-w-3xl" /></div>}
+        <div className="grid gap-6 p-6 md:grid-cols-[0.55fr_1.45fr] md:gap-12 md:p-10">
+          <div>
+            <span className="font-display text-5xl text-primary">{data.n}</span>
+            <div className="mt-6 flex flex-wrap gap-2">{data.tags.map((tag) => <span key={tag} className="rounded-full bg-accent px-3 py-1 text-xs">{tag}</span>)}</div>
+          </div>
+          <div>
+            {data.placeholder && <p className="mb-3 text-xs font-medium text-muted-foreground">Placeholder case study · details awaiting confirmation</p>}
+            <p className="text-sm text-muted-foreground">{data.org}</p>
+            <h3 className="font-display mt-2 text-3xl leading-tight group-hover:text-primary md:text-4xl">{data.title}</h3>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{data.summary}</p>
+            <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4 border-y border-border py-4 text-sm">
+              <div><dt className="text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{data.role}</dd></div>
+              {data.timeline && <div><dt className="text-muted-foreground">Timeline</dt><dd className="mt-1 font-medium">{data.timeline}</dd></div>}
+            </dl>
+            <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary">View case study <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>
           </div>
         </div>
-
-        <div>
-          <p className="text-sm text-muted-foreground">{data.org}</p>
-          <h3 className="font-display mt-2 text-3xl leading-tight transition-colors group-hover:text-primary md:text-4xl">
-            {data.title}
-          </h3>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{data.summary}</p>
-
-          <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4 border-y border-border py-4 text-sm">
-            <div>
-              <dt className="text-muted-foreground">My role</dt>
-              <dd className="mt-1 font-medium">{data.role}</dd>
-            </div>
-            {data.timeline && (
-              <div>
-                <dt className="text-muted-foreground">Timeline</dt>
-                <dd className="mt-1 font-medium">{data.timeline}</dd>
-              </div>
-            )}
-          </dl>
-
-          <button
-            onClick={onToggle}
-            aria-expanded={open}
-            className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary"
-          >
-            {open ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />} What I did
-          </button>
-          {open && (
-            <ul className="animate-rise mt-4 space-y-2">
-              {data.contributions.map((x) => (
-                <li key={x} className="flex gap-3 text-muted-foreground">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  {x}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
-
-      {wide && (
-        <div className="border-t border-border p-8 md:p-10">
-          <p className="mb-5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
-            Research &amp; prototype
-          </p>
-          <div className="grid gap-6">
-            <Figure image={wide} onZoom={onZoom} />
-            {more.length > 0 && (
-              <div className="grid gap-6 sm:grid-cols-2">
-                {more.map((img) => (
-                  <Figure key={img.src} image={img} onZoom={onZoom} />
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </article>
+      </article>
+    </Link>
   );
 }
 
 function Index() {
-  const [open, setOpen] = useState<number | null>(null);
-  const [zoom, setZoom] = useState<CaseImage | null>(null);
 
   return (
     <div className="min-h-screen">
@@ -350,20 +204,12 @@ function Index() {
       </section>
 
       <section id="work" className="mx-auto max-w-6xl px-6 py-20">
-        <div className="mb-12 flex items-end justify-between">
+        <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
           <h2 className="font-display text-4xl md:text-5xl">Case studies</h2>
-          <span className="text-sm text-muted-foreground">{CASES.length} projects · click any image to enlarge</span>
+          <span className="text-sm text-muted-foreground">{CASES.length} projects</span>
         </div>
         <div className="space-y-10">
-          {CASES.map((c, i) => (
-            <CaseCard
-              key={c.n}
-              data={c}
-              open={open === i}
-              onToggle={() => setOpen(open === i ? null : i)}
-              onZoom={setZoom}
-            />
-          ))}
+          {CASES.map((data) => <CaseCard key={data.n} data={data} />)}
         </div>
       </section>
 
@@ -409,7 +255,6 @@ function Index() {
         </div>
       </footer>
 
-      {zoom && <Lightbox image={zoom} onClose={() => setZoom(null)} />}
     </div>
   );
 }
