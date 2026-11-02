@@ -3,7 +3,6 @@ import { useRef, useState, type MouseEvent } from "react";
 import { ArrowUpRight } from "lucide-react";
 import heroFront from "@/assets/hero-front.jpg";
 import heroReveal from "@/assets/hero-reveal.jpg";
-import packdMockups from "@/assets/packd_mockups.png.asset.json";
 import { PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 
 export const Route = createFileRoute("/")({
