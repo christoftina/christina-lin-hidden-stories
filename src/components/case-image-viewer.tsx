@@ -55,7 +55,7 @@ export function CaseImageViewer({ images }: { images: CaseImage[] }) {
 function ImageButton({ image, onClick, priority = false }: { image: CaseImage; onClick: () => void; priority?: boolean }) {
   return (
     <Button variant="ghost" onClick={onClick} aria-label={`Enlarge ${image.caption}`} className="group relative block h-auto w-full cursor-zoom-in overflow-hidden rounded-lg border border-border bg-card p-0 hover:bg-card">
-      <img src={image.src} alt={image.alt} loading={priority ? "eager" : "lazy"} className="block aspect-[1272/717] w-full object-contain" />
+      <img src={image.src} alt={image.alt} loading={priority ? "eager" : "lazy"} style={{ aspectRatio: image.ratio ?? "1272 / 717" }} className="block w-full object-contain" />
       <span className="absolute bottom-3 right-3 rounded-md border border-border bg-card/90 p-2 text-foreground"><Expand className="size-4" /></span>
     </Button>
   );

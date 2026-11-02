@@ -10,10 +10,10 @@ import homeMessaging from "@/assets/packd_home_messaging.png.asset.json";
 import tripPlanning from "@/assets/packd_trip_planning.png.asset.json";
 import financeDiscover from "@/assets/packd_finance_discover.png.asset.json";
 
-export type CaseImage = { src: string; alt: string; caption: string; section: string };
+export type CaseImage = { src: string; alt: string; caption: string; section: string; ratio?: string };
 
 export const PACKD_IMAGES: CaseImage[] = [
-  { src: mockups.url, alt: "PackD activity, group messaging and home screens shown on three phones", caption: "Activity, messaging and home screens", section: "Overview" },
+  { src: mockups.url, alt: "PackD activity, group messaging and home screens shown on three phones", caption: "Activity, messaging and home screens", section: "Overview", ratio: "1038 / 362" },
   { src: competitive.url, alt: "PackD competitive analysis comparing Notion AI, TripIt, Google Travel and Roadtrippers", caption: "Competitive analysis", section: "Research" },
   { src: survey.url, alt: "User testing survey results with participant quotes and expected travel planning features", caption: "User testing survey results", section: "Research" },
   { src: flowHome.url, alt: "User flow maps for PackD home and discover pages", caption: "Home and discover user flows", section: "User flows" },
