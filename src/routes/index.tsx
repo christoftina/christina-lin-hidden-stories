@@ -18,11 +18,45 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const WORK = [
-  { n: "01", title: "Mental Health in Design Lab", org: "MiD Lab · UC San Diego", tags: ["Research", "UX"], text: "Designing supportive digital experiences grounded in research on wellbeing." },
-  { n: "02", title: "CSES Project Design", org: "CSES · UC San Diego", tags: ["Product", "Visual"], text: "Leading project design for a student engineering community's digital tools." },
-  { n: "03", title: "MixBash", org: "Design Intern", tags: ["Product", "Startup"], text: "Shipping product design work in a fast-moving startup environment." },
-  { n: "04", title: "Language Infant Learning", org: "LiL Lab · UC San Diego", tags: ["Research"], text: "Supporting research on how infants learn language, through a cognitive science lens." },
+const CASES = [
+  {
+    n: "01",
+    title: "Designing calmer check-ins for student mental health",
+    org: "Mental Health in Design Lab · UC San Diego",
+    role: "UX Researcher & Designer",
+    timeline: "10 weeks",
+    tags: ["User research", "Accessibility", "Mobile"],
+    summary: "Students struggled to track their wellbeing without feeling judged. I led interviews and prototyped a low-pressure daily check-in flow.",
+    contributions: ["Ran 8 semi-structured interviews", "Synthesized insights into an affinity map", "Designed and tested mid-fi prototypes"],
+  },
+  {
+    n: "02",
+    title: "A clearer events hub for an engineering community",
+    org: "CSES · UC San Diego",
+    role: "Project Designer",
+    timeline: "1 quarter",
+    tags: ["Product design", "Design systems"],
+    summary: "Members missed events because information was scattered. I redesigned the hub so upcoming events and sign-ups live in one place.",
+    contributions: ["Audited existing touchpoints", "Built a small component library", "Partnered with engineers on handoff"],
+  },
+  {
+    n: "03",
+    title: "Streamlining event planning at MixBash",
+    org: "MixBash",
+    role: "Product Design Intern",
+    timeline: "Summer internship",
+    tags: ["Startup", "End-to-end"],
+    summary: "Hosts dropped off during event setup. I simplified the creation flow and reduced the steps needed to publish an event.",
+    contributions: ["Mapped the existing creation flow", "Designed a shorter step-by-step setup", "Validated with usability tests"],
+  },
+];
+
+const EXPERIENCE = [
+  { role: "Product Design Intern", org: "MixBash", when: "Internship" },
+  { role: "UX Researcher & Designer", org: "Mental Health in Design (MiD) Lab, UCSD", when: "Research" },
+  { role: "Project Designer", org: "CSES @ UCSD", when: "Student org" },
+  { role: "Research Assistant", org: "Language Infant Learning (LiL) Lab, UCSD", when: "Research" },
+  { role: "Regents Scholar", org: "UC San Diego", when: "Honor" },
 ];
 
 const FACTS = [
@@ -66,7 +100,7 @@ function RevealImage() {
 }
 
 function Index() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-border bg-background/80 backdrop-blur">
@@ -74,6 +108,7 @@ function Index() {
           <a href="#" className="font-display text-2xl">Christina Lin</a>
           <nav className="flex gap-8 text-sm text-muted-foreground">
             <a href="#work" className="hover:text-foreground">Work</a>
+            <a href="#experience" className="hover:text-foreground">Experience</a>
             <a href="#about" className="hover:text-foreground">About</a>
             <a href="mailto:Christinalin252005@gmail.com" className="hover:text-foreground">Contact</a>
           </nav>
@@ -101,30 +136,52 @@ function Index() {
 
       <section id="work" className="mx-auto max-w-6xl px-6 py-20">
         <div className="mb-12 flex items-end justify-between">
-          <h2 className="font-display text-4xl md:text-5xl">Selected work</h2>
-          <span className="text-sm text-muted-foreground">2023 — Present</span>
+          <h2 className="font-display text-4xl md:text-5xl">Case studies</h2>
+          <span className="text-sm text-muted-foreground">{CASES.length} projects</span>
         </div>
-        <ul className="border-t border-border">
-          {WORK.map((w, i) => (
-            <li key={w.n} className="border-b border-border">
-              <button onClick={() => setOpen(open === i ? null : i)} className="group grid w-full grid-cols-[3rem_1fr_auto] items-center gap-4 py-8 text-left">
-                <span className="text-sm text-muted-foreground">{w.n}</span>
-                <span>
-                  <span className="font-display block text-2xl transition-colors group-hover:text-primary md:text-3xl">{w.title}</span>
-                  <span className="mt-1 block text-sm text-muted-foreground">{w.org}</span>
-                </span>
-                {open === i ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
-              </button>
-              {open === i && (
-                <div className="animate-rise grid gap-6 pb-10 pl-16 md:grid-cols-[1fr_auto]">
-                  <p className="max-w-xl text-lg text-muted-foreground">{w.text}</p>
-                  <div className="flex items-start gap-2">
-                    {w.tags.map((t) => (
-                      <span key={t} className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">{t}</span>
-                    ))}
-                  </div>
+        <div className="space-y-10">
+          {CASES.map((c, i) => (
+            <article key={c.n} className="group grid gap-8 rounded-2xl border border-border bg-card p-8 shadow-soft transition hover:-translate-y-1 md:grid-cols-[1fr_1.2fr] md:p-10">
+              <div className="flex flex-col justify-between gap-8 rounded-xl bg-accent p-8">
+                <span className="font-display text-6xl text-accent-foreground">{c.n}</span>
+                <div className="flex flex-wrap gap-2">
+                  {c.tags.map((t) => (
+                    <span key={t} className="rounded-full bg-card px-3 py-1 text-xs font-medium">{t}</span>
+                  ))}
                 </div>
-              )}
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">{c.org}</p>
+                <h3 className="font-display mt-2 text-3xl leading-tight transition-colors group-hover:text-primary md:text-4xl">{c.title}</h3>
+                <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{c.summary}</p>
+                <dl className="mt-6 grid grid-cols-2 gap-4 border-y border-border py-4 text-sm">
+                  <div><dt className="text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{c.role}</dd></div>
+                  <div><dt className="text-muted-foreground">Timeline</dt><dd className="mt-1 font-medium">{c.timeline}</dd></div>
+                </dl>
+                <button onClick={() => setOpen(open === i ? null : i)} className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary">
+                  {open === i ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />} What I did
+                </button>
+                {open === i && (
+                  <ul className="animate-rise mt-4 space-y-2">
+                    {c.contributions.map((x) => (
+                      <li key={x} className="flex gap-3 text-muted-foreground"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />{x}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="experience" className="mx-auto max-w-6xl px-6 py-20">
+        <h2 className="font-display mb-12 text-4xl md:text-5xl">Experience</h2>
+        <ul className="border-t border-border">
+          {EXPERIENCE.map((e) => (
+            <li key={e.org} className="grid grid-cols-1 gap-1 border-b border-border py-6 md:grid-cols-[1fr_1fr_auto] md:items-center">
+              <span className="font-display text-2xl">{e.role}</span>
+              <span className="text-muted-foreground">{e.org}</span>
+              <span className="text-sm text-muted-foreground">{e.when}</span>
             </li>
           ))}
         </ul>
