@@ -19,6 +19,15 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+export type StorySection = {
+  id: string;
+  title: string;
+  problem?: boolean;
+  paragraphs?: string[];
+  bullets?: string[];
+  items?: { label: string; text: string }[];
+};
+
 export type Case = {
   slug: string;
   placeholder?: boolean;
@@ -31,6 +40,8 @@ export type Case = {
   summary: string;
   contributions: string[];
   images?: CaseImage[];
+  story?: StorySection[];
+  prototype?: string;
 };
 
 export const CASES: Case[] = [
@@ -50,6 +61,70 @@ export const CASES: Case[] = [
       "Led the showcase presentation",
     ],
     images: PACKD_IMAGES,
+    prototype: "https://www.figma.com/proto/WOFoOSwVJpeSL3k9uMkjjO/ACM-SP26-Projects?page-id=70%3A12&node-id=138-41&viewport=-2721%2C-987%2C0.48&t=bKOpByEoYr97WXC9-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=138%3A41&show-proto-sidebar=1",
+    story: [
+      {
+        id: "problem",
+        title: "Problem statement",
+        problem: true,
+        paragraphs: ["How might we create a mobile app that simplifies the trip planning process for young adults so that planning trips is more budget and group friendly?"],
+      },
+      {
+        id: "goals",
+        title: "Goals",
+        bullets: [
+          "Simplify group trip planning",
+          "Encourage budgeting",
+          "Improve communication",
+          "Reduce cognitive load on navigating through multiple apps",
+        ],
+      },
+      {
+        id: "competitive-analysis",
+        title: "Competitive analysis",
+        paragraphs: [
+          "Most solutions excel at organizing travel logistics but fall short in supporting group coordination. Users often rely on multiple tools to manage availability, communicate preferences, and make decisions collectively.",
+          "These findings informed our design direction for PackD: a unified platform that streamlines both trip planning and group collaboration, reducing friction throughout the travel planning process.",
+        ],
+      },
+      {
+        id: "user-research",
+        title: "User research",
+        paragraphs: [
+          "User research was conducted via surveys. We discovered that users disliked needing to navigate through multiple apps and having a messy system that easily overwhelms them.",
+          "The majority preferred features such as splitting expenses, curated destination suggestions, and clean itineraries, while disliking cluttered user interfaces.",
+        ],
+      },
+      {
+        id: "solution",
+        title: "Solution",
+        paragraphs: [
+          "My team and I addressed user concerns and created PackD, a centralized travel planning mobile app where users can collaborate on destinations, split expenses (as well as remembering who owes whom and for what expense), use a group itinerary editable calendar, and a personal messaging hub within the app.",
+          "With a simple interface, users can navigate easily without struggling with confusing features.",
+        ],
+      },
+      {
+        id: "usability",
+        title: "Usability findings & iterations",
+        items: [
+          { label: "Finding", text: "Users thought the front page looked too static and plain." },
+          { label: "Solution", text: "Added a texturized background." },
+          { label: "Finding", text: "The original navigation bar design seemed confusing for users, as the indicator for which page they were on was not clearly defined." },
+          { label: "Solution", text: "Changed into a bubble style where the icon's color inverted when the user is on the page." },
+        ],
+      },
+      {
+        id: "next-steps",
+        title: "Next steps",
+        bullets: [
+          "Gather information from a broader, more diverse group of users for their input on the app",
+          "More emphasis on the discover page of the app — making different features, changing the layout, etc.",
+          "Fleshing out the finance page more for app consistency",
+          "Emphasis on creating easier steps for user flow",
+          "Integrate a map feature with all the stops",
+        ],
+      },
+    ],
   },
   {
     n: "02",
