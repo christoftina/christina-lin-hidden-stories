@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import type { CaseImage } from "@/lib/packd-images";
 
-export function CaseImageViewer({ images }: { images: CaseImage[] }) {
+export function CaseImageViewer({ images, hasOverview = true }: { images: CaseImage[]; hasOverview?: boolean }) {
   const [selected, setSelected] = useState<number | null>(null);
   const current = selected === null ? undefined : images[selected];
-  const sections = [...new Set(images.slice(1).map((image) => image.section))];
+  const sections = [...new Set(images.slice(hasOverview ? 1 : 0).map((image) => image.section))];
   return (
     <>
-      {images[0] && (
+      {hasOverview && images[0] && (
         <figure className="border-y border-border bg-secondary py-8 md:py-12">
           <div className="mx-auto max-w-6xl px-6">
             <ImageButton image={images[0]} onClick={() => setSelected(0)} priority />

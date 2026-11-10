@@ -4,6 +4,8 @@ import { ArrowUpRight } from "lucide-react";
 import heroFront from "@/assets/hero-front.jpg";
 import heroReveal from "@/assets/hero-reveal.jpg";
 import { PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
+import { INSTACART_IMAGES } from "@/lib/instacart-images";
+import acmLogo from "@/assets/acm-projects-team.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,12 +36,14 @@ export type Case = {
   n: string;
   title: string;
   org: string;
-  role: string;
+  role?: string;
+  orgLogo?: { src: string; alt: string };
   timeline?: string;
   tags: string[];
   summary: string;
   contributions: string[];
   images?: CaseImage[];
+  imagesHaveOverview?: boolean;
   story?: StorySection[];
   prototype?: string;
 };
@@ -49,7 +53,8 @@ export const CASES: Case[] = [
     n: "01",
     slug: "packd",
     title: "PackD — planning large group trips in one place",
-    org: "Travel planning app",
+    org: "ACM project",
+    orgLogo: { src: acmLogo.url, alt: "ACM Projects Team #1 design logo" },
     role: "UI/UX Designer & Researcher",
     tags: ["User research", "UI/UX design", "Prototyping", "Mobile"],
     summary:
@@ -128,6 +133,58 @@ export const CASES: Case[] = [
   },
   {
     n: "02",
+    slug: "instacart",
+    title: "Extending Instacart",
+    org: "Instacart",
+    tags: ["Meal planning", "Budgeting", "User research"],
+    summary: "Young adults are having difficulty budgeting their grocery money for the week, let's make sure they don't overspend.",
+    contributions: [],
+    images: INSTACART_IMAGES,
+    imagesHaveOverview: false,
+    story: [
+      {
+        id: "problem", title: "Problem statement", problem: true,
+        paragraphs: ["Rising grocery costs and busy schedules make meal planning difficult, leaving many people uncertain about what to cook and concerned about overspending on groceries."],
+      },
+      {
+        id: "goals", title: "Goals",
+        bullets: ["Simplify meal planning", "Help users stay within budget while grocery shopping", "Enhance Instacart's value for budget conscious shoppers", "Increase confidence in user purchasing decisions"],
+      },
+      {
+        id: "competitive-analysis", title: "Competitive analysis",
+        paragraphs: [
+          "My team conducted a competitive analysis of several grocery and meal-planning platforms, including HelloFresh, Too Good To Go, and Thrive Market, to identify features that could improve the grocery shopping experience. We evaluated each platform's strengths and limitations and explored opportunities to incorporate valuable features into an existing grocery delivery service such as Instacart.",
+          "HelloFresh provides users with curated meal recipes and pre-portioned ingredients, helping reduce the effort required for meal planning. However, users have limited flexibility in modifying included ingredients and seasonings, and the service does not currently accept EBT payments.",
+          "TooGoodToGo focuses on affordability and sustainability by connecting users with discounted surplus food from local businesses. While the platform helps users save money and reduce food waste, food selections are often limited and may come as surprise bags with only general descriptions of their contents.",
+          "Thrive Market offers a wide selection of pantry staples, frozen foods, and specialty dietary products at discounted prices. While it excels at providing affordable grocery options, it offers limited fresh produce compared to traditional grocery delivery services.",
+          "Through this analysis, we identified three key opportunities for Instacart: integrating meal-planning support, improving budget-conscious shopping options, and helping users discover affordable grocery alternatives while maintaining the flexibility to choose their own products. These insights informed the development of our proposed meal-planning extension.",
+        ],
+      },
+      {
+        id: "user-research", title: "User research",
+        paragraphs: [
+          "Through user interviews, we discovered that budget concerns heavily influenced grocery shopping decisions. Participants consistently prioritized affordability and often second-guessed purchases out of fear of exceeding their budget.",
+          "Time constraints also played a significant role in meal planning behavior. Limited time reduced how often participants were able to plan meals or shop for groceries, leading them to rely on whatever ingredients were available at home. As a result, meals became less intentional, repetitive, and often less balanced. Participants also struggled to create meals that felt both filling and nutritious while staying within budget. Many felt forced to sacrifice nutritional quality in order to purchase enough food to meet their needs.",
+        ],
+      },
+      {
+        id: "pain-points", title: "Pain points",
+        paragraphs: ["Users struggled most with:"],
+        bullets: ["Keeping track of spending while shopping", "Planning groceries consistently with limited time", "Creating meals that feel complete within a limited budget"],
+      },
+      {
+        id: "wishes", title: "Wishes and desires",
+        paragraphs: ["Users wanted to see:"],
+        bullets: ["Clear visibility into how much they are spending in real time", "Support in building affordable but filling meals", "A more efficient and less stressful planning process"],
+      },
+      {
+        id: "solution", title: "Solution",
+        paragraphs: ["To address users' concerns around budgeting and meal planning, we designed a budget-aware meal planning feature for Instacart. The feature helps users build affordable, filling meals while tracking costs in real time, making grocery shopping more efficient, less stressful, and financially predictable."],
+      },
+    ],
+  },
+  {
+    n: "03",
     slug: "mid-lab",
     placeholder: true,
     title: "Designing calmer check-ins for student mental health",
@@ -139,7 +196,7 @@ export const CASES: Case[] = [
     contributions: ["Ran 8 semi-structured interviews", "Synthesized insights into an affinity map", "Designed and tested mid-fi prototypes"],
   },
   {
-    n: "03",
+    n: "04",
     slug: "cses",
     placeholder: true,
     title: "A clearer events hub for an engineering community",
@@ -151,7 +208,7 @@ export const CASES: Case[] = [
     contributions: ["Audited existing touchpoints", "Built a small component library", "Partnered with engineers on handoff"],
   },
   {
-    n: "04",
+    n: "05",
     slug: "mixbash",
     placeholder: true,
     title: "Streamlining event planning at MixBash",
@@ -230,7 +287,7 @@ function CaseCard({ data }: { data: Case }) {
             <h3 className="font-display mt-2 text-3xl leading-tight group-hover:text-primary md:text-4xl">{data.title}</h3>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{data.summary}</p>
             <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4 border-y border-border py-4 text-sm">
-              <div><dt className="text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{data.role}</dd></div>
+              <div><dt className="text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{data.role ?? "Awaiting confirmation"}</dd></div>
               {data.timeline && <div><dt className="text-muted-foreground">Timeline</dt><dd className="mt-1 font-medium">{data.timeline}</dd></div>}
             </dl>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary">View case study <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>

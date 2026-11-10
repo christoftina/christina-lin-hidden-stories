@@ -8,7 +8,7 @@ import { CASES } from "@/routes/index";
 // Match routes without running loaders or rendering: loaders may need a server or
 // network the test run lacks, and jsdom never loads the stylesheets React waits on.
 describe("App routing", () => {
-  it.each(["packd", "mid-lab", "cses", "mixbash"])("opens a dedicated case study page for %s", (slug) => {
+  it.each(["packd", "instacart", "mid-lab", "cses", "mixbash"])("opens a dedicated case study page for %s", (slug) => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
     const matches = router.matchRoutes(`/case-studies/${slug}`);
     expect(matches.at(-1)?.routeId).toBe("/case-studies/$slug");
@@ -37,5 +37,20 @@ describe("App routing", () => {
     ]);
     expect(packd?.story?.[0]?.paragraphs?.[0]).toContain("How might we create a mobile app");
     expect(packd?.prototype).toBe("https://www.figma.com/proto/WOFoOSwVJpeSL3k9uMkjjO/ACM-SP26-Projects?page-id=70%3A12&node-id=138-41&viewport=-2721%2C-987%2C0.48&t=bKOpByEoYr97WXC9-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=138%3A41&show-proto-sidebar=1");
+  });
+
+  it("records PackD's confirmed ACM affiliation without inferring a timeline", () => {
+    const packd = CASES.find((item) => item.slug === "packd");
+    expect(packd?.org).toBe("ACM project");
+    expect(packd?.orgLogo?.src).toMatch(/acm-projects-team\.png$/);
+    expect(packd?.timeline).toBeUndefined();
+  });
+
+  it("does not invent an Instacart role, timeline or personal contributions", () => {
+    const instacart = CASES.find((item) => item.slug === "instacart");
+    expect(instacart).toBeDefined();
+    expect(instacart?.role).toBeUndefined();
+    expect(instacart?.timeline).toBeUndefined();
+    expect(instacart?.contributions).toEqual([]);
   });
 });
