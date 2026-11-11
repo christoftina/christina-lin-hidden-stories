@@ -47,6 +47,8 @@ export type Case = {
   prototype?: string;
   prototypeLabel?: string;
   tools?: string[];
+  /** Short project name shown on the generated title tile when there is no title image. */
+  shortName?: string;
 };
 
 export const CASES: Case[] = [
@@ -138,6 +140,7 @@ export const CASES: Case[] = [
     n: "02",
     slug: "instacart",
     title: "Extending Instacart with a budget-aware meal planner",
+    shortName: "Budgeting Instacart",
     org: "COGS 127 · UC San Diego",
     role: "Designer, Interaction & Researcher",
     timeline: "Spring 2026",
@@ -203,6 +206,7 @@ export const CASES: Case[] = [
     n: "03",
     slug: "aria",
     title: "A.R.I.A — an AI Readiness Interview Assistant",
+    shortName: "A.R.I.A",
     org: "Hackathon project",
     role: "Lead Designer, Interaction & Researcher",
     timeline: "Apr 4 – 5 · 2-day hackathon",
@@ -275,6 +279,7 @@ export const CASES: Case[] = [
     n: "04",
     slug: "mc-honeyhive",
     title: "MC HoneyHive — safer, more dignified shelter rooms for women",
+    shortName: "MC HoneyHive",
     org: "Design-a-thon project",
     role: "Designer, Interaction & Researcher",
     timeline: "May 9 – 10 · 2-day design-a-thon",
@@ -330,12 +335,12 @@ export const CASES: Case[] = [
     n: "05",
     slug: "mixbash",
     placeholder: true,
-    title: "Product design & marketing at a YC startup in Tokyo",
+    title: "Product design & marketing at MixBash",
     org: "MixBash · Tokyo",
     role: "Product Design & Marketing Intern",
     timeline: "Jul – Aug 2026",
     tags: ["Startup", "Product design", "Marketing"],
-    summary: "I spent summer 2026 in Tokyo as a Product Design and Marketing intern at a Y Combinator startup.",
+    summary: "I spent summer 2026 in Tokyo as a Product Design and Marketing intern at MixBash, a Y Combinator startup.",
     contributions: [],
   },
   {
@@ -380,7 +385,7 @@ type Experience = {
 const EXPERIENCE: Experience[] = [
   { role: "UX/UI Designer", org: "Product Management Club (PMC) @ UCSD", when: "Fall 2026 – present", kind: "Design", current: true },
   { role: "Design Mentor", org: "ACM Projects @ UCSD", when: "Fall 2026 – present", kind: "Leadership & honors", current: true, note: "Mentoring this quarter's ACM project teams on design." },
-  { role: "Product Design & Marketing Intern", org: "MixBash · YC startup, Tokyo", when: "Jul – Aug 2026", kind: "Design", slug: "mixbash" },
+  { role: "Product Design & Marketing Intern", org: "MixBash (YC) · Tokyo", when: "Jul – Aug 2026", kind: "Design", slug: "mixbash" },
   { role: "Research Assistant", org: "Mental Health in Design (MiD) Lab, UCSD", when: "Spring 2026 – present", kind: "Research", current: true, note: "Qualitative analysis.", slug: "mid-lab" },
   { role: "UI/UX Designer & Researcher", org: "ACM Projects @ UCSD — PackD", when: "Spring 2026", kind: "Design", note: "Designed PackD, a group travel planning app.", slug: "packd" },
   { role: "Project Designer", org: "CSES @ UCSD", when: "Student org", kind: "Design", note: "Designed a mockup SanD Hacks hackathon page.", slug: "cses" },
@@ -405,7 +410,7 @@ const NOW = [
   "Research Assistant at the MiD Lab",
   "Project Designer at CSES",
   "Regents Scholar",
-  "Previously: product design & marketing at a YC startup in Tokyo",
+  "Previously: Product Design & Marketing Intern at MixBash (YC) in Tokyo",
 ];
 
 const HOBBIES: { icon: LucideIcon; title: string; back: string }[] = [
@@ -425,7 +430,7 @@ const SOCIALS = [
   { label: "Instagram", href: "https://www.instagram.com/_ch.ristinaa/" },
 ];
 
-const ROTATING = ["actually use things.", "plan trips together.", "budget their groceries.", "prep for interviews."];
+const ROTATING = ["actually use things.", "plan trips together.", "budget groceries.", "prep for interviews."];
 
 const EMAIL = "Christinalin252005@gmail.com";
 
@@ -473,7 +478,7 @@ function RotatingWords({ words }: { words: string[] }) {
   }, [text, deleting, index, words, reduce]);
 
   return (
-    <span className="block min-h-[2.1em] md:min-h-[1.1em]">
+    <span className="block h-[1.15em] whitespace-nowrap">
       <span className="sr-only">{words.join(" ")}</span>
       <em aria-hidden="true" className="text-primary">
         {text}
@@ -537,8 +542,18 @@ function Tags({ tags }: { tags: string[] }) {
   );
 }
 
+function TitleImage({ data }: { data: Case }) {
+  if (data.orgLogo) {
+    return <img src={data.orgLogo.src} alt={data.orgLogo.alt} width={585} height={367} className="h-auto w-full max-w-[240px] rounded-xl" />;
+  }
+  return (
+    <div className="flex aspect-[585/367] w-full max-w-[240px] items-center justify-center rounded-xl border border-border bg-gradient-to-br from-lavender-soft to-accent p-4 text-center transition-colors group-hover:to-lavender/60">
+      <span className="font-display text-3xl leading-tight text-accent-foreground">{data.shortName ?? data.org}</span>
+    </div>
+  );
+}
+
 function CaseCard({ data }: { data: Case }) {
-  const hero = data.images?.[0];
   return (
     <Link
       to="/case-studies/$slug"
@@ -547,31 +562,24 @@ function CaseCard({ data }: { data: Case }) {
       onPointerMove={trackSpotlight}
       className="spotlight group block overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:border-lavender focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <article>
-        {hero && (
-          <div className="overflow-hidden border-b border-border bg-secondary p-6 md:p-10">
-            <img src={hero.src} alt={hero.alt} className="mx-auto w-full max-w-3xl transition duration-500 group-hover:scale-[1.02]" />
-          </div>
-        )}
-        <div className="grid gap-6 p-6 md:grid-cols-[0.55fr_1.45fr] md:gap-12 md:p-10">
-          <div className="space-y-6">
-            {data.orgLogo && <img src={data.orgLogo.src} alt={data.orgLogo.alt} width={585} height={367} className="h-auto w-32 rounded-lg" />}
-            <Tags tags={data.tags} />
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">{data.org}</p>
-            <h3 className="font-display mt-2 text-3xl leading-tight transition-colors group-hover:text-primary md:text-4xl">{data.title}</h3>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{data.summary}</p>
-            {(data.role || data.timeline) && (
-              <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4 border-y border-border py-4 text-sm">
-                {data.role && <div><dt className="label-ui text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{data.role}</dd></div>}
-                {data.timeline && <div><dt className="label-ui text-muted-foreground">Timeline</dt><dd className="mt-1 font-medium">{data.timeline}</dd></div>}
-              </dl>
-            )}
-            <span className="mt-6 inline-flex items-center gap-2 font-sans text-sm font-medium text-primary">
-              View case study <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-            </span>
-          </div>
+      <article className="grid gap-6 p-6 md:grid-cols-[0.55fr_1.45fr] md:gap-12 md:p-10">
+        <div className="space-y-5">
+          <TitleImage data={data} />
+          <Tags tags={data.tags} />
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground">{data.org}</p>
+          <h3 className="font-display mt-2 text-3xl leading-tight transition-colors group-hover:text-primary md:text-4xl">{data.title}</h3>
+          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{data.summary}</p>
+          {(data.role || data.timeline) && (
+            <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4 border-y border-border py-4 text-sm">
+              {data.role && <div><dt className="label-ui text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{data.role}</dd></div>}
+              {data.timeline && <div><dt className="label-ui text-muted-foreground">Timeline</dt><dd className="mt-1 font-medium">{data.timeline}</dd></div>}
+            </dl>
+          )}
+          <span className="mt-6 inline-flex items-center gap-2 font-sans text-sm font-medium text-primary">
+            View case study <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+          </span>
         </div>
       </article>
     </Link>
@@ -604,7 +612,7 @@ function ComingSoonCard({ data }: { data: Case }) {
 function NowMarquee() {
   const items = [...NOW, ...NOW];
   return (
-    <div className="group overflow-hidden border-y border-border bg-lavender-soft py-4" aria-label="What I'm doing now">
+    <div className="group overflow-hidden border-y border-border bg-lavender-soft pb-4 pt-9 md:pt-11" aria-label="What I'm doing now">
       <ul className="animate-marquee flex w-max gap-10 group-hover:[animation-play-state:paused]">
         {items.map((item, i) => (
           <li key={`${item}-${i}`} aria-hidden={i >= NOW.length} className="flex items-center gap-10 whitespace-nowrap font-display text-xl italic text-accent-foreground md:text-2xl">
@@ -815,7 +823,7 @@ function Index() {
             </span>
             Open to 2027 product design roles
           </p>
-          <h1 className="font-display text-5xl leading-[1.05] md:text-7xl">
+          <h1 className="font-display text-[clamp(2.25rem,9.4vw,4rem)] leading-[1.08]">
             Designing for how people
             <RotatingWords words={ROTATING} />
           </h1>
@@ -874,7 +882,7 @@ function Index() {
               I'm a 4th-year transfer student and Regents Scholar at UC San Diego, majoring in Cognitive Science with a specialization in Design &amp; Interaction. I'm drawn to product design because it sits right where my two interests meet: understanding how people think, and making things that fit how they actually behave.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              My path runs through research labs, student design teams, hackathons and a summer at a YC startup in Tokyo. Today I design with PMC, mentor ACM project teams and do qualitative analysis at the Mental Health in Design Lab.
+              My path runs through research labs, student design teams, hackathons and a summer in Tokyo at MixBash, a YC startup. Today I design with PMC, mentor ACM project teams and do qualitative analysis at the Mental Health in Design Lab.
             </p>
           </div>
           <dl className="self-start rounded-2xl border border-border bg-card p-8 shadow-soft">

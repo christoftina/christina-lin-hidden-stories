@@ -16,3 +16,5 @@
 - [ ] Confirm CSES dates.
 - [x] Import A.R.I.A, MC HoneyHive, SanD Hacks prototype, side projects and About details from Christina's Readymag portfolio.
 - [ ] Upload A.R.I.A, MC HoneyHive and SanD Hacks images as Lovable assets.
+- [x] Avatar: cleaner downcast eyes, gripping hands that stay above the marquee text; single-line rotating headline; title images on case cards instead of top screenshots; MixBash named.
+- [ ] Title images for Instacart, A.R.I.A and MC HoneyHive (generated title tiles until supplied).
