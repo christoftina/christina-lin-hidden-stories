@@ -8,7 +8,7 @@ import { PACKD_DEMO, PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 import { INSTACART_DEMO, INSTACART_IMAGES } from "@/lib/instacart-images";
 import { HONEYHIVE } from "@/lib/honeyhive-images";
 import { TREE_STAMPS_DEMO } from "@/lib/side-project-media";
-import acmLogo from "@/assets/acm-projects-team.png.asset.json";
+const acmLogo = { url: "/media/packd/acm-projects-team.webp" };
 
 export const Route = createFileRoute("/")({
   head: () => ({

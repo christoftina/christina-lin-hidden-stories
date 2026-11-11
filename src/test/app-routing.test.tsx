@@ -42,7 +42,7 @@ describe("App routing", () => {
   it("records PackD's confirmed ACM affiliation and Spring 2026 timeline", () => {
     const packd = CASES.find((item) => item.slug === "packd");
     expect(packd?.org).toBe("ACM project");
-    expect(packd?.orgLogo?.src).toMatch(/acm-projects-team\.png$/);
+    expect(packd?.orgLogo?.src).toMatch(/acm-projects-team\.webp$/);
     expect(packd?.timeline).toBe("Spring 2026");
   });
 

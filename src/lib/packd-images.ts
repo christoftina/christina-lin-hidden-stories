@@ -1,14 +1,15 @@
-import mockups from "@/assets/packd_mockups.png.asset.json";
-import competitive from "@/assets/packd_competitive_details.png.asset.json";
-import survey from "@/assets/packd_survey_details.png.asset.json";
-import flowHome from "@/assets/packd_flow_home_discover.png.asset.json";
-import flowTrip from "@/assets/packd_flow_trip_messaging.png.asset.json";
-import lofiHome from "@/assets/packd_lofi_home.png.asset.json";
-import lofiFinances from "@/assets/packd_lofi_finances.png.asset.json";
-import branding from "@/assets/packd_branding.png.asset.json";
-import homeMessaging from "@/assets/packd_home_messaging.png.asset.json";
-import tripPlanning from "@/assets/packd_trip_planning.png.asset.json";
-import financeDiscover from "@/assets/packd_finance_discover.png.asset.json";
+// Images live in /public/media/packd (optimized WebP).
+const mockups = { url: "/media/packd/packd-mockups.webp" };
+const competitive = { url: "/media/packd/packd-competitive-details.webp" };
+const survey = { url: "/media/packd/packd-survey-details.webp" };
+const flowHome = { url: "/media/packd/packd-flow-home-discover.webp" };
+const flowTrip = { url: "/media/packd/packd-flow-trip-messaging.webp" };
+const lofiHome = { url: "/media/packd/packd-lofi-home.webp" };
+const lofiFinances = { url: "/media/packd/packd-lofi-finances.webp" };
+const branding = { url: "/media/packd/packd-branding.webp" };
+const homeMessaging = { url: "/media/packd/packd-home-messaging.webp" };
+const tripPlanning = { url: "/media/packd/packd-trip-planning.webp" };
+const financeDiscover = { url: "/media/packd/packd-finance-discover.webp" };
 
 /** `notes`: Christina's own write-up of her part, shown in a panel under the image. */
 export type CaseImage = { src: string; alt: string; caption: string; section: string; ratio?: string; notes?: string[] };
