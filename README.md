@@ -1,6 +1,6 @@
 # Christina Lin Hidden Stories
 
-build be a personal portfolio that has interactivity and the information for case studies are all in this link: https://readymag.website/u3909277733/ChristinaLin/. I want users to be able to reveal a hidden image for the hero section when they hover their cursor on the original image
+build be a personal portfolio that has interactivity and the information for case studies are all in this link: https://readymag.website/u3909277733/ChristinaLin/
 
 This project was built with [Lovable](https://lovable.dev).
 
