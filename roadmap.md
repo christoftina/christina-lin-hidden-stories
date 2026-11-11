@@ -24,3 +24,5 @@
 - [x] PackD: My-part notes under lo-fi home and hi-fi home/messaging images; case-study text on solid panels; Cherry Bomb One wordmark.
 - [ ] Upload the Instacart title image as a Lovable asset (currently inlined in src/lib/title-images.ts).
 - [x] Baby blue palette with #CE72B2 accent (darker #A44C8B for small text); Jua headings; Chewy wordmark; sticky Jump-to navigation in case studies.
+- [x] A.R.I.A and MC HoneyHive title images; MC HoneyHive org Design Frontiers; Instacart user flows, lo-fi sketches, hi-fi screens, new key changes and a phone-only demo video; new player stats (Hobby / Playing / Drinking).
+- [ ] Upload /public/media files and inlined title images as Lovable assets if preferred.

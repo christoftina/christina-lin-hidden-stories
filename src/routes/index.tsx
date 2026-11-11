@@ -2,9 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowUpRight, CupSoda, Gamepad2, Soup, Tv, type LucideIcon } from "lucide-react";
 import { PIXEL_CHRISTINA } from "@/lib/pixel-christina";
-import { INSTACART_TITLE } from "@/lib/title-images";
+import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE } from "@/lib/title-images";
 import { PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
-import { INSTACART_IMAGES } from "@/lib/instacart-images";
+import { INSTACART_DEMO, INSTACART_IMAGES } from "@/lib/instacart-images";
 import acmLogo from "@/assets/acm-projects-team.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -44,6 +44,8 @@ export type Case = {
   contributions: string[];
   images?: CaseImage[];
   imagesHaveOverview?: boolean;
+  /** Phone-only prototype recording shown in a "Demo video" section. */
+  video?: { src: string; poster: string; caption: string; width: number; height: number };
   story?: StorySection[];
   prototype?: string;
   prototypeLabel?: string;
@@ -155,6 +157,7 @@ export const CASES: Case[] = [
     contributions: [],
     images: INSTACART_IMAGES,
     imagesHaveOverview: false,
+    video: INSTACART_DEMO,
     story: [
       {
         id: "problem", title: "Problem statement", problem: true,
@@ -211,6 +214,7 @@ export const CASES: Case[] = [
     slug: "aria",
     title: "A.R.I.A — an AI Readiness Interview Assistant",
     shortName: "A.R.I.A",
+    orgLogo: ARIA_TITLE,
     org: "Hackathon project",
     role: "Lead Designer, Interaction & Researcher",
     timeline: "Apr 4 – 5 · 2-day hackathon",
@@ -284,7 +288,8 @@ export const CASES: Case[] = [
     slug: "mc-honeyhive",
     title: "MC HoneyHive — safer, more dignified shelter rooms for women",
     shortName: "MC HoneyHive",
-    org: "Design-a-thon project",
+    orgLogo: HONEYHIVE_TITLE,
+    org: "Design Frontiers",
     role: "Designer, Interaction & Researcher",
     timeline: "May 9 – 10 · 2-day design-a-thon",
     tools: ["Figma", "FigJam", "Spline"],
@@ -685,9 +690,9 @@ function CharacterSheet() {
     ["School", "UC San Diego"],
     ["Class", "Aspiring UX/UI & Product Designer"],
     ["Skill", "Figma Design"],
-    ["Accessory", "Silver jewelry"],
-    ["Armor", "Something comfy"],
-    ["Weapon", "My black tote bag"],
+    ["Hobby", "Making flowers out of art materials"],
+    ["Playing", "League of Legends — ARAM"],
+    ["Drinking", "Thai crème brûlée milk tea with boba"],
   ];
   return (
     <div className="rounded-2xl border border-border bg-card p-6 shadow-soft md:p-8">

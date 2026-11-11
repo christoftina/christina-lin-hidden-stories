@@ -123,6 +123,7 @@ function CaseStudyPage() {
     { href: "#overview", label: "Overview" },
     ...(study.story ?? []).map((section) => ({ href: `#${section.id}`, label: section.title })),
     ...sections.map((section, i) => ({ href: `#process-${i}`, label: section })),
+    ...(study.video ? [{ href: "#demo", label: "Demo video" }] : []),
   ];
   return (
     <div className="min-h-screen px-0">
@@ -164,6 +165,30 @@ function CaseStudyPage() {
           <div className="min-w-0">
         {(study.story ?? []).map((section) => <StoryBlock key={section.id} section={section} />)}
         {study.images && <CaseImageViewer images={study.images} hasOverview={study.imagesHaveOverview} />}
+        {study.video && (
+          <section id="demo" className="scroll-mt-40 py-3 lg:scroll-mt-24">
+            <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
+              <h2 className="font-display text-3xl md:text-4xl">Demo video</h2>
+              <figure className="mt-8 flex flex-col items-center">
+                <video
+                  src={study.video.src}
+                  poster={study.video.poster}
+                  width={study.video.width}
+                  height={study.video.height}
+                  controls
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label={study.video.caption}
+                  className="h-auto max-h-[80vh] w-auto max-w-full shadow-soft"
+                  style={{ borderRadius: "16.5% / 8%", aspectRatio: `${study.video.width} / ${study.video.height}` }}
+                />
+                <figcaption className="mt-4 text-sm text-muted-foreground">{study.video.caption}</figcaption>
+              </figure>
+            </div>
+          </section>
+        )}
         {study.placeholder && (
           <section className="py-3">
             <div className="rounded-2xl border border-dashed border-border bg-baby-soft p-8 md:p-12">
