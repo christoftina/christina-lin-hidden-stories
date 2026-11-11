@@ -70,18 +70,30 @@ function Boba() {
   );
 }
 
-function SpringRolls() {
+function Ramen() {
   return (
     <svg viewBox="0 0 64 64">
-      <path d="M8 46c10-14 30-22 48-20" stroke="#7ccf8a" strokeWidth="5" strokeLinecap="round" fill="none" />
-      <g transform="rotate(-18 32 32)">
-        <rect x="6" y="22" width="40" height="13" rx="6.5" fill="#f3dfb8" stroke="#e2c58f" strokeWidth="1.2" />
-        <path d="M12 25c5 2 10-1 14 1s9-1 14 1" stroke="#f28b6b" strokeWidth="2" fill="none" />
-        <path d="M12 31c6-2 11 1 16-1s8 1 12-1" stroke="#7ccf8a" strokeWidth="2" fill="none" />
-        <rect x="14" y="36" width="40" height="13" rx="6.5" fill="#f3dfb8" stroke="#e2c58f" strokeWidth="1.2" />
-        <path d="M20 39c5 2 10-1 14 1s9-1 14 1" stroke="#f28b6b" strokeWidth="2" fill="none" />
-        <path d="M20 45c6-2 11 1 16-1s8 1 12-1" stroke="#7ccf8a" strokeWidth="2" fill="none" />
-      </g>
+      <path d="M40 4 26 26M48 6 30 27" stroke="#c98a55" strokeWidth="3" strokeLinecap="round" />
+      <path d="M6 30h52c0 15-11 26-26 26S6 45 6 30z" fill="#e8506f" />
+      <path d="M12 41h40" stroke="#fff" strokeWidth="2.5" strokeDasharray="4 4" opacity="0.7" />
+      <ellipse cx="32" cy="30" rx="26" ry="6" fill="#f7d58c" />
+      <path d="M13 30c4-3 7 2 11-1s7 2 11-1 7 2 11-1 5 2 6 2" stroke="#f2b632" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <ellipse cx="22" cy="28.5" rx="6" ry="3.6" fill="#fff" />
+      <ellipse cx="22" cy="28.5" rx="2.8" ry="2" fill="#f2a531" />
+      <ellipse cx="41" cy="28.5" rx="5" ry="3" fill="#fff" />
+      <path d="M38 28.5a3 1.6 0 1 0 6 0" stroke="#f497b8" strokeWidth="1.4" fill="none" />
+      <path d="M31 25l3 5" stroke="#5fae4a" strokeWidth="2.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ChiliPepper() {
+  return (
+    <svg viewBox="0 0 64 64">
+      <path d="M44 14c-6 4-8 8-9 13-2 12-10 22-25 27 9 4 26 2 34-12 4-7 5-15 3-22z" fill="#e3342f" />
+      <path d="M40 22c-1 9-6 18-16 24" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" fill="none" opacity="0.5" />
+      <path d="M41 14c2-3 6-4 9-2 2 1 2 4 0 5-3 1-6 0-9-3z" fill="#5fae4a" />
+      <path d="M47 12c1-4 3-7 7-8" stroke="#4f9a3f" strokeWidth="3" strokeLinecap="round" fill="none" />
     </svg>
   );
 }
@@ -154,7 +166,8 @@ const STICKERS: Record<string, Sticker[]> = {
   ],
   "Food hunts": [
     { art: <Boba />, className: "-right-5 -top-9", rotate: 12, size: 64 },
-    { art: <SpringRolls />, className: "-bottom-8 -left-5", rotate: -8, size: 64 },
+    { art: <Ramen />, className: "-bottom-8 -left-5", rotate: -8, size: 64 },
+    { art: <ChiliPepper />, className: "-bottom-6 right-3", rotate: 14, size: 46 },
   ],
   "Crafts & scrolling": [
     { art: <PaperFlower petal="#f7a8c9" fold="#e27aa6" center="#ffd65a" />, className: "-left-5 -top-7", rotate: -12 },

@@ -826,7 +826,7 @@ function Index() {
             {[["#work", "Work"], ["#experience", "Experience"], ["#about", "About"]].map(([href, label]) => (
               <a key={href} href={href} className="relative hidden after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:text-foreground hover:after:scale-x-100 sm:inline">{label}</a>
             ))}
-            <a href={`mailto:${EMAIL}`} className="rounded-full bg-primary px-4 py-1.5 text-primary-foreground transition hover:opacity-90">Contact</a>
+            <a href="#contact" className="rounded-full bg-primary px-4 py-1.5 text-primary-foreground transition hover:opacity-90">Contact</a>
           </nav>
         </div>
       </header>
@@ -849,7 +849,7 @@ function Index() {
           </p>
           <div className="mt-10 flex flex-wrap gap-4 font-sans">
             <a href="#work" className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:-translate-y-0.5 hover:opacity-90">View my work</a>
-            <a href={`mailto:${EMAIL}`} className="rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:border-baby hover:bg-baby-soft">Say hello</a>
+            <a href="#contact" className="rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:border-baby hover:bg-baby-soft">Say hello</a>
           </div>
         </div>
         <div className="animate-rise [animation-delay:150ms]"><PeekingAvatar /></div>
@@ -931,12 +931,12 @@ function Index() {
         </div>
       </section>
 
-      <footer className="relative overflow-hidden border-t border-border bg-card/75 backdrop-blur-sm">
+      <footer id="contact" className="relative scroll-mt-16 overflow-hidden border-t border-border bg-card/75 backdrop-blur-sm">
         <div aria-hidden="true" className="animate-drift absolute -right-20 -top-20 size-72 rounded-full bg-baby/50 blur-3xl" />
         <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="font-display text-4xl md:text-6xl">Let's build something<br /><em className="not-italic text-primary-ink">thoughtful</em>.</h2>
-            <p className="mt-4 text-muted-foreground">Bonus points if we talk about it over boba.</p>
+            <h2 className="font-display text-4xl md:text-6xl">Let's work on something cool and <em className="not-italic text-primary-ink">impactful</em>!</h2>
+            <p className="mt-4 text-muted-foreground">Bonus points if we talk about it over malatang.</p>
           </div>
           <div className="flex flex-col gap-3 md:items-end">
             <a href={`mailto:${EMAIL}`} className="group inline-flex items-center gap-2 text-lg font-medium text-primary-ink">
@@ -950,7 +950,7 @@ function Index() {
             </div>
           </div>
         </div>
-        <p className="relative mx-auto max-w-6xl px-6 pb-8 font-sans text-xs text-muted-foreground">© 2026 Christina Lin · Designed with baby &amp; too much boba</p>
+        <p className="relative mx-auto max-w-6xl px-6 pb-8 font-sans text-xs text-muted-foreground">© 2026 Christina Lin · Designed with whimsy &amp; too much boba</p>
       </footer>
     </div>
   );

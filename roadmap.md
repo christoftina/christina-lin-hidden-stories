@@ -29,3 +29,4 @@
 - [x] MC HoneyHive research, sketch, IA, moodboard and 3D model images inside their story sections; PackD phone-only demo video; key-change images on white; avatar fun facts (Teemo, Elbaf arc); wordmark without shadow.
 - [x] Google Tree Stamps page (laptop-framed demo video, Christina's description); original sticker pop-ups on hobby flip cards; side work cards without write-up links (SanD Hacks keeps its Figma link and title image).
 - [x] MixBash (333clips) and MiD Lab title images, uniform side-work image size, MixBash Figma and MiD Lab website links; anime stickers: pirate flag, boxing gloves, fairy.\n
+- [x] Contact jumps to footer; footer copy (cool & impactful, malatang, whimsy); ramen + chili stickers; garden-shovel cursor (dirty over clickables).\n
