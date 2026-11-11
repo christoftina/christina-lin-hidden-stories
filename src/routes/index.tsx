@@ -46,6 +46,8 @@ export type Case = {
   imagesHaveOverview?: boolean;
   story?: StorySection[];
   prototype?: string;
+  prototypeLabel?: string;
+  tools?: string[];
 };
 
 export const CASES: Case[] = [
@@ -67,6 +69,7 @@ export const CASES: Case[] = [
       "Led the showcase presentation",
     ],
     images: PACKD_IMAGES,
+    tools: ["Figma", "FigJam"],
     prototype: "https://www.figma.com/proto/WOFoOSwVJpeSL3k9uMkjjO/ACM-SP26-Projects?page-id=70%3A12&node-id=138-41&viewport=-2721%2C-987%2C0.48&t=bKOpByEoYr97WXC9-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=138%3A41&show-proto-sidebar=1",
     story: [
       {
@@ -137,6 +140,10 @@ export const CASES: Case[] = [
     slug: "instacart",
     title: "Extending Instacart with a budget-aware meal planner",
     org: "COGS 127 · UC San Diego",
+    role: "Designer, Interaction & Researcher",
+    timeline: "Spring 2026",
+    tools: ["Figma", "FigJam"],
+    prototype: "https://www.figma.com/proto/Wd4vPqo0PTWwZmV4tvMGz8/Cogs-127---Instacart-Extension?node-id=507-2383&p=f&viewport=1501%2C-3313%2C0.35&t=Lpj6gnd9LW2hmA6Y-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=507%3A2383&page-id=0%3A1",
     tags: ["Meal planning", "Budgeting", "User research"],
     summary: "Young adults are having difficulty budgeting their grocery money for the week, let's make sure they don't overspend.",
     contributions: [],
@@ -182,10 +189,146 @@ export const CASES: Case[] = [
         id: "solution", title: "Solution",
         paragraphs: ["To address users' concerns around budgeting and meal planning, we designed a budget-aware meal planning feature for Instacart. The feature helps users build affordable, filling meals while tracking costs in real time, making grocery shopping more efficient, less stressful, and financially predictable."],
       },
+      {
+        id: "usability", title: "Usability findings & iterations",
+        items: [
+          { label: "Finding", text: "Participants responded positively to both budget widget concepts. They appreciated the detailed spending information in the larger widget while also valuing the smaller widget's reduced visual footprint." },
+          { label: "Solution", text: "We created a hybrid design that combines the visibility of the larger concept with a more compact layout, and moved the widget closer to the bottom of the screen to improve thumb reachability while browsing meals." },
+          { label: "Finding", text: "Participants preferred a simpler approach to dietary preferences and suggested adding cuisine-based filtering. Earlier designs used dedicated screens with large visual elements." },
+          { label: "Solution", text: "The final design condenses these selections into a compact filter menu on the browse meals page, creating a more streamlined experience without adding extra steps to the flow." },
+        ],
+      },
     ],
   },
   {
     n: "03",
+    slug: "aria",
+    title: "A.R.I.A — an AI Readiness Interview Assistant",
+    org: "Hackathon project",
+    role: "Lead Designer, Interaction & Researcher",
+    timeline: "Apr 4 – 5 · 2-day hackathon",
+    tools: ["Figma", "FigJam", "Claude API", "ElevenLabs"],
+    tags: ["AI", "Interaction design", "Hackathon"],
+    summary: "This technical interview agent elevates your pre-interview experience — a live, voice-driven AI interviewer that watches you code and gives feedback.",
+    contributions: [],
+    prototype: "https://youtu.be/lW5jPb4g7Nw",
+    prototypeLabel: "Watch the demo video",
+    story: [
+      { id: "problem", title: "Problem statement", problem: true, paragraphs: ["How could we create a user-friendly application that is unique to what is already in the current market?"] },
+      {
+        id: "goals", title: "Goals",
+        bullets: [
+          "Make a user-friendly space where, while coding, users have ample room to see both live feedback and their code",
+          "Showcase consolidated feedback",
+          "Create an option to see all verbal exchanges in text format",
+        ],
+      },
+      {
+        id: "user-research", title: "User research",
+        paragraphs: [
+          "Our team began with an idea for an application that helps people seeking jobs, which grew into an interview prep AI bot. To elevate it, we looked for apps that combine a bot that reads code live with immediate feedback. There was little out there as niche as our idea, which — given our limited time frame — we deemed sufficient research.",
+          "While there are plenty of interview preparation resources, we found it difficult to find one with technical aspects embedded in the software. As a team of four students with computer science experience, we felt a live technical interview bot would be extremely helpful.",
+        ],
+      },
+      {
+        id: "pain-points", title: "Pain points",
+        paragraphs: ["Interviewees struggled with:"],
+        bullets: ["Receiving quick feedback on their coding assignments", "Finding interview prep that tells them what they did well and what they did poorly"],
+      },
+      {
+        id: "solution", title: "Solution",
+        paragraphs: ["A technical interview bot that operates live with you. It can hear your audio and track your movements, which lets it give feedback at the end of the session — grading whether you explained your code correctly and even whether you had good posture — preparing you for real-world technical interviews."],
+      },
+      {
+        id: "what-it-does", title: "What it does",
+        paragraphs: [
+          "ARIA simulates a full technical coding interview with a voice-driven AI interviewer. You configure your session by question style (LeetCode, system design, debugging), difficulty, interviewer persona (from friendly coach to tough pressure) and time limit. Then you're dropped into a live interview: the AI introduces itself, gives you a problem, and listens as you explain your thinking — asking and answering clarifying questions and pushing back on incorrect assumptions as you code in the Monaco editor.",
+          "Once you finish, ARIA generates a detailed scorecard across six dimensions (correctness, algorithm choice, communication clarity, confidence and more), follows up with system design trade-off questions when relevant, and gives you a full transcript and an optimal-solution comparison. If enabled, it uses Google's MediaPipe and OpenCV to track gaze and presence for an extra layer of realism.",
+        ],
+      },
+      {
+        id: "how-we-built-it", title: "How we built it",
+        bullets: [
+          "Next.js 16 + React 19 for the full-stack framework",
+          "Claude API for real-time interviewer responses and post-session scoring",
+          "ElevenLabs TTS with three distinct voices, one per persona",
+          "Browser Web Speech API for in-browser speech-to-text",
+          "Monaco Editor for the in-browser code editor",
+          "MediaPipe for optional camera-based gaze tracking and presence scoring",
+          "Tailwind CSS v4, shadcn/ui and Allotment for the resizable split-panel layout",
+          "Framer Motion for animated scorecard reveals",
+        ],
+      },
+      {
+        id: "challenges", title: "Challenges",
+        paragraphs: [
+          "The hardest part was managing the async voice loop without race conditions. Speech-to-text fires interim and final transcript events continuously, and our pipeline (speech-to-text → Claude → ElevenLabs → playback) has multiple async stages that can collide. We used React refs instead of state for in-flight values and added guards so a single utterance is never processed twice.",
+          "Parsing structured scorecard data out of a streamed response was also messy — we needed reliable JSON extraction and had to handle malformed arrays and inconsistent field names across question types. Getting ElevenLabs latency low enough to feel conversational took tuning too: we proxied it server-side and cached audio on the client.",
+        ],
+      },
+      {
+        id: "notes", title: "Notes",
+        paragraphs: ["This was a hackathon project, and the design changed a lot over the weekend. My original design was created within the hackathon time frame and later morphed into a different design during the build. The bot ran locally on our computers, so there's no public prototype link — the demo video shows it in action."],
+      },
+    ],
+  },
+  {
+    n: "04",
+    slug: "mc-honeyhive",
+    title: "MC HoneyHive — safer, more dignified shelter rooms for women",
+    org: "Design-a-thon project",
+    role: "Designer, Interaction & Researcher",
+    timeline: "May 9 – 10 · 2-day design-a-thon",
+    tools: ["Figma", "FigJam", "Spline"],
+    tags: ["Spatial design", "Research", "Social impact"],
+    summary: "Dignify San Diego women's shelters with a sleek, innovative shelter room design that ensures comfort, privacy and — most importantly — safety.",
+    contributions: [],
+    prototype: "https://app.spline.design/file/e03baf11-4e01-486a-9349-bb50a30de2a3",
+    prototypeLabel: "Explore the 3D model in Spline",
+    story: [
+      { id: "problem", title: "Problem statement", problem: true, paragraphs: ["How might we redesign the homeless shelter experience in San Diego so women from diverse circumstances feel safe in a space that communicates dignity and provides access to necessary resources?"] },
+      { id: "goals", title: "Goals", bullets: ["Increase safety", "Ensure those with disabilities have equal access", "Improve morale and dignity"] },
+      {
+        id: "current-situation", title: "Current situation",
+        paragraphs: [
+          "Most homeless shelters in San Diego offer little to no privacy and low safety, and can only house a limited number of residents. Women seeking refuge have often already escaped harrowing situations, such as domestic abuse and sexual violence.",
+          "Overcrowded sleeping areas, limited supervision and the mixing of people with very different backgrounds and struggles can lead to theft, violence, harassment, or exposure to drug use and mental health crises. Residents often have little control over who they're placed near, and some shelters lack the staff or resources to respond to conflicts or emergencies.",
+          "Storage is another frequently reported issue: most shelters have a one-to-two bag limit. When losing a home is already devastating, having to give up belongings adds further distress.",
+        ],
+      },
+      {
+        id: "competitive-analysis", title: "Competitive analysis",
+        paragraphs: ["Looking through multiple women-centered shelters in the San Diego area, we found pros and cons for each."],
+        items: [
+          { label: "Rachel's Promise Center for Women and Children", text: "A women-only, family-centered shelter operated by Catholic Charities of San Diego, with about 50 beds for adult women (109 for single women and 101 for families overall). It operates 24/7 and offers trauma-informed care, case management, therapy and life-skills workshops, aiming to transition women into permanent housing." },
+          { label: "Father Joe's Bishop Maher Center", text: "Houses single adult women (18+, no families). With about 28 beds, space is more limited, but Father Joe's Village adds valuable resources like childcare, job training and meals to help residents secure income and housing." },
+          { label: "Haven Interim Housing", text: "More limited: housing requires a referral with no guarantee through the application. Up to 72 beds across its apartments, prioritizing short-term transitional housing for single women and families." },
+        ],
+      },
+      {
+        id: "user-research", title: "User research",
+        paragraphs: ["Time constraints shaped our research, as this was a weekend design-a-thon and the shelter we hoped to call was unavailable. Instead, we read reviews left by real visitors and residents of the shelters."],
+      },
+      { id: "pain-points", title: "Pain points", paragraphs: ["Residents struggled most with:"], bullets: ["Disability and accessibility features", "Lack of transparency and trust", "Staff treatment and dignity", "Cleanliness and basic working living conditions"] },
+      { id: "wishes", title: "Wishes and desires", paragraphs: ["Residents wanted to see:"], bullets: ["Support in case management", "Safer and cleaner environments", "A greater sense of dignity in their living environment", "More storage options", "Better accommodations for people with disabilities"] },
+      {
+        id: "solution", title: "Solution",
+        paragraphs: [
+          "A hive pod rooming system. Its unique shape lets pods stack to increase bed capacity with safety in mind, while each small room has a semi-see-through frosted folding acrylic door that balances privacy with safety. Each one-bed room also allows secure storage. For residents with disabilities, the first-floor rooms are designed specifically for accessibility.",
+          "Our two-tier layout was chosen for structural efficiency: stacking pods doubles resident capacity without doubling floor space, adjacent pods share walls to reduce material needs, and the uniform design enables offsite batch construction, lowering labor costs and build time.",
+        ],
+      },
+      {
+        id: "budget", title: "Budget feasibility",
+        paragraphs: [
+          "According to the San Diego Housing Commission's 2024 presentation, Rachel's Promise Center operates at roughly $5,034,981 a year for 210 beds — about $24,000 per bed per year, or around $2,000 per bed each month. Yet resident reviews and public records point to persistent issues with safety, discrimination and limited housing placement.",
+          "Trauma-informed, dignity-centered design increases service engagement and housing placement, making every dollar spent on case management more effective. The question isn't whether we can afford to build this — it's whether we can afford to keep spending $5 million a year on spaces that aren't working.",
+        ],
+      },
+    ],
+  },
+  {
+    n: "05",
     slug: "mixbash",
     placeholder: true,
     title: "Product design & marketing at a YC startup in Tokyo",
@@ -197,18 +340,20 @@ export const CASES: Case[] = [
     contributions: [],
   },
   {
-    n: "04",
+    n: "06",
     slug: "cses",
     placeholder: true,
     title: "Designing the SanD Hacks webpage",
     org: "CSES · UC San Diego",
     role: "Project Designer",
+    tools: ["Figma"],
     tags: ["Web design", "Student org"],
-    summary: "As a Project Designer at CSES, I helped design the webpage for SanD Hacks.",
+    summary: "A mockup hackathon page for UCSD's Computer Science and Engineering Society, designed in Figma with generated assets.",
     contributions: [],
+    prototype: "https://www.figma.com/proto/xspGjPS4nd64mlXlmT6s6P/my-draft---CSES-Website-2026-Redesign--Copy-?node-id=2062-457&viewport=173%2C-275%2C0.19&t=xbVozAXlS9e1s7NL-1&scaling=min-zoom&content-scaling=fixed&page-id=166%3A145",
   },
   {
-    n: "05",
+    n: "07",
     slug: "mid-lab",
     placeholder: true,
     title: "Qualitative research at the Mental Health in Design Lab",
@@ -239,7 +384,7 @@ const EXPERIENCE: Experience[] = [
   { role: "Product Design & Marketing Intern", org: "MixBash · YC startup, Tokyo", when: "Jul – Aug 2026", kind: "Design", slug: "mixbash" },
   { role: "Research Assistant", org: "Mental Health in Design (MiD) Lab, UCSD", when: "Spring 2026 – present", kind: "Research", current: true, note: "Qualitative analysis.", slug: "mid-lab" },
   { role: "UI/UX Designer & Researcher", org: "ACM Projects @ UCSD — PackD", when: "Spring 2026", kind: "Design", note: "Designed PackD, a group travel planning app.", slug: "packd" },
-  { role: "Project Designer", org: "CSES @ UCSD", when: "Student org", kind: "Design", note: "Helped design the SanD Hacks webpage.", slug: "cses" },
+  { role: "Project Designer", org: "CSES @ UCSD", when: "Student org", kind: "Design", note: "Designed a mockup SanD Hacks hackathon page.", slug: "cses" },
   { role: "Research Assistant", org: "Language Infant Learning (LiL) Lab, UCSD", when: "Fall 2025 – Winter 2026", kind: "Research" },
   { role: "Regents Scholar", org: "UC San Diego", when: "Honor", kind: "Leadership & honors" },
 ];
@@ -265,13 +410,23 @@ const NOW = [
 ];
 
 const HOBBIES: { icon: LucideIcon; title: string; back: string }[] = [
-  { icon: Gamepad2, title: "Gaming", back: "Always down for a co-op session — ask me what I'm playing right now." },
-  { icon: Tv, title: "Anime", back: "Usually mid-season on something. Recommendations are very welcome." },
-  { icon: CupSoda, title: "Boba runs", back: "The best study break is a boba run with friends." },
-  { icon: Soup, title: "Malatang", back: "Building the perfect malatang bowl is a design problem, too." },
+  { icon: Gamepad2, title: "Gaming", back: "Always down for a co-op session — currently jamming to the Clair Obscur: Expedition 33 soundtrack." },
+  { icon: Tv, title: "Anime & TV", back: "One Piece, Hunter x Hunter, Winx Club, Hello My Twenties, Bloodhounds." },
+  { icon: Soup, title: "Food hunts", back: "Craving wasabi chicken, mapo tofu, malatang, pho or pad kra pao — then boba with friends." },
+  { icon: CupSoda, title: "Crafts & scrolling", back: "Trying new crafts with friends, plus some ‘academic’ competitive analysis of TikToks and Reels." },
 ];
 
-const ROTATING = ["actually use things.", "plan trips together.", "budget their groceries.", "find their people."];
+const SIDE_PROJECTS = [
+  { title: "Describe My Drawing!", status: "Work in progress", text: "A Roblox game built to expand my AI skill set. I connected Roblox's MCP servers to Codex to lay down the physical spaces, used Claude to fix bugs, add widgets and build a sub-server players can teleport into, and drew the cartoony thumbnail in Procreate.", tools: ["Codex", "Claude", "Procreate"] },
+  { title: "Google Tree Stamps", status: "Concept", text: "A concept for Google Search: each time you search a new country, you unlock its national tree stamp to place anywhere on your search page — and Google plants one tree seed to help fight deforestation and forest fires.", tools: ["Figma"], link: "https://www.figma.com/proto/D5woPzQozfdCQa3wg0vx6n/Google-Tree-Stamps?node-id=2-5&p=f&viewport=1634%2C-1393%2C1.62&t=IJdaWMsu7tdGajhd-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A5&page-id=0%3A1" },
+];
+
+const SOCIALS = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/christina-lin2/" },
+  { label: "Instagram", href: "https://www.instagram.com/_ch.ristinaa/" },
+];
+
+const ROTATING = ["actually use things.", "plan trips together.", "budget their groceries.", "prep for interviews."];
 
 const EMAIL = "Christinalin252005@gmail.com";
 
@@ -532,6 +687,88 @@ function ExperienceList() {
   );
 }
 
+function StatBar({ label, value, max }: { label: string; value: number; max: number }) {
+  return (
+    <div>
+      <div className="flex justify-between font-sans text-xs">
+        <span className="label-ui text-muted-foreground">{label}</span>
+        <span className="tabular-nums">{value}/{max}</span>
+      </div>
+      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-secondary" role="progressbar" aria-label={label} aria-valuenow={value} aria-valuemin={0} aria-valuemax={max}>
+        <div className="h-full rounded-full bg-gradient-to-r from-lavender to-primary transition-[width] duration-700 ease-out" style={{ width: `${(value / max) * 100}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function CharacterSheet() {
+  const [mp, setMp] = useState(80);
+  const full = mp >= 100;
+  const rows: [string, string][] = [
+    ["Level", "Senior"],
+    ["School", "UC San Diego"],
+    ["Class", "Aspiring UX/UI & Product Designer"],
+    ["Skill", "Figma Design"],
+    ["Accessory", "Silver jewelry"],
+    ["Armor", "Something comfy"],
+    ["Weapon", "My black tote bag"],
+  ];
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-soft md:p-8">
+      <div className="flex items-center justify-between gap-4">
+        <p className="label-ui text-primary">Player stats</p>
+        <span className="font-sans text-xs text-muted-foreground">Christina · Lv. 4</span>
+      </div>
+      <div className="mt-5 space-y-4">
+        <StatBar label="HP" value={225} max={225} />
+        <StatBar label="Magic power" value={mp} max={100} />
+      </div>
+      <button
+        type="button"
+        onClick={() => setMp((v) => (v >= 100 ? 80 : Math.min(100, v + 10)))}
+        className="mt-4 inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 font-sans text-sm transition hover:border-lavender hover:bg-lavender-soft"
+      >
+        <CupSoda className="size-4 text-primary" />
+        {full ? "MP full — ready to design! (reset)" : "Drink boba (+10 MP)"}
+      </button>
+      <dl className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+        {rows.map(([k, v]) => (
+          <div key={k} className="flex justify-between gap-4 border-b border-border py-2.5">
+            <dt className="label-ui self-center text-muted-foreground">{k}</dt>
+            <dd className="text-right">{v}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-5 text-sm text-muted-foreground">
+        <span className="label-ui mr-2">Jamming to</span>
+        <a href="https://soundcloud.com/lorien26/clair-obscur-expedition-33-clair-obscur" target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Clair Obscur: Expedition 33 OST</a>
+      </p>
+    </div>
+  );
+}
+
+function SideProjects() {
+  return (
+    <div className="grid gap-6 md:grid-cols-2">
+      {SIDE_PROJECTS.map((p) => (
+        <article key={p.title} onPointerMove={trackSpotlight} className="spotlight flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-lavender md:p-8">
+          <span className="label-ui text-primary">{p.status}</span>
+          <h3 className="font-display mt-3 text-3xl">{p.title}</h3>
+          <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">{p.text}</p>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+            <Tags tags={p.tools} />
+            {p.link && (
+              <a href={p.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-primary hover:underline">
+                Try it <ArrowUpRight className="size-4" />
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 function HobbyCard({ icon: Icon, title, back }: { icon: LucideIcon; title: string; back: string }) {
   const [flipped, setFlipped] = useState(false);
   return (
@@ -624,6 +861,12 @@ function Index() {
         )}
       </section>
 
+      <section id="playground" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-12">
+        <p className="label-ui mb-3 text-primary">Just for fun</p>
+        <h2 className="font-display mb-10 text-4xl md:text-5xl">Playground</h2>
+        <SideProjects />
+      </section>
+
       <section id="experience" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-20">
         <p className="label-ui mb-3 text-primary">Where I've been</p>
         <h2 className="font-display mb-10 text-4xl md:text-5xl">Experience</h2>
@@ -639,7 +882,7 @@ function Index() {
               I'm a 4th-year transfer student and Regents Scholar at UC San Diego, majoring in Cognitive Science with a specialization in Design &amp; Interaction. I'm drawn to product design because it sits right where my two interests meet: understanding how people think, and making things that fit how they actually behave.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              My path runs through research labs, student design teams and a summer at a YC startup in Tokyo. Today I design with PMC, mentor ACM project teams and do qualitative analysis at the Mental Health in Design Lab.
+              My path runs through research labs, student design teams, hackathons and a summer at a YC startup in Tokyo. Today I design with PMC, mentor ACM project teams and do qualitative analysis at the Mental Health in Design Lab.
             </p>
           </div>
           <dl className="self-start rounded-2xl border border-border bg-card p-8 shadow-soft">
@@ -655,10 +898,13 @@ function Index() {
         <div className="mt-20">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <h3 className="font-display text-3xl md:text-4xl">Off the clock</h3>
-            <span className="font-sans text-sm text-muted-foreground">Hover or tap a card</span>
+            <span className="font-sans text-sm text-muted-foreground">Hover or tap a card · drink some boba</span>
           </div>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {HOBBIES.map((h) => <HobbyCard key={h.title} {...h} />)}
+          <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+            <CharacterSheet />
+            <div className="grid grid-cols-2 gap-4 self-start">
+              {HOBBIES.map((h) => <HobbyCard key={h.title} {...h} />)}
+            </div>
           </div>
         </div>
       </section>
@@ -670,10 +916,17 @@ function Index() {
             <h2 className="font-display text-4xl md:text-6xl">Let's build something<br /><em className="text-primary">thoughtful</em>.</h2>
             <p className="mt-4 text-muted-foreground">Bonus points if we talk about it over boba.</p>
           </div>
-          <a href={`mailto:${EMAIL}`} className="group inline-flex items-center gap-2 text-lg font-medium text-primary">
-            <span className="border-b border-transparent transition group-hover:border-primary">{EMAIL}</span>
-            <ArrowUpRight className="size-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
-          </a>
+          <div className="flex flex-col gap-3 md:items-end">
+            <a href={`mailto:${EMAIL}`} className="group inline-flex items-center gap-2 text-lg font-medium text-primary">
+              <span className="border-b border-transparent transition group-hover:border-primary">{EMAIL}</span>
+              <ArrowUpRight className="size-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+            </a>
+            <div className="flex gap-3 font-sans text-sm">
+              {SOCIALS.map((link) => (
+                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="rounded-full border border-border bg-card px-4 py-1.5 transition hover:border-lavender hover:text-primary">{link.label}</a>
+              ))}
+            </div>
+          </div>
         </div>
         <p className="relative mx-auto max-w-6xl px-6 pb-8 font-sans text-xs text-muted-foreground">© 2026 Christina Lin · Designed with lavender &amp; too much boba</p>
       </footer>

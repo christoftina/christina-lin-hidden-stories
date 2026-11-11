@@ -85,6 +85,7 @@ function CaseStudyPage() {
             <dl className="space-y-5 text-sm">
               {study.role && <div><dt className="label-ui text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{study.role}</dd></div>}
               {study.timeline && <div><dt className="label-ui text-muted-foreground">Timeline</dt><dd className="mt-1">{study.timeline}</dd></div>}
+              {study.tools && <div><dt className="label-ui text-muted-foreground">Tools</dt><dd className="mt-1">{study.tools.join(", ")}</dd></div>}
               <div className="flex flex-wrap gap-2">{study.tags.map((tag) => <span key={tag} className="rounded-full bg-accent px-3 py-1 font-sans text-xs text-accent-foreground">{tag}</span>)}</div>
             </dl>
             {study.contributions.length > 0 && <div>
@@ -94,7 +95,7 @@ function CaseStudyPage() {
           </div>
           {study.prototype && (
             <a href={study.prototype} target="_blank" rel="noreferrer" className="mt-8 inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium transition hover:bg-secondary">
-              Open the Figma prototype <ArrowUpRight className="size-4" />
+              {study.prototypeLabel ?? "Open the Figma prototype"} <ArrowUpRight className="size-4" />
             </a>
           )}
           {nav.length > 0 && (

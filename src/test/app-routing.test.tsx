@@ -8,7 +8,7 @@ import { CASES } from "@/routes/index";
 // Match routes without running loaders or rendering: loaders may need a server or
 // network the test run lacks, and jsdom never loads the stylesheets React waits on.
 describe("App routing", () => {
-  it.each(["packd", "instacart", "mid-lab", "cses", "mixbash"])("opens a dedicated case study page for %s", (slug) => {
+  it.each(["packd", "instacart", "aria", "mc-honeyhive", "mid-lab", "cses", "mixbash"])("opens a dedicated case study page for %s", (slug) => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
     const matches = router.matchRoutes(`/case-studies/${slug}`);
     expect(matches.at(-1)?.routeId).toBe("/case-studies/$slug");
@@ -54,11 +54,16 @@ describe("App routing", () => {
     }
   });
 
-  it("does not invent an Instacart role, timeline or personal contributions", () => {
+  it("uses Instacart's role and timeline from Christina's portfolio without inventing contributions", () => {
     const instacart = CASES.find((item) => item.slug === "instacart");
-    expect(instacart).toBeDefined();
-    expect(instacart?.role).toBeUndefined();
-    expect(instacart?.timeline).toBeUndefined();
+    expect(instacart?.role).toBe("Designer, Interaction & Researcher");
+    expect(instacart?.timeline).toBe("Spring 2026");
     expect(instacart?.contributions).toEqual([]);
+    expect(instacart?.prototype).toMatch(/^https:\/\/www\.figma\.com\/proto\//);
+  });
+
+  it("has unique slugs for every case study", () => {
+    const slugs = CASES.map((item) => item.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
   });
 });

@@ -8,9 +8,11 @@
 - [x] Confirm PackD's timeline: March 26–June 28, 2026.
 - [x] Add Extending Instacart with Christina's full story and theme-matched key change images.
 - [x] Confirm Instacart, MiD Lab and MixBash roles in work and experience.
-- [ ] Confirm Instacart timeline (awaiting Christina).
+- [x] Confirm Instacart timeline — Spring 2026 (03/26–06/20, from Christina's Readymag portfolio).
 - [x] Move card images above the left-side tags and remove case numbers.
 - [x] Replace invented placeholder copy for MiD Lab, CSES and MixBash with facts Christina supplied (roles, dates, SanD Hacks, YC/Tokyo).
 - [x] Switch to lavender palette and serif body type (Newsreader); add rotating hero headline, "now" marquee, filterable experience, hobby flip cards.
 - [ ] Write full MixBash, CSES (SanD Hacks) and MiD Lab case studies (awaiting Christina).
 - [ ] Confirm CSES dates.
+- [x] Import A.R.I.A, MC HoneyHive, SanD Hacks prototype, side projects and About details from Christina's Readymag portfolio.
+- [ ] Upload A.R.I.A, MC HoneyHive and SanD Hacks images as Lovable assets.
