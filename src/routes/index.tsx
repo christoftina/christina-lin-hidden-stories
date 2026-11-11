@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowUpRight, CupSoda, Gamepad2, Soup, Tv, type LucideIcon } from "lucide-react";
-import heroFront from "@/assets/hero-front.jpg";
-import heroReveal from "@/assets/hero-reveal.jpg";
+import { PIXEL_CHRISTINA } from "@/lib/pixel-christina";
 import { PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 import { INSTACART_IMAGES } from "@/lib/instacart-images";
 import acmLogo from "@/assets/acm-projects-team.png.asset.json";
@@ -484,48 +483,41 @@ function RotatingWords({ words }: { words: string[] }) {
   );
 }
 
-function RevealImage() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [p, setP] = useState({ x: 50, y: 50, on: false });
-  const move = (e: PointerEvent) => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    setP({ x: e.clientX - r.left, y: e.clientY - r.top, on: true });
-  };
-  const size = p.on ? 160 : 0;
-  const mask = `radial-gradient(circle ${size}px at ${p.x}px ${p.y}px, black 98%, transparent 100%)`;
+function PeekingAvatar() {
+  const [talking, setTalking] = useState(false);
+  useEffect(() => {
+    const show = window.setTimeout(() => setTalking(true), 1400);
+    const hide = window.setTimeout(() => setTalking(false), 6000);
+    return () => { window.clearTimeout(show); window.clearTimeout(hide); };
+  }, []);
+  const { src, width, height, handsBelowLedge } = PIXEL_CHRISTINA;
   return (
-    <div className="relative">
-      <div aria-hidden="true" className="animate-drift absolute -right-6 -top-6 size-40 rounded-full bg-lavender/60 blur-2xl" />
-      <div aria-hidden="true" className="animate-drift absolute -bottom-8 -left-8 size-48 rounded-full bg-accent blur-2xl [animation-delay:-6s]" />
-      <div
-        ref={ref}
-        onPointerMove={move}
-        onPointerDown={move}
-        onPointerLeave={() => setP((s) => ({ ...s, on: false }))}
-        className="relative aspect-[4/5] w-full touch-pan-y overflow-hidden rounded-2xl shadow-soft md:cursor-none"
+    <a
+      href="#work"
+      aria-label="Christina's pixel avatar peeking down at her case studies — jump to case studies"
+      onPointerEnter={() => setTalking(true)}
+      onPointerLeave={() => setTalking(false)}
+      onFocus={() => setTalking(true)}
+      onBlur={() => setTalking(false)}
+      className="group relative z-10 mx-auto mt-20 block w-fit [--px:7px] md:mt-0 focus-visible:outline-none md:mr-8 md:[--px:10px]"
+      style={{ marginBottom: `calc(-${handsBelowLedge} * var(--px))` }}
+    >
+      <span
+        aria-hidden="true"
+        className={`absolute -top-16 left-1/2 z-10 -translate-x-1/2 rounded-2xl border-2 border-primary bg-card px-4 py-3 font-sans text-sm font-medium whitespace-nowrap shadow-soft transition duration-300 ${talking ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"}`}
       >
-        <img src={heroFront} alt="A designer's desk" width={1200} height={1504} className="absolute inset-0 h-full w-full object-cover" />
-        <img
-          src={heroReveal}
-          alt="The same desk revealing wireframes, user flows and an affinity map"
-          width={1200}
-          height={1504}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ maskImage: mask, WebkitMaskImage: mask }}
-        />
-        {p.on && (
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute size-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-lavender/80"
-            style={{ left: p.x, top: p.y }}
-          />
-        )}
-        <span className="label-ui absolute bottom-4 left-4 rounded-full bg-card/90 px-3 py-1.5 text-card-foreground backdrop-blur">
-          {p.on ? "The process behind the polish" : "Hover or drag to see the process"}
-        </span>
-      </div>
-    </div>
+        psst — my case studies are down here ↓
+      </span>
+      <img
+        src={src}
+        alt=""
+        width={width}
+        height={height}
+        draggable={false}
+        className="block select-none transition-transform duration-300 group-hover:-translate-y-1"
+        style={{ width: `calc(${width} * var(--px))`, height: `calc(${height} * var(--px))`, imageRendering: "pixelated" }}
+      />
+    </a>
   );
 }
 
@@ -814,8 +806,8 @@ function Index() {
         </div>
       </header>
 
-      <section className="mx-auto grid max-w-6xl items-center gap-14 px-6 py-16 md:grid-cols-[1.2fr_1fr] md:py-24">
-        <div className="animate-rise">
+      <section className="mx-auto grid max-w-6xl items-end gap-10 px-6 pt-16 md:grid-cols-[1.2fr_1fr] md:gap-14 md:pt-24">
+        <div className="animate-rise md:pb-28">
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 font-sans text-sm text-muted-foreground">
             <span className="relative flex size-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lavender opacity-75" />
@@ -835,7 +827,7 @@ function Index() {
             <a href={`mailto:${EMAIL}`} className="rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:border-lavender hover:bg-lavender-soft">Say hello</a>
           </div>
         </div>
-        <div className="animate-rise [animation-delay:150ms]"><RevealImage /></div>
+        <div className="animate-rise [animation-delay:150ms]"><PeekingAvatar /></div>
       </section>
 
       <NowMarquee />
