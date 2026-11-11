@@ -49,8 +49,9 @@
   --font-display: "Instrument Serif", serif;
   --font-body: "Newsreader", Georgia, serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --color-lavender: var(--lavender);
-  --color-lavender-soft: var(--lavender-soft);
+  --font-wordmark: "Bagel Fat One", "Instrument Serif", serif;
+  --color-blush: var(--blush);
+  --color-blush-soft: var(--blush-soft);
   --shadow-soft: var(--soft-shadow);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -69,29 +70,29 @@
 
 :root {
   --radius: 0.75rem;
-  /* Lavender palette */
-  --background: oklch(0.985 0.007 305);
-  --foreground: oklch(0.21 0.025 295);
+  /* Light pink palette */
+  --background: oklch(0.988 0.006 355);
+  --foreground: oklch(0.22 0.02 350);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.025 295);
+  --card-foreground: oklch(0.22 0.02 350);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.025 295);
-  --primary: oklch(0.5 0.15 296);
-  --primary-foreground: oklch(0.99 0.004 300);
-  --secondary: oklch(0.962 0.016 303);
-  --secondary-foreground: oklch(0.21 0.025 295);
-  --muted: oklch(0.962 0.012 303);
-  --muted-foreground: oklch(0.47 0.03 292);
-  --accent: oklch(0.93 0.045 302);
-  --accent-foreground: oklch(0.38 0.13 296);
-  --lavender: oklch(0.82 0.085 302);
-  --lavender-soft: oklch(0.95 0.03 303);
+  --popover-foreground: oklch(0.22 0.02 350);
+  --primary: oklch(0.56 0.16 358);
+  --primary-foreground: oklch(0.995 0.003 355);
+  --secondary: oklch(0.965 0.014 355);
+  --secondary-foreground: oklch(0.22 0.02 350);
+  --muted: oklch(0.965 0.012 355);
+  --muted-foreground: oklch(0.47 0.025 350);
+  --accent: oklch(0.94 0.04 355);
+  --accent-foreground: oklch(0.43 0.14 358);
+  --blush: oklch(0.85 0.08 355);
+  --blush-soft: oklch(0.965 0.022 355);
   --destructive: oklch(0.6 0.2 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.905 0.02 303);
-  --input: oklch(0.905 0.02 303);
-  --ring: oklch(0.5 0.15 296);
-  --soft-shadow: 0 1px 2px oklch(0.3 0.05 295 / 5%), 0 14px 36px -14px oklch(0.35 0.1 295 / 22%);
+  --border: oklch(0.91 0.02 355);
+  --input: oklch(0.91 0.02 355);
+  --ring: oklch(0.56 0.16 358);
+  --soft-shadow: 0 1px 2px oklch(0.3 0.04 355 / 5%), 0 14px 36px -14px oklch(0.4 0.08 355 / 20%);
 }
 
 .dark {
@@ -145,7 +146,7 @@
   html { scroll-behavior: smooth; }
   body { font-family: var(--font-body); font-size: 1.0625rem; -webkit-font-smoothing: antialiased; }
   .font-display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
-  ::selection { background: var(--lavender); color: var(--foreground); }
+  ::selection { background: var(--blush); color: var(--foreground); }
 }
 
 @keyframes rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
@@ -166,12 +167,15 @@
 @keyframes drift { 0%, 100% { transform: translate(0, 0) scale(1) } 50% { transform: translate(18px, -14px) scale(1.06) } }
 @utility animate-drift { animation: drift 12s ease-in-out infinite; }
 
+/* Chunky, bubbly wordmark for the site name, with a soft pink offset shadow */
+@utility font-wordmark { font-family: var(--font-wordmark); font-weight: 400; letter-spacing: 0.01em; color: oklch(0.25 0.015 350); text-shadow: 2px 2px 0 oklch(0.88 0.07 355); }
+
 /* Small UI labels in a clean sans for contrast with the serif body */
 @utility label-ui { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* Lavender spotlight that follows the cursor on cards (set --mx / --my from JS) */
 @utility spotlight {
-  background-image: radial-gradient(420px circle at var(--mx, -999px) var(--my, -999px), color-mix(in oklch, var(--lavender) 28%, transparent), transparent 60%);
+  background-image: radial-gradient(420px circle at var(--mx, -999px) var(--my, -999px), color-mix(in oklch, var(--blush) 28%, transparent), transparent 60%);
 }
 
 /* Flip cards */

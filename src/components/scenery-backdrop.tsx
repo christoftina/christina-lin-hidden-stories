@@ -1,7 +1,7 @@
 /**
  * Cartoon sky-and-meadow scenery that sits fixed behind every page:
  * a blue gradient sky with a soft sun and slowly drifting clouds,
- * and rolling green hills with grass tufts and little lavender flowers along the bottom.
+ * and rolling green hills with grass tufts and little blush flowers along the bottom.
  * Purely decorative (aria-hidden, no pointer events).
  */
 
@@ -21,7 +21,7 @@ function Cloud() {
           d="M36 92c-18 0-30-12-30-27s13-27 30-26c4-18 20-31 39-31 15 0 28 8 35 20 6-4 13-6 21-6 21 0 38 16 39 36 17 1 31 15 31 32 0 1 0 2-1 2z"
           fill="#ffffff"
         />
-        <path d="M18 84c8 6 16 8 24 8h158c4-4 8-10 9-16-8 9-20 12-33 12H40c-8 0-15-1-22-4z" fill="#e6e4f5" />
+        <path d="M18 84c8 6 16 8 24 8h158c4-4 8-10 9-16-8 9-20 12-33 12H40c-8 0-15-1-22-4z" fill="#f4e6ee" />
       </g>
     </svg>
   );
@@ -81,15 +81,15 @@ export function SceneryBackdrop() {
           <Tuft key={x} x={x} y={i % 2 ? 196 : 204} />
         ))}
         {[
-          [120, 186, "#b79ff0"],
+          [120, 186, "#f4a7c3"],
           [270, 198, "#ffffff"],
-          [415, 190, "#9f86e6"],
-          [610, 200, "#c7b4f5"],
+          [415, 190, "#ec8fb2"],
+          [610, 200, "#f8c8d9"],
           [760, 188, "#ffffff"],
-          [905, 197, "#b79ff0"],
-          [1060, 186, "#9f86e6"],
+          [905, 197, "#f4a7c3"],
+          [1060, 186, "#ec8fb2"],
           [1210, 199, "#ffffff"],
-          [1360, 190, "#c7b4f5"],
+          [1360, 190, "#f8c8d9"],
         ].map(([x, y, c]) => (
           <Flower key={`${x}`} x={x as number} y={y as number} color={c as string} />
         ))}

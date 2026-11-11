@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowUpRight, CupSoda, Gamepad2, Soup, Tv, type LucideIcon } from "lucide-react";
 import { PIXEL_CHRISTINA } from "@/lib/pixel-christina";
+import { INSTACART_TITLE } from "@/lib/title-images";
 import { PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 import { INSTACART_IMAGES } from "@/lib/instacart-images";
 import acmLogo from "@/assets/acm-projects-team.png.asset.json";
@@ -143,6 +144,7 @@ export const CASES: Case[] = [
     slug: "instacart",
     title: "Extending Instacart with a budget-aware meal planner",
     shortName: "Budgeting Instacart",
+    orgLogo: INSTACART_TITLE,
     org: "COGS 127 · UC San Diego",
     role: "UI/UX Designer & Researcher",
     timeline: "Spring 2026",
@@ -489,7 +491,7 @@ function RotatingWords({ words }: { words: string[] }) {
       <span className="sr-only">{words.join(" ")}</span>
       <em aria-hidden="true" className="text-primary">
         {text}
-        <span className="animate-caret ml-0.5 inline-block h-[0.8em] w-[3px] translate-y-[0.08em] rounded-full bg-lavender" />
+        <span className="animate-caret ml-0.5 inline-block h-[0.8em] w-[3px] translate-y-[0.08em] rounded-full bg-blush" />
       </em>
     </span>
   );
@@ -555,10 +557,10 @@ function Tags({ tags }: { tags: string[] }) {
 
 function TitleImage({ data }: { data: Case }) {
   if (data.orgLogo) {
-    return <img src={data.orgLogo.src} alt={data.orgLogo.alt} width={585} height={367} className="h-auto w-full max-w-[240px] rounded-xl" />;
+    return <img src={data.orgLogo.src} alt={data.orgLogo.alt} className="max-h-full w-auto max-w-full rounded-xl object-contain" />;
   }
   return (
-    <div className="flex aspect-[585/367] w-full max-w-[240px] items-center justify-center rounded-xl border border-border bg-gradient-to-br from-lavender-soft to-accent p-4 text-center transition-colors group-hover:to-lavender/60">
+    <div className="flex aspect-[585/367] h-full max-w-full items-center justify-center rounded-xl border border-border bg-gradient-to-br from-blush-soft to-accent p-4 text-center transition-colors group-hover:to-blush/60">
       <span className="font-display text-3xl leading-tight text-accent-foreground">{data.shortName ?? data.org}</span>
     </div>
   );
@@ -571,24 +573,19 @@ function CaseCard({ data }: { data: Case }) {
       params={{ slug: data.slug }}
       aria-label={`View ${data.title} case study`}
       onPointerMove={trackSpotlight}
-      className="spotlight group block overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:border-lavender focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="spotlight group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:border-blush focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <article className="grid gap-6 p-6 md:grid-cols-[0.55fr_1.45fr] md:gap-12 md:p-10">
-        <div className="space-y-5">
-          <TitleImage data={data} />
-          <Tags tags={data.tags} />
-        </div>
-        <div>
-          <p className="text-sm text-muted-foreground">{data.org}</p>
-          <h3 className="font-display mt-2 text-3xl leading-tight transition-colors group-hover:text-primary md:text-4xl">{data.title}</h3>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{data.summary}</p>
-          {(data.role || data.timeline) && (
-            <dl className="mt-6 flex flex-wrap gap-x-12 gap-y-4 border-y border-border py-4 text-sm">
-              {data.role && <div><dt className="label-ui text-muted-foreground">My role</dt><dd className="mt-1 font-medium">{data.role}</dd></div>}
-              {data.timeline && <div><dt className="label-ui text-muted-foreground">Timeline</dt><dd className="mt-1 font-medium">{data.timeline}</dd></div>}
-            </dl>
-          )}
-          <span className="mt-6 inline-flex items-center gap-2 font-sans text-sm font-medium text-primary">
+      <div className="flex h-44 items-center justify-center border-b border-border bg-blush-soft/50 p-5 md:h-48">
+        <TitleImage data={data} />
+      </div>
+      <article className="flex flex-1 flex-col p-6 md:p-7">
+        <p className="text-sm text-muted-foreground">{data.org}{data.timeline ? ` · ${data.timeline}` : ""}</p>
+        <h3 className="font-display mt-1.5 text-2xl leading-tight transition-colors group-hover:text-primary md:text-[1.7rem]">{data.title}</h3>
+        <p className="mt-3 line-clamp-3 leading-relaxed text-muted-foreground">{data.summary}</p>
+        <div className="mb-6 mt-4"><Tags tags={data.tags.slice(0, 3)} /></div>
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+          {data.role && <span className="font-sans text-xs text-muted-foreground">{data.role}</span>}
+          <span className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-primary">
             View case study <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
           </span>
         </div>
@@ -604,10 +601,10 @@ function ComingSoonCard({ data }: { data: Case }) {
       params={{ slug: data.slug }}
       aria-label={`Preview ${data.title}`}
       onPointerMove={trackSpotlight}
-      className="spotlight group flex h-full flex-col rounded-2xl border border-dashed border-border bg-card p-6 transition duration-300 hover:-translate-y-1 hover:border-lavender hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="spotlight group flex h-full flex-col rounded-2xl border border-dashed border-border bg-card p-6 transition duration-300 hover:-translate-y-1 hover:border-blush hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <span className="label-ui inline-flex items-center gap-2 text-primary">
-        <span className="size-1.5 rounded-full bg-lavender" /> {data.kind ?? "More soon"}
+        <span className="size-1.5 rounded-full bg-blush" /> {data.kind ?? "More soon"}
       </span>
       <h3 className="font-display mt-4 text-2xl leading-tight transition-colors group-hover:text-primary">{data.title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{data.role} · {data.org}</p>
@@ -635,7 +632,7 @@ function ExperienceList() {
               type="button"
               aria-pressed={active}
               onClick={() => setFilter(f)}
-              className={`rounded-full border px-4 py-2 font-sans text-sm transition ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:border-lavender hover:bg-lavender-soft"}`}
+              className={`rounded-full border px-4 py-2 font-sans text-sm transition ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:border-blush hover:bg-blush-soft"}`}
             >
               {f} <span className={active ? "opacity-80" : "text-muted-foreground"}>{count}</span>
             </button>
@@ -652,7 +649,7 @@ function ExperienceList() {
                   {e.role}
                   {e.current && (
                     <span className="relative flex size-2" title="Current">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lavender opacity-75" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blush opacity-75" />
                       <span className="relative inline-flex size-2 rounded-full bg-primary" />
                     </span>
                   )}
@@ -666,7 +663,7 @@ function ExperienceList() {
               </span>
             </>
           );
-          const cls = "group relative grid grid-cols-1 gap-1 py-6 pl-5 transition-colors md:grid-cols-[1.3fr_1fr_12rem] md:items-center md:gap-6 hover:bg-lavender-soft/60";
+          const cls = "group relative grid grid-cols-1 gap-1 py-6 pl-5 transition-colors md:grid-cols-[1.3fr_1fr_12rem] md:items-center md:gap-6 hover:bg-blush-soft/60";
           return (
             <li key={`${e.role}-${e.org}`} className="border-b border-border">
               {e.slug ? (
@@ -720,7 +717,7 @@ function SideProjects() {
   return (
     <div className="grid gap-6 md:grid-cols-2">
       {SIDE_PROJECTS.map((p) => (
-        <article key={p.title} onPointerMove={trackSpotlight} className="spotlight flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-lavender md:p-8">
+        <article key={p.title} onPointerMove={trackSpotlight} className="spotlight flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-blush md:p-8">
           <span className="label-ui text-primary">{p.status}</span>
           <h3 className="font-display mt-3 text-3xl">{p.title}</h3>
           <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">{p.text}</p>
@@ -773,7 +770,7 @@ function Index() {
     <div className="min-h-screen overflow-x-clip">
       <header className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#" className="font-display text-2xl">Christina Lin<span className="text-primary">.</span></a>
+          <a href="#" className="font-wordmark text-3xl leading-none md:text-4xl">Christina Lin</a>
           <nav className="flex items-center gap-5 font-sans text-sm text-muted-foreground md:gap-8">
             {[["#work", "Work"], ["#experience", "Experience"], ["#about", "About"]].map(([href, label]) => (
               <a key={href} href={href} className="relative hidden after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:text-foreground hover:after:scale-x-100 sm:inline">{label}</a>
@@ -787,7 +784,7 @@ function Index() {
         <div className="animate-rise md:pb-28">
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 font-sans text-sm text-muted-foreground">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lavender opacity-75" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blush opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-primary" />
             </span>
             Open to 2027 product design roles
@@ -801,14 +798,14 @@ function Index() {
           </p>
           <div className="mt-10 flex flex-wrap gap-4 font-sans">
             <a href="#work" className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:-translate-y-0.5 hover:opacity-90">View my work</a>
-            <a href={`mailto:${EMAIL}`} className="rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:border-lavender hover:bg-lavender-soft">Say hello</a>
+            <a href={`mailto:${EMAIL}`} className="rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:border-blush hover:bg-blush-soft">Say hello</a>
           </div>
         </div>
         <div className="animate-rise [animation-delay:150ms]"><PeekingAvatar /></div>
       </section>
 
       <section id="work" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-20">
-        <div className="rounded-3xl border border-border bg-lavender-soft px-6 pb-8 pt-10 shadow-soft md:px-10 md:pb-12 md:pt-14">
+        <div className="rounded-3xl border border-border bg-blush-soft px-6 pb-8 pt-10 shadow-soft md:px-10 md:pb-12 md:pt-14">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="label-ui mb-3 text-primary">Selected work</p>
@@ -816,7 +813,7 @@ function Index() {
           </div>
           <span className="font-sans text-sm text-muted-foreground">{featured.length} case studies</span>
         </div>
-        <div className="space-y-10">
+        <div className="grid gap-6 md:grid-cols-2">
           {featured.map((data) => <CaseCard key={data.slug} data={data} />)}
         </div>
         {upcoming.length > 0 && (
@@ -859,7 +856,7 @@ function Index() {
               My path runs through research labs, student design teams, hackathons and a summer in Tokyo at MixBash, a YC startup. Today I design with PMC, mentor ACM project teams and do qualitative analysis at the Mental Health in Design Lab.
             </p>
           </div>
-          <dl className="self-start rounded-2xl bg-lavender-soft px-6 py-2 md:px-8">
+          <dl className="self-start rounded-2xl bg-blush-soft px-6 py-2 md:px-8">
             {FACTS.map(([k, v]) => (
               <div key={k} className="flex justify-between gap-6 border-b border-border py-4 last:border-0">
                 <dt className="label-ui self-center text-muted-foreground">{k}</dt>
@@ -884,7 +881,7 @@ function Index() {
       </section>
 
       <footer className="relative overflow-hidden border-t border-border bg-card/75 backdrop-blur-sm">
-        <div aria-hidden="true" className="animate-drift absolute -right-20 -top-20 size-72 rounded-full bg-lavender/50 blur-3xl" />
+        <div aria-hidden="true" className="animate-drift absolute -right-20 -top-20 size-72 rounded-full bg-blush/50 blur-3xl" />
         <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20 md:flex-row md:items-end md:justify-between">
           <div>
             <h2 className="font-display text-4xl md:text-6xl">Let's build something<br /><em className="text-primary">thoughtful</em>.</h2>
@@ -897,12 +894,12 @@ function Index() {
             </a>
             <div className="flex gap-3 font-sans text-sm">
               {SOCIALS.map((link) => (
-                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="rounded-full border border-border bg-card px-4 py-1.5 transition hover:border-lavender hover:text-primary">{link.label}</a>
+                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="rounded-full border border-border bg-card px-4 py-1.5 transition hover:border-blush hover:text-primary">{link.label}</a>
               ))}
             </div>
           </div>
         </div>
-        <p className="relative mx-auto max-w-6xl px-6 pb-8 font-sans text-xs text-muted-foreground">© 2026 Christina Lin · Designed with lavender &amp; too much boba</p>
+        <p className="relative mx-auto max-w-6xl px-6 pb-8 font-sans text-xs text-muted-foreground">© 2026 Christina Lin · Designed with blush &amp; too much boba</p>
       </footer>
     </div>
   );

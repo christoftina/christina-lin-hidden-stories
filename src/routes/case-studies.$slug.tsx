@@ -70,7 +70,7 @@ function CaseStudyPage() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-          <Link to="/" className="font-display text-2xl">Christina Lin<span className="text-primary">.</span></Link>
+          <Link to="/" className="font-wordmark text-2xl leading-none md:text-3xl">Christina Lin</Link>
           <Button variant="ghost" asChild><Link to="/" hash="work"><ArrowLeft /> All work</Link></Button>
         </div>
       </header>
@@ -110,7 +110,7 @@ function CaseStudyPage() {
         {study.images && <CaseImageViewer images={study.images} hasOverview={study.imagesHaveOverview} />}
         {study.placeholder && (
           <section className="mx-auto max-w-6xl px-6">
-            <div className="rounded-2xl border border-dashed border-border bg-lavender-soft p-8 md:p-12">
+            <div className="rounded-2xl border border-dashed border-border bg-blush-soft p-8 md:p-12">
               <h2 className="font-display text-3xl md:text-4xl">The full story is on its way.</h2>
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">I'm still writing this one up. In the meantime, I'm happy to walk you through the work directly.</p>
               <a href="mailto:Christinalin252005@gmail.com" className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-sans text-sm font-medium text-primary-foreground transition hover:opacity-90">Ask me about it <ArrowUpRight className="size-4" /></a>
