@@ -154,6 +154,9 @@
 @keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
 @utility animate-marquee { animation: marquee 40s linear infinite; }
 
+@keyframes hop { 0% { transform: translateY(0) } 35% { transform: translateY(-14px) } 65% { transform: translateY(0) } 80% { transform: translateY(-4px) } 100% { transform: translateY(0) } }
+@utility animate-hop { animation: hop 0.45s ease-out; }
+
 @keyframes caret { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
 @utility animate-caret { animation: caret 1s steps(1) infinite; }
 
@@ -180,7 +183,7 @@
 @media (hover: hover) { .flip:hover .flip-inner { transform: rotateY(180deg); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee, .animate-drift { animation: none; }
+  .animate-marquee, .animate-drift, .animate-hop { animation: none; }
   .animate-cloud { animation-play-state: paused; }
   .flip-inner { transition: none; }
   html { scroll-behavior: auto; }

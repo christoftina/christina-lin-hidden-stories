@@ -410,13 +410,14 @@ const FACTS = [
   ["Honors", "Regents Scholar"],
 ];
 
-const NOW = [
-  "UX/UI Designer at PMC",
-  "Design Mentor for ACM Projects",
-  "Research Assistant at the MiD Lab",
-  "Project Designer at CSES",
-  "Regents Scholar",
-  "Previously: Product Design & Marketing Intern at MixBash (YC) in Tokyo",
+const AVATAR_LINES = [
+  "psst — my case studies are down here ↓",
+  "Right now I'm a UX/UI Designer at PMC ✦",
+  "This fall I'm mentoring ACM project teams on design",
+  "I do qualitative research at the MiD Lab",
+  "I design for CSES — like the SanD Hacks page",
+  "Summer '26: designing & marketing at MixBash in Tokyo",
+  "Off the clock? Probably getting boba or malatang",
 ];
 
 const HOBBIES: { icon: LucideIcon; title: string; back: string }[] = [
@@ -495,40 +496,44 @@ function RotatingWords({ words }: { words: string[] }) {
 }
 
 function PeekingAvatar() {
-  const [talking, setTalking] = useState(false);
-  useEffect(() => {
-    const show = window.setTimeout(() => setTalking(true), 1400);
-    const hide = window.setTimeout(() => setTalking(false), 6000);
-    return () => { window.clearTimeout(show); window.clearTimeout(hide); };
-  }, []);
+  const [line, setLine] = useState(0);
+  const [bounce, setBounce] = useState(0);
   const { src, width, height, handsBelowLedge } = PIXEL_CHRISTINA;
+  const next = () => {
+    setLine((i) => (i + 1) % AVATAR_LINES.length);
+    setBounce((n) => n + 1);
+  };
   return (
-    <a
-      href="#work"
-      aria-label="Christina's pixel avatar peeking down at her case studies — jump to case studies"
-      onPointerEnter={() => setTalking(true)}
-      onPointerLeave={() => setTalking(false)}
-      onFocus={() => setTalking(true)}
-      onBlur={() => setTalking(false)}
-      className="group relative z-10 mx-auto mt-20 block w-fit [--px:7px] md:mt-0 focus-visible:outline-none md:mr-8 md:[--px:10px]"
+    <div
+      className="relative z-10 mx-auto mt-24 w-fit [--px:7px] md:mr-8 md:mt-0 md:[--px:10px]"
       style={{ marginBottom: `calc(-${handsBelowLedge} * var(--px))` }}
     >
-      <span
-        aria-hidden="true"
-        className={`absolute -top-16 left-1/2 z-10 -translate-x-1/2 rounded-2xl border-2 border-primary bg-card px-4 py-3 font-sans text-sm font-medium whitespace-nowrap shadow-soft transition duration-300 ${talking ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"}`}
+      <p
+        aria-live="polite"
+        className="absolute -top-20 left-1/2 z-10 w-max max-w-[18rem] -translate-x-1/2 rounded-2xl border-2 border-primary bg-card px-4 py-2.5 text-center font-sans text-sm font-medium shadow-soft md:max-w-[22rem]"
       >
-        psst — my case studies are down here ↓
-      </span>
-      <img
-        src={src}
-        alt=""
-        width={width}
-        height={height}
-        draggable={false}
-        className="block select-none transition-transform duration-300 group-hover:-translate-y-1"
-        style={{ width: `calc(${width} * var(--px))`, height: `calc(${height} * var(--px))`, imageRendering: "pixelated" }}
-      />
-    </a>
+        <span key={line} className="animate-rise block [animation-duration:0.35s]">{AVATAR_LINES[line]}</span>
+        <span className="mt-1 block text-[0.7rem] font-normal text-muted-foreground">click me · {line + 1}/{AVATAR_LINES.length}</span>
+        <span aria-hidden="true" className="absolute -bottom-[9px] left-1/2 size-4 -translate-x-1/2 rotate-45 border-b-2 border-r-2 border-primary bg-card" />
+      </p>
+      <button
+        type="button"
+        onClick={next}
+        aria-label="Christina's pixel avatar. Click to hear what she's up to."
+        className="group block cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <img
+          key={bounce}
+          src={src}
+          alt=""
+          width={width}
+          height={height}
+          draggable={false}
+          className={`block select-none transition-transform duration-300 group-hover:-translate-y-1 ${bounce ? "animate-hop" : ""}`}
+          style={{ width: `calc(${width} * var(--px))`, height: `calc(${height} * var(--px))`, imageRendering: "pixelated" }}
+        />
+      </button>
+    </div>
   );
 }
 
@@ -612,22 +617,6 @@ function ComingSoonCard({ data }: { data: Case }) {
         <ArrowUpRight className="size-4 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
       </div>
     </Link>
-  );
-}
-
-function NowMarquee() {
-  const items = [...NOW, ...NOW];
-  return (
-    <div className="group overflow-hidden border-y border-border bg-lavender-soft py-9 md:py-11" aria-label="What I'm doing now">
-      <ul className="animate-marquee flex w-max gap-10 group-hover:[animation-play-state:paused]">
-        {items.map((item, i) => (
-          <li key={`${item}-${i}`} aria-hidden={i >= NOW.length} className="flex items-center gap-10 whitespace-nowrap font-display text-xl italic text-accent-foreground md:text-2xl">
-            {item}
-            <span className="text-lavender">✦</span>
-          </li>
-        ))}
-      </ul>
-    </div>
   );
 }
 
@@ -818,9 +807,8 @@ function Index() {
         <div className="animate-rise [animation-delay:150ms]"><PeekingAvatar /></div>
       </section>
 
-      <NowMarquee />
-
-      <section id="work" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-20">
+      <section id="work" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-20">
+        <div className="rounded-3xl border border-border bg-lavender-soft px-6 pb-8 pt-10 shadow-soft md:px-10 md:pb-12 md:pt-14">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="label-ui mb-3 text-primary">Selected work</p>
@@ -842,6 +830,7 @@ function Index() {
             </div>
           </>
         )}
+        </div>
       </section>
 
       <section id="playground" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-12">
@@ -850,14 +839,16 @@ function Index() {
         <SideProjects />
       </section>
 
-      <section id="experience" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-20">
-        <p className="label-ui mb-3 text-primary">Where I've been</p>
-        <h2 className="font-display mb-10 text-4xl md:text-5xl">Experience</h2>
-        <ExperienceList />
+      <section id="experience" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-12">
+        <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
+          <p className="label-ui mb-3 text-primary">Where I've been</p>
+          <h2 className="font-display mb-10 text-4xl md:text-5xl">Experience</h2>
+          <ExperienceList />
+        </div>
       </section>
 
-      <section id="about" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-20">
-        <div className="grid gap-12 md:grid-cols-2">
+      <section id="about" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-12">
+        <div className="grid gap-10 rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10 md:grid-cols-2 md:gap-12">
           <div>
             <p className="label-ui mb-3 text-primary">A little about me</p>
             <h2 className="font-display text-4xl md:text-5xl">About</h2>
@@ -868,7 +859,7 @@ function Index() {
               My path runs through research labs, student design teams, hackathons and a summer in Tokyo at MixBash, a YC startup. Today I design with PMC, mentor ACM project teams and do qualitative analysis at the Mental Health in Design Lab.
             </p>
           </div>
-          <dl className="self-start rounded-2xl border border-border bg-card p-8 shadow-soft">
+          <dl className="self-start rounded-2xl bg-lavender-soft px-6 py-2 md:px-8">
             {FACTS.map(([k, v]) => (
               <div key={k} className="flex justify-between gap-6 border-b border-border py-4 last:border-0">
                 <dt className="label-ui self-center text-muted-foreground">{k}</dt>
@@ -878,7 +869,7 @@ function Index() {
           </dl>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-16">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <h3 className="font-display text-3xl md:text-4xl">Off the clock</h3>
             <span className="font-sans text-sm text-muted-foreground">Hover or tap a card</span>
