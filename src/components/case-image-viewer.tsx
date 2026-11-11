@@ -11,18 +11,18 @@ export function CaseImageViewer({ images, hasOverview = true }: { images: CaseIm
   return (
     <>
       {hasOverview && images[0] && (
-        <figure className="mx-auto max-w-6xl px-6 py-3">
+        <figure className="py-3">
           <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
             <ImageButton image={images[0]} onClick={() => setSelected(0)} priority />
           </div>
         </figure>
       )}
-      <div className="mx-auto max-w-6xl px-6">
+      <div>
         {sections.map((section, i) => (
-          <section id={`process-${i}`} key={section} className="scroll-mt-24 py-3">
+          <section id={`process-${i}`} key={section} className="scroll-mt-40 py-3 lg:scroll-mt-24">
             <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
             <div className="mb-8 flex items-baseline gap-4">
-              <span className="text-sm text-primary">{String(i + 1).padStart(2, "0")}</span>
+              <span className="text-sm text-primary-ink">{String(i + 1).padStart(2, "0")}</span>
               <h2 className="font-display text-3xl md:text-4xl">{section}</h2>
             </div>
             <div className="space-y-10">
@@ -31,8 +31,8 @@ export function CaseImageViewer({ images, hasOverview = true }: { images: CaseIm
                   <ImageButton image={image} onClick={() => setSelected(index)} />
                   <figcaption className="mt-3 text-sm text-muted-foreground">{image.caption}</figcaption>
                   {image.notes && (
-                    <div className="mt-5 rounded-2xl bg-blush-soft p-5 md:p-7">
-                      <p className="label-ui text-primary">My part</p>
+                    <div className="mt-5 rounded-2xl bg-baby-soft p-5 md:p-7">
+                      <p className="label-ui text-primary-ink">My part</p>
                       {image.notes.map((note) => <p key={note} className="mt-3 max-w-3xl text-lg leading-relaxed text-foreground/80">{note}</p>)}
                     </div>
                   )}

@@ -8,7 +8,7 @@
  * Design system definition.
  *
  * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
+ * classes (e.g. --color-primary -> bg-primary, text-primary-ink).
  *
  * The :root and .dark blocks define the actual color values using oklch.
  * All colors MUST use oklch format.
@@ -46,12 +46,13 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-ring-offset-background: var(--background);
-  --font-display: "Instrument Serif", serif;
+  --font-display: "Jua", "Instrument Serif", sans-serif;
+  --color-primary-ink: var(--primary-ink);
   --font-body: "Newsreader", Georgia, serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-wordmark: "Cherry Bomb One", "Instrument Serif", serif;
-  --color-blush: var(--blush);
-  --color-blush-soft: var(--blush-soft);
+  --font-wordmark: "Chewy", "Instrument Serif", serif;
+  --color-baby: var(--baby);
+  --color-baby-soft: var(--baby-soft);
   --shadow-soft: var(--soft-shadow);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
@@ -70,29 +71,30 @@
 
 :root {
   --radius: 0.75rem;
-  /* Light pink palette */
-  --background: oklch(0.988 0.006 355);
-  --foreground: oklch(0.22 0.02 350);
+  /* Baby blue palette with an orchid (#CE72B2) accent */
+  --background: oklch(0.985 0.008 235);
+  --foreground: oklch(0.25 0.03 255);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.02 350);
+  --card-foreground: oklch(0.25 0.03 255);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.02 350);
-  --primary: oklch(0.56 0.16 358);
-  --primary-foreground: oklch(0.995 0.003 355);
-  --secondary: oklch(0.965 0.014 355);
-  --secondary-foreground: oklch(0.22 0.02 350);
-  --muted: oklch(0.965 0.012 355);
-  --muted-foreground: oklch(0.47 0.025 350);
-  --accent: oklch(0.94 0.04 355);
-  --accent-foreground: oklch(0.43 0.14 358);
-  --blush: oklch(0.85 0.08 355);
-  --blush-soft: oklch(0.965 0.022 355);
+  --popover-foreground: oklch(0.25 0.03 255);
+  --primary: #ce72b2;                 /* accent: buttons, dots, active states */
+  --primary-ink: #a44c8b;             /* darker accent for small text on white (AA contrast) */
+  --primary-foreground: #ffffff;
+  --secondary: oklch(0.965 0.02 235);
+  --secondary-foreground: oklch(0.25 0.03 255);
+  --muted: oklch(0.965 0.015 235);
+  --muted-foreground: oklch(0.46 0.03 250);
+  --accent: oklch(0.93 0.045 235);     /* baby blue pills */
+  --accent-foreground: oklch(0.38 0.09 245);
+  --baby: oklch(0.84 0.075 235);       /* baby blue */
+  --baby-soft: oklch(0.96 0.025 235);
   --destructive: oklch(0.6 0.2 27);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.91 0.02 355);
-  --input: oklch(0.91 0.02 355);
-  --ring: oklch(0.56 0.16 358);
-  --soft-shadow: 0 1px 2px oklch(0.3 0.04 355 / 5%), 0 14px 36px -14px oklch(0.4 0.08 355 / 20%);
+  --border: oklch(0.9 0.025 235);
+  --input: oklch(0.9 0.025 235);
+  --ring: #ce72b2;
+  --soft-shadow: 0 1px 2px oklch(0.3 0.04 245 / 6%), 0 14px 36px -14px oklch(0.4 0.08 245 / 22%);
 }
 
 .dark {
@@ -145,8 +147,8 @@
 @layer base {
   html { scroll-behavior: smooth; }
   body { font-family: var(--font-body); font-size: 1.0625rem; -webkit-font-smoothing: antialiased; }
-  .font-display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
-  ::selection { background: var(--blush); color: var(--foreground); }
+  .font-display { font-family: var(--font-display); font-weight: 400; letter-spacing: 0; }
+  ::selection { background: var(--baby); color: var(--foreground); }
 }
 
 @keyframes rise { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: none } }
@@ -168,14 +170,14 @@
 @utility animate-drift { animation: drift 12s ease-in-out infinite; }
 
 /* Chunky, bubbly wordmark for the site name, with a soft pink offset shadow */
-@utility font-wordmark { font-family: var(--font-wordmark); font-weight: 400; letter-spacing: 0.01em; color: oklch(0.25 0.015 350); text-shadow: 2px 2px 0 oklch(0.88 0.07 355); }
+@utility font-wordmark { font-family: var(--font-wordmark); font-weight: 400; letter-spacing: 0.01em; color: oklch(0.27 0.04 255); text-shadow: 2px 2px 0 oklch(0.84 0.075 235); }
 
 /* Small UI labels in a clean sans for contrast with the serif body */
 @utility label-ui { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* Lavender spotlight that follows the cursor on cards (set --mx / --my from JS) */
 @utility spotlight {
-  background-image: radial-gradient(420px circle at var(--mx, -999px) var(--my, -999px), color-mix(in oklch, var(--blush) 28%, transparent), transparent 60%);
+  background-image: radial-gradient(420px circle at var(--mx, -999px) var(--my, -999px), color-mix(in oklch, var(--baby) 28%, transparent), transparent 60%);
 }
 
 /* Flip cards */

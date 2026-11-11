@@ -1,12 +1,13 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, ArrowUp, ArrowUpRight } from "lucide-react";
 import { CASES, type StorySection } from "@/routes/index";
 import { Button } from "@/components/ui/button";
 import { CaseImageViewer } from "@/components/case-image-viewer";
 
 function StoryBlock({ section }: { section: StorySection }) {
   return (
-    <section id={section.id} className="scroll-mt-24 py-3">
+    <section id={section.id} className="scroll-mt-40 py-3 lg:scroll-mt-24">
       <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
       <h2 className="font-display text-3xl md:text-4xl">{section.title}</h2>
       {section.problem && (
@@ -27,8 +28,8 @@ function StoryBlock({ section }: { section: StorySection }) {
       {section.items && (
         <div className="mt-6 max-w-3xl space-y-4">
           {section.items.map((item) => (
-            <div key={item.text} className="rounded-2xl bg-blush-soft p-5">
-              <p className="text-xs font-medium tracking-wide text-primary uppercase">{item.label}</p>
+            <div key={item.text} className="rounded-2xl bg-baby-soft p-5">
+              <p className="text-xs font-medium tracking-wide text-primary-ink uppercase">{item.label}</p>
               <p className="mt-2 leading-relaxed text-muted-foreground">{item.text}</p>
             </div>
           ))}
@@ -36,6 +37,60 @@ function StoryBlock({ section }: { section: StorySection }) {
       )}
       </div>
     </section>
+  );
+}
+
+type NavItem = { href: string; label: string };
+
+/** Sticky "Jump to" menu: a side list on large screens, a scrollable chip row on small ones. Highlights the section in view. */
+function CaseNav({ items }: { items: NavItem[] }) {
+  const [active, setActive] = useState(items[0]?.href ?? "");
+  const key = items.map((item) => item.href).join("|");
+  useEffect(() => {
+    const targets = items
+      .map((item) => document.getElementById(item.href.slice(1)))
+      .filter((el): el is HTMLElement => el !== null);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActive(`#${visible[0].target.id}`);
+      },
+      { rootMargin: "-25% 0px -65% 0px" },
+    );
+    targets.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
+  useEffect(() => {
+    document.querySelector(`[data-nav-chip="${active}"]`)?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [active]);
+  if (items.length === 0) return null;
+  return (
+    <nav aria-label="Jump to a section" className="sticky top-[4.75rem] z-10 py-3 lg:top-24 lg:self-start">
+      <div className="rounded-2xl border border-border bg-card/95 p-2 shadow-soft backdrop-blur lg:p-4">
+        <p className="label-ui hidden px-2 pb-2 text-primary-ink lg:block">Jump to</p>
+        <ol className="flex gap-1.5 overflow-x-auto [scrollbar-width:none] lg:flex-col lg:gap-0.5 lg:overflow-visible">
+          {items.map((item) => {
+            const on = item.href === active;
+            return (
+              <li key={item.href} className="shrink-0">
+                <a
+                  href={item.href}
+                  data-nav-chip={item.href}
+                  aria-current={on ? "location" : undefined}
+                  className={`block whitespace-nowrap rounded-full px-3 py-1.5 font-sans text-sm transition lg:whitespace-normal lg:rounded-lg lg:border-l-2 lg:py-2 ${on ? "bg-primary text-primary-foreground lg:border-primary lg:bg-baby-soft lg:text-foreground" : "text-muted-foreground hover:bg-baby-soft hover:text-foreground lg:border-transparent"}`}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+        <a href="#overview" className="mt-2 hidden items-center gap-1.5 border-t border-border px-2 pt-3 font-sans text-xs text-muted-foreground hover:text-primary-ink lg:flex">
+          <ArrowUp className="size-3.5" /> Back to top
+        </a>
+      </div>
+    </nav>
   );
 }
 
@@ -64,7 +119,8 @@ function CaseStudyPage() {
   const index = CASES.findIndex((item) => item.slug === study.slug);
   const next = CASES[(index + 1) % CASES.length];
   const sections = [...new Set((study.images ?? []).slice(study.imagesHaveOverview === false ? 0 : 1).map((image) => image.section))];
-  const nav = [
+  const nav: NavItem[] = [
+    { href: "#overview", label: "Overview" },
     ...(study.story ?? []).map((section) => ({ href: `#${section.id}`, label: section.title })),
     ...sections.map((section, i) => ({ href: `#process-${i}`, label: section })),
   ];
@@ -77,9 +133,9 @@ function CaseStudyPage() {
         </div>
       </header>
       <main>
-        <section className="mx-auto max-w-6xl px-6 pb-3 pt-10 md:pt-14">
+        <section id="overview" className="mx-auto max-w-6xl scroll-mt-28 px-6 pb-3 pt-10 md:pt-14">
           <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
-          <p className="label-ui mb-6 text-primary">Case study · {study.org}</p>
+          <p className="label-ui mb-6 text-primary-ink">Case study · {study.org}</p>
           {study.orgLogo && <img src={study.orgLogo.src} alt={study.orgLogo.alt} width={585} height={367} className="mb-6 h-auto w-48 rounded-lg" />}
           {study.placeholder && <p className="label-ui mb-6 inline-flex items-center gap-2 rounded-full bg-accent px-3 py-1.5 text-accent-foreground"><span className="size-1.5 rounded-full bg-primary" /> Full case study in progress</p>}
           <h1 className="font-display max-w-4xl text-4xl leading-tight md:text-6xl">{study.title}</h1>
@@ -101,30 +157,28 @@ function CaseStudyPage() {
               {study.prototypeLabel ?? "Open the Figma prototype"} <ArrowUpRight className="size-4" />
             </a>
           )}
-          {nav.length > 0 && (
-            <nav aria-label="Case study sections" className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-6 text-sm text-muted-foreground">
-              {nav.map((item) => <a key={item.href} href={item.href} className="hover:text-primary">{item.label}</a>)}
-            </nav>
-          )}
           </div>
         </section>
-        <div className="mx-auto max-w-6xl px-6">
-          {(study.story ?? []).map((section) => <StoryBlock key={section.id} section={section} />)}
-        </div>
+        <div className="mx-auto max-w-6xl px-6 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-6">
+          <CaseNav items={nav} />
+          <div className="min-w-0">
+        {(study.story ?? []).map((section) => <StoryBlock key={section.id} section={section} />)}
         {study.images && <CaseImageViewer images={study.images} hasOverview={study.imagesHaveOverview} />}
         {study.placeholder && (
-          <section className="mx-auto max-w-6xl px-6">
-            <div className="rounded-2xl border border-dashed border-border bg-blush-soft p-8 md:p-12">
+          <section className="py-3">
+            <div className="rounded-2xl border border-dashed border-border bg-baby-soft p-8 md:p-12">
               <h2 className="font-display text-3xl md:text-4xl">The full story is on its way.</h2>
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">I'm still writing this one up. In the meantime, I'm happy to walk you through the work directly.</p>
               <a href="mailto:Christinalin252005@gmail.com" className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 font-sans text-sm font-medium text-primary-foreground transition hover:opacity-90">Ask me about it <ArrowUpRight className="size-4" /></a>
             </div>
           </section>
         )}
+          </div>
+        </div>
       </main>
       <footer className="mx-auto my-12 flex max-w-6xl flex-col gap-8 rounded-3xl border border-border bg-card p-6 shadow-soft sm:flex-row sm:items-center sm:justify-between md:p-8">
         <Button variant="outline" asChild><Link to="/" hash="work"><ArrowLeft /> Back to all work</Link></Button>
-        {next && <Link to="/case-studies/$slug" params={{ slug: next.slug }} className="flex items-center gap-4 text-primary"><span><span className="block text-xs text-muted-foreground">Next case study</span><span className="font-display text-2xl">{next.title}</span></span><ArrowUpRight className="size-5 shrink-0" /></Link>}
+        {next && <Link to="/case-studies/$slug" params={{ slug: next.slug }} className="flex items-center gap-4 text-primary-ink"><span><span className="block text-xs text-muted-foreground">Next case study</span><span className="font-display text-2xl">{next.title}</span></span><ArrowUpRight className="size-5 shrink-0" /></Link>}
       </footer>
     </div>
   );

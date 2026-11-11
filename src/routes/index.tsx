@@ -489,9 +489,9 @@ function RotatingWords({ words }: { words: string[] }) {
   return (
     <span className="block h-[1.15em] whitespace-nowrap">
       <span className="sr-only">{words.join(" ")}</span>
-      <em aria-hidden="true" className="text-primary">
+      <em aria-hidden="true" className="not-italic text-primary-ink">
         {text}
-        <span className="animate-caret ml-0.5 inline-block h-[0.8em] w-[3px] translate-y-[0.08em] rounded-full bg-blush" />
+        <span className="animate-caret ml-0.5 inline-block h-[0.8em] w-[3px] translate-y-[0.08em] rounded-full bg-baby" />
       </em>
     </span>
   );
@@ -560,7 +560,7 @@ function TitleImage({ data }: { data: Case }) {
     return <img src={data.orgLogo.src} alt={data.orgLogo.alt} className="max-h-full w-auto max-w-full rounded-xl object-contain" />;
   }
   return (
-    <div className="flex aspect-[585/367] h-full max-w-full items-center justify-center rounded-xl border border-border bg-gradient-to-br from-blush-soft to-accent p-4 text-center transition-colors group-hover:to-blush/60">
+    <div className="flex aspect-[585/367] h-full max-w-full items-center justify-center rounded-xl border border-border bg-gradient-to-br from-baby-soft to-accent p-4 text-center transition-colors group-hover:to-baby/60">
       <span className="font-display text-3xl leading-tight text-accent-foreground">{data.shortName ?? data.org}</span>
     </div>
   );
@@ -573,19 +573,19 @@ function CaseCard({ data }: { data: Case }) {
       params={{ slug: data.slug }}
       aria-label={`View ${data.title} case study`}
       onPointerMove={trackSpotlight}
-      className="spotlight group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:border-blush focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="spotlight group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:border-baby focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <div className="flex h-44 items-center justify-center border-b border-border bg-blush-soft/50 p-5 md:h-48">
+      <div className="flex h-44 items-center justify-center border-b border-border bg-baby-soft/50 p-5 md:h-48">
         <TitleImage data={data} />
       </div>
       <article className="flex flex-1 flex-col p-6 md:p-7">
         <p className="text-sm text-muted-foreground">{data.org}{data.timeline ? ` · ${data.timeline}` : ""}</p>
-        <h3 className="font-display mt-1.5 text-2xl leading-tight transition-colors group-hover:text-primary md:text-[1.7rem]">{data.title}</h3>
+        <h3 className="font-display mt-1.5 text-2xl leading-tight transition-colors group-hover:text-primary-ink md:text-[1.7rem]">{data.title}</h3>
         <p className="mt-3 line-clamp-3 leading-relaxed text-muted-foreground">{data.summary}</p>
         <div className="mb-6 mt-4"><Tags tags={data.tags.slice(0, 3)} /></div>
         <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
           {data.role && <span className="font-sans text-xs text-muted-foreground">{data.role}</span>}
-          <span className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-primary">
+          <span className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-primary-ink">
             View case study <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
           </span>
         </div>
@@ -601,17 +601,17 @@ function ComingSoonCard({ data }: { data: Case }) {
       params={{ slug: data.slug }}
       aria-label={`Preview ${data.title}`}
       onPointerMove={trackSpotlight}
-      className="spotlight group flex h-full flex-col rounded-2xl border border-dashed border-border bg-card p-6 transition duration-300 hover:-translate-y-1 hover:border-blush hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="spotlight group flex h-full flex-col rounded-2xl border border-dashed border-border bg-card p-6 transition duration-300 hover:-translate-y-1 hover:border-baby hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <span className="label-ui inline-flex items-center gap-2 text-primary">
-        <span className="size-1.5 rounded-full bg-blush" /> {data.kind ?? "More soon"}
+      <span className="label-ui inline-flex items-center gap-2 text-primary-ink">
+        <span className="size-1.5 rounded-full bg-baby" /> {data.kind ?? "More soon"}
       </span>
-      <h3 className="font-display mt-4 text-2xl leading-tight transition-colors group-hover:text-primary">{data.title}</h3>
+      <h3 className="font-display mt-4 text-2xl leading-tight transition-colors group-hover:text-primary-ink">{data.title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{data.role} · {data.org}</p>
       <p className="mt-4 flex-1 leading-relaxed text-muted-foreground">{data.summary}</p>
       <div className="mt-6 flex items-center justify-between gap-4">
         <span className="font-sans text-xs text-muted-foreground">{data.timeline ?? ""}</span>
-        <ArrowUpRight className="size-4 text-primary transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+        <ArrowUpRight className="size-4 text-primary-ink transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
       </div>
     </Link>
   );
@@ -632,7 +632,7 @@ function ExperienceList() {
               type="button"
               aria-pressed={active}
               onClick={() => setFilter(f)}
-              className={`rounded-full border px-4 py-2 font-sans text-sm transition ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:border-blush hover:bg-blush-soft"}`}
+              className={`rounded-full border px-4 py-2 font-sans text-sm transition ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card hover:border-baby hover:bg-baby-soft"}`}
             >
               {f} <span className={active ? "opacity-80" : "text-muted-foreground"}>{count}</span>
             </button>
@@ -649,7 +649,7 @@ function ExperienceList() {
                   {e.role}
                   {e.current && (
                     <span className="relative flex size-2" title="Current">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blush opacity-75" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-baby opacity-75" />
                       <span className="relative inline-flex size-2 rounded-full bg-primary" />
                     </span>
                   )}
@@ -659,11 +659,11 @@ function ExperienceList() {
               <span className="text-muted-foreground">{e.org}</span>
               <span className="flex items-center gap-2 font-sans text-sm text-muted-foreground md:justify-end">
                 {e.when}
-                {e.slug && <ArrowUpRight className="size-4 text-primary transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />}
+                {e.slug && <ArrowUpRight className="size-4 text-primary-ink transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />}
               </span>
             </>
           );
-          const cls = "group relative grid grid-cols-1 gap-1 py-6 pl-5 transition-colors md:grid-cols-[1.3fr_1fr_12rem] md:items-center md:gap-6 hover:bg-blush-soft/60";
+          const cls = "group relative grid grid-cols-1 gap-1 py-6 pl-5 transition-colors md:grid-cols-[1.3fr_1fr_12rem] md:items-center md:gap-6 hover:bg-baby-soft/60";
           return (
             <li key={`${e.role}-${e.org}`} className="border-b border-border">
               {e.slug ? (
@@ -692,7 +692,7 @@ function CharacterSheet() {
   return (
     <div className="rounded-2xl border border-border bg-card p-6 shadow-soft md:p-8">
       <div className="flex items-center justify-between gap-4">
-        <p className="label-ui text-primary">Player stats</p>
+        <p className="label-ui text-primary-ink">Player stats</p>
         <span className="font-sans text-xs text-muted-foreground">Christina · Lv. 4</span>
       </div>
       <dl className="mt-4 divide-y divide-border">
@@ -705,7 +705,7 @@ function CharacterSheet() {
         <div className="grid grid-cols-[6.5rem_1fr] items-center gap-4 py-3">
           <dt className="label-ui text-muted-foreground">Jamming to</dt>
           <dd>
-            <a href="https://soundcloud.com/lorien26/clair-obscur-expedition-33-clair-obscur" target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Clair Obscur: Expedition 33 OST</a>
+            <a href="https://soundcloud.com/lorien26/clair-obscur-expedition-33-clair-obscur" target="_blank" rel="noreferrer" className="text-primary-ink underline-offset-4 hover:underline">Clair Obscur: Expedition 33 OST</a>
           </dd>
         </div>
       </dl>
@@ -717,14 +717,14 @@ function SideProjects() {
   return (
     <div className="grid gap-6 md:grid-cols-2">
       {SIDE_PROJECTS.map((p) => (
-        <article key={p.title} onPointerMove={trackSpotlight} className="spotlight flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-blush md:p-8">
-          <span className="label-ui text-primary">{p.status}</span>
+        <article key={p.title} onPointerMove={trackSpotlight} className="spotlight flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-baby md:p-8">
+          <span className="label-ui text-primary-ink">{p.status}</span>
           <h3 className="font-display mt-3 text-3xl">{p.title}</h3>
           <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">{p.text}</p>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
             <Tags tags={p.tools} />
             {p.link && (
-              <a href={p.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-primary hover:underline">
+              <a href={p.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-primary-ink hover:underline">
                 Try it <ArrowUpRight className="size-4" />
               </a>
             )}
@@ -784,12 +784,12 @@ function Index() {
         <div className="animate-rise md:pb-28">
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 font-sans text-sm text-muted-foreground">
             <span className="relative flex size-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blush opacity-75" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-baby opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-primary" />
             </span>
             Open to 2027 product design roles
           </p>
-          <h1 className="font-display text-[clamp(2.25rem,9.4vw,4rem)] leading-[1.08]">
+          <h1 className="font-display text-[clamp(1.9rem,8vw,3.5rem)] leading-[1.08]">
             Designing for how people
             <RotatingWords words={ROTATING} />
           </h1>
@@ -798,17 +798,17 @@ function Index() {
           </p>
           <div className="mt-10 flex flex-wrap gap-4 font-sans">
             <a href="#work" className="rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition hover:-translate-y-0.5 hover:opacity-90">View my work</a>
-            <a href={`mailto:${EMAIL}`} className="rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:border-blush hover:bg-blush-soft">Say hello</a>
+            <a href={`mailto:${EMAIL}`} className="rounded-full border border-border bg-card px-6 py-3 text-sm font-medium transition hover:-translate-y-0.5 hover:border-baby hover:bg-baby-soft">Say hello</a>
           </div>
         </div>
         <div className="animate-rise [animation-delay:150ms]"><PeekingAvatar /></div>
       </section>
 
       <section id="work" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-20">
-        <div className="rounded-3xl border border-border bg-blush-soft px-6 pb-8 pt-10 shadow-soft md:px-10 md:pb-12 md:pt-14">
+        <div className="rounded-3xl border border-border bg-baby-soft px-6 pb-8 pt-10 shadow-soft md:px-10 md:pb-12 md:pt-14">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="label-ui mb-3 text-primary">Selected work</p>
+            <p className="label-ui mb-3 text-primary-ink">Selected work</p>
             <h2 className="font-display text-4xl md:text-5xl">Case studies</h2>
           </div>
           <span className="font-sans text-sm text-muted-foreground">{featured.length} case studies</span>
@@ -831,14 +831,14 @@ function Index() {
       </section>
 
       <section id="playground" className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-12">
-        <p className="label-ui mb-3 text-primary">Just for fun</p>
+        <p className="label-ui mb-3 text-primary-ink">Just for fun</p>
         <h2 className="font-display mb-10 text-4xl md:text-5xl">Playground</h2>
         <SideProjects />
       </section>
 
       <section id="experience" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-12">
         <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
-          <p className="label-ui mb-3 text-primary">Where I've been</p>
+          <p className="label-ui mb-3 text-primary-ink">Where I've been</p>
           <h2 className="font-display mb-10 text-4xl md:text-5xl">Experience</h2>
           <ExperienceList />
         </div>
@@ -847,7 +847,7 @@ function Index() {
       <section id="about" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-12">
         <div className="grid gap-10 rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10 md:grid-cols-2 md:gap-12">
           <div>
-            <p className="label-ui mb-3 text-primary">A little about me</p>
+            <p className="label-ui mb-3 text-primary-ink">A little about me</p>
             <h2 className="font-display text-4xl md:text-5xl">About</h2>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
               I'm a 4th-year transfer student and Regents Scholar at UC San Diego, majoring in Cognitive Science with a specialization in Design &amp; Interaction. I'm drawn to product design because it sits right where my two interests meet: understanding how people think, and making things that fit how they actually behave.
@@ -856,7 +856,7 @@ function Index() {
               My path runs through research labs, student design teams, hackathons and a summer in Tokyo at MixBash, a YC startup. Today I design with PMC, mentor one of ACM Projects' design teams and do qualitative analysis at the Mental Health in Design Lab.
             </p>
           </div>
-          <dl className="self-start rounded-2xl bg-blush-soft px-6 py-2 md:px-8">
+          <dl className="self-start rounded-2xl bg-baby-soft px-6 py-2 md:px-8">
             {FACTS.map(([k, v]) => (
               <div key={k} className="flex justify-between gap-6 border-b border-border py-4 last:border-0">
                 <dt className="label-ui self-center text-muted-foreground">{k}</dt>
@@ -881,25 +881,25 @@ function Index() {
       </section>
 
       <footer className="relative overflow-hidden border-t border-border bg-card/75 backdrop-blur-sm">
-        <div aria-hidden="true" className="animate-drift absolute -right-20 -top-20 size-72 rounded-full bg-blush/50 blur-3xl" />
+        <div aria-hidden="true" className="animate-drift absolute -right-20 -top-20 size-72 rounded-full bg-baby/50 blur-3xl" />
         <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20 md:flex-row md:items-end md:justify-between">
           <div>
-            <h2 className="font-display text-4xl md:text-6xl">Let's build something<br /><em className="text-primary">thoughtful</em>.</h2>
+            <h2 className="font-display text-4xl md:text-6xl">Let's build something<br /><em className="not-italic text-primary-ink">thoughtful</em>.</h2>
             <p className="mt-4 text-muted-foreground">Bonus points if we talk about it over boba.</p>
           </div>
           <div className="flex flex-col gap-3 md:items-end">
-            <a href={`mailto:${EMAIL}`} className="group inline-flex items-center gap-2 text-lg font-medium text-primary">
+            <a href={`mailto:${EMAIL}`} className="group inline-flex items-center gap-2 text-lg font-medium text-primary-ink">
               <span className="border-b border-transparent transition group-hover:border-primary">{EMAIL}</span>
               <ArrowUpRight className="size-5 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
             </a>
             <div className="flex gap-3 font-sans text-sm">
               {SOCIALS.map((link) => (
-                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="rounded-full border border-border bg-card px-4 py-1.5 transition hover:border-blush hover:text-primary">{link.label}</a>
+                <a key={link.label} href={link.href} target="_blank" rel="noreferrer" className="rounded-full border border-border bg-card px-4 py-1.5 transition hover:border-baby hover:text-primary-ink">{link.label}</a>
               ))}
             </div>
           </div>
         </div>
-        <p className="relative mx-auto max-w-6xl px-6 pb-8 font-sans text-xs text-muted-foreground">© 2026 Christina Lin · Designed with blush &amp; too much boba</p>
+        <p className="relative mx-auto max-w-6xl px-6 pb-8 font-sans text-xs text-muted-foreground">© 2026 Christina Lin · Designed with baby &amp; too much boba</p>
       </footer>
     </div>
   );
