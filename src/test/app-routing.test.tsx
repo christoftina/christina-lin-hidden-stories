@@ -56,7 +56,7 @@ describe("App routing", () => {
 
   it("uses Instacart's role and timeline from Christina's portfolio without inventing contributions", () => {
     const instacart = CASES.find((item) => item.slug === "instacart");
-    expect(instacart?.role).toBe("Designer, Interaction & Researcher");
+    expect(instacart?.role).toBe("UI/UX Designer & Researcher");
     expect(instacart?.timeline).toBe("Spring 2026");
     expect(instacart?.contributions).toEqual([]);
     expect(instacart?.prototype).toMatch(/^https:\/\/www\.figma\.com\/proto\//);

@@ -18,3 +18,4 @@
 - [ ] Upload A.R.I.A, MC HoneyHive and SanD Hacks images as Lovable assets.
 - [x] Avatar: cleaner downcast eyes, gripping hands that stay above the marquee text; single-line rotating headline; title images on case cards instead of top screenshots; MixBash named.
 - [ ] Title images for Instacart, A.R.I.A and MC HoneyHive (generated title tiles until supplied).
+- [x] Cartoon sky + meadow backdrop on every page; experience in date order (CSES Summer 2026 – present); side work retitled "Other things I've been up to"; Instacart role UI/UX Designer & Researcher; stats card without HP/MP.

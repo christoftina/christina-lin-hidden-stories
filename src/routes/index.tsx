@@ -49,6 +49,8 @@ export type Case = {
   tools?: string[];
   /** Short project name shown on the generated title tile when there is no title image. */
   shortName?: string;
+  /** For side work (placeholder entries): what kind of work it is, shown on its card. */
+  kind?: string;
 };
 
 export const CASES: Case[] = [
@@ -142,7 +144,7 @@ export const CASES: Case[] = [
     title: "Extending Instacart with a budget-aware meal planner",
     shortName: "Budgeting Instacart",
     org: "COGS 127 · UC San Diego",
-    role: "Designer, Interaction & Researcher",
+    role: "UI/UX Designer & Researcher",
     timeline: "Spring 2026",
     tools: ["Figma", "FigJam"],
     prototype: "https://www.figma.com/proto/Wd4vPqo0PTWwZmV4tvMGz8/Cogs-127---Instacart-Extension?node-id=507-2383&p=f&viewport=1501%2C-3313%2C0.35&t=Lpj6gnd9LW2hmA6Y-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=507%3A2383&page-id=0%3A1",
@@ -335,6 +337,7 @@ export const CASES: Case[] = [
     n: "05",
     slug: "mixbash",
     placeholder: true,
+    kind: "Internship",
     title: "Product design & marketing at MixBash",
     org: "MixBash · Tokyo",
     role: "Product Design & Marketing Intern",
@@ -347,6 +350,8 @@ export const CASES: Case[] = [
     n: "06",
     slug: "cses",
     placeholder: true,
+    kind: "Web design",
+    timeline: "Summer 2026 – present",
     title: "Designing the SanD Hacks webpage",
     org: "CSES · UC San Diego",
     role: "Project Designer",
@@ -360,6 +365,7 @@ export const CASES: Case[] = [
     n: "07",
     slug: "mid-lab",
     placeholder: true,
+    kind: "Research",
     title: "Qualitative research at the Mental Health in Design Lab",
     org: "Mental Health in Design Lab · UC San Diego",
     role: "Research Assistant",
@@ -386,11 +392,11 @@ const EXPERIENCE: Experience[] = [
   { role: "UX/UI Designer", org: "Product Management Club (PMC) @ UCSD", when: "Fall 2026 – present", kind: "Design", current: true },
   { role: "Design Mentor", org: "ACM Projects @ UCSD", when: "Fall 2026 – present", kind: "Leadership & honors", current: true, note: "Mentoring this quarter's ACM project teams on design." },
   { role: "Product Design & Marketing Intern", org: "MixBash (YC) · Tokyo", when: "Jul – Aug 2026", kind: "Design", slug: "mixbash" },
+  { role: "Project Designer", org: "CSES @ UCSD", when: "Summer 2026 – present", kind: "Design", current: true, note: "Designed a mockup SanD Hacks hackathon page.", slug: "cses" },
   { role: "Research Assistant", org: "Mental Health in Design (MiD) Lab, UCSD", when: "Spring 2026 – present", kind: "Research", current: true, note: "Qualitative analysis.", slug: "mid-lab" },
   { role: "UI/UX Designer & Researcher", org: "ACM Projects @ UCSD — PackD", when: "Spring 2026", kind: "Design", note: "Designed PackD, a group travel planning app.", slug: "packd" },
-  { role: "Project Designer", org: "CSES @ UCSD", when: "Student org", kind: "Design", note: "Designed a mockup SanD Hacks hackathon page.", slug: "cses" },
   { role: "Research Assistant", org: "Language Infant Learning (LiL) Lab, UCSD", when: "Fall 2025 – Winter 2026", kind: "Research" },
-  { role: "Regents Scholar", org: "UC San Diego", when: "Honor", kind: "Leadership & honors" },
+  { role: "Regents Scholar", org: "UC San Diego", when: "Fall 2025 – present", kind: "Leadership & honors" },
 ];
 
 const FILTERS: ("All" | Kind)[] = ["All", "Design", "Research", "Leadership & honors"];
@@ -593,10 +599,10 @@ function ComingSoonCard({ data }: { data: Case }) {
       params={{ slug: data.slug }}
       aria-label={`Preview ${data.title}`}
       onPointerMove={trackSpotlight}
-      className="spotlight group flex h-full flex-col rounded-2xl border border-dashed border-border bg-card/60 p-6 transition duration-300 hover:-translate-y-1 hover:border-lavender hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="spotlight group flex h-full flex-col rounded-2xl border border-dashed border-border bg-card p-6 transition duration-300 hover:-translate-y-1 hover:border-lavender hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <span className="label-ui inline-flex items-center gap-2 text-primary">
-        <span className="size-1.5 rounded-full bg-lavender" /> Case study in progress
+        <span className="size-1.5 rounded-full bg-lavender" /> {data.kind ?? "More soon"}
       </span>
       <h3 className="font-display mt-4 text-2xl leading-tight transition-colors group-hover:text-primary">{data.title}</h3>
       <p className="mt-2 text-sm text-muted-foreground">{data.role} · {data.org}</p>
@@ -612,7 +618,7 @@ function ComingSoonCard({ data }: { data: Case }) {
 function NowMarquee() {
   const items = [...NOW, ...NOW];
   return (
-    <div className="group overflow-hidden border-y border-border bg-lavender-soft pb-4 pt-9 md:pt-11" aria-label="What I'm doing now">
+    <div className="group overflow-hidden border-y border-border bg-lavender-soft py-9 md:py-11" aria-label="What I'm doing now">
       <ul className="animate-marquee flex w-max gap-10 group-hover:[animation-play-state:paused]">
         {items.map((item, i) => (
           <li key={`${item}-${i}`} aria-hidden={i >= NOW.length} className="flex items-center gap-10 whitespace-nowrap font-display text-xl italic text-accent-foreground md:text-2xl">
@@ -687,23 +693,7 @@ function ExperienceList() {
   );
 }
 
-function StatBar({ label, value, max }: { label: string; value: number; max: number }) {
-  return (
-    <div>
-      <div className="flex justify-between font-sans text-xs">
-        <span className="label-ui text-muted-foreground">{label}</span>
-        <span className="tabular-nums">{value}/{max}</span>
-      </div>
-      <div className="mt-1.5 h-2.5 overflow-hidden rounded-full bg-secondary" role="progressbar" aria-label={label} aria-valuenow={value} aria-valuemin={0} aria-valuemax={max}>
-        <div className="h-full rounded-full bg-gradient-to-r from-lavender to-primary transition-[width] duration-700 ease-out" style={{ width: `${(value / max) * 100}%` }} />
-      </div>
-    </div>
-  );
-}
-
 function CharacterSheet() {
-  const [mp, setMp] = useState(80);
-  const full = mp >= 100;
   const rows: [string, string][] = [
     ["Level", "Senior"],
     ["School", "UC San Diego"],
@@ -719,30 +709,20 @@ function CharacterSheet() {
         <p className="label-ui text-primary">Player stats</p>
         <span className="font-sans text-xs text-muted-foreground">Christina · Lv. 4</span>
       </div>
-      <div className="mt-5 space-y-4">
-        <StatBar label="HP" value={225} max={225} />
-        <StatBar label="Magic power" value={mp} max={100} />
-      </div>
-      <button
-        type="button"
-        onClick={() => setMp((v) => (v >= 100 ? 80 : Math.min(100, v + 10)))}
-        className="mt-4 inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 font-sans text-sm transition hover:border-lavender hover:bg-lavender-soft"
-      >
-        <CupSoda className="size-4 text-primary" />
-        {full ? "MP full — ready to design! (reset)" : "Drink boba (+10 MP)"}
-      </button>
-      <dl className="mt-6 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+      <dl className="mt-4 divide-y divide-border">
         {rows.map(([k, v]) => (
-          <div key={k} className="flex justify-between gap-4 border-b border-border py-2.5">
-            <dt className="label-ui self-center text-muted-foreground">{k}</dt>
-            <dd className="text-right">{v}</dd>
+          <div key={k} className="grid grid-cols-[6.5rem_1fr] items-center gap-4 py-3">
+            <dt className="label-ui text-muted-foreground">{k}</dt>
+            <dd>{v}</dd>
           </div>
         ))}
+        <div className="grid grid-cols-[6.5rem_1fr] items-center gap-4 py-3">
+          <dt className="label-ui text-muted-foreground">Jamming to</dt>
+          <dd>
+            <a href="https://soundcloud.com/lorien26/clair-obscur-expedition-33-clair-obscur" target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Clair Obscur: Expedition 33 OST</a>
+          </dd>
+        </div>
       </dl>
-      <p className="mt-5 text-sm text-muted-foreground">
-        <span className="label-ui mr-2">Jamming to</span>
-        <a href="https://soundcloud.com/lorien26/clair-obscur-expedition-33-clair-obscur" target="_blank" rel="noreferrer" className="text-primary underline-offset-4 hover:underline">Clair Obscur: Expedition 33 OST</a>
-      </p>
     </div>
   );
 }
@@ -846,14 +826,17 @@ function Index() {
             <p className="label-ui mb-3 text-primary">Selected work</p>
             <h2 className="font-display text-4xl md:text-5xl">Case studies</h2>
           </div>
-          <span className="font-sans text-sm text-muted-foreground">{featured.length} full · {upcoming.length} in progress</span>
+          <span className="font-sans text-sm text-muted-foreground">{featured.length} case studies</span>
         </div>
         <div className="space-y-10">
           {featured.map((data) => <CaseCard key={data.slug} data={data} />)}
         </div>
         {upcoming.length > 0 && (
           <>
-            <h3 className="font-display mb-6 mt-16 text-3xl">More on the way</h3>
+            <div className="mb-6 mt-16">
+              <h3 className="font-display text-3xl">Other things I've been up to</h3>
+              <p className="mt-2 text-muted-foreground">Roles and projects outside my case studies — write-ups coming soon.</p>
+            </div>
             <div className="grid gap-6 md:grid-cols-3">
               {upcoming.map((data) => <ComingSoonCard key={data.slug} data={data} />)}
             </div>
@@ -898,7 +881,7 @@ function Index() {
         <div className="mt-20">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
             <h3 className="font-display text-3xl md:text-4xl">Off the clock</h3>
-            <span className="font-sans text-sm text-muted-foreground">Hover or tap a card · drink some boba</span>
+            <span className="font-sans text-sm text-muted-foreground">Hover or tap a card</span>
           </div>
           <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
             <CharacterSheet />
@@ -909,7 +892,7 @@ function Index() {
         </div>
       </section>
 
-      <footer className="relative overflow-hidden border-t border-border bg-lavender-soft">
+      <footer className="relative overflow-hidden border-t border-border bg-card/75 backdrop-blur-sm">
         <div aria-hidden="true" className="animate-drift absolute -right-20 -top-20 size-72 rounded-full bg-lavender/50 blur-3xl" />
         <div className="relative mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20 md:flex-row md:items-end md:justify-between">
           <div>
