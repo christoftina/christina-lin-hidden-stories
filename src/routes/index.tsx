@@ -3,8 +3,9 @@ import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowUpRight, CupSoda, Gamepad2, Soup, Tv, type LucideIcon } from "lucide-react";
 import { PIXEL_CHRISTINA } from "@/lib/pixel-christina";
 import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE } from "@/lib/title-images";
-import { PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
+import { PACKD_DEMO, PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 import { INSTACART_DEMO, INSTACART_IMAGES } from "@/lib/instacart-images";
+import { HONEYHIVE } from "@/lib/honeyhive-images";
 import acmLogo from "@/assets/acm-projects-team.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -28,6 +29,8 @@ export type StorySection = {
   paragraphs?: string[];
   bullets?: string[];
   items?: { label: string; text: string }[];
+  /** Images shown at the end of this story section. */
+  images?: CaseImage[];
 };
 
 export type Case = {
@@ -45,7 +48,7 @@ export type Case = {
   images?: CaseImage[];
   imagesHaveOverview?: boolean;
   /** Phone-only prototype recording shown in a "Demo video" section. */
-  video?: { src: string; poster: string; caption: string; width: number; height: number };
+  video?: { src: string; poster: string; caption: string; width: number; height: number; radius: string };
   story?: StorySection[];
   prototype?: string;
   prototypeLabel?: string;
@@ -75,6 +78,7 @@ export const CASES: Case[] = [
       "Led the showcase presentation",
     ],
     images: PACKD_IMAGES,
+    video: PACKD_DEMO,
     tools: ["Figma", "FigJam"],
     prototype: "https://www.figma.com/proto/WOFoOSwVJpeSL3k9uMkjjO/ACM-SP26-Projects?page-id=70%3A12&node-id=138-41&viewport=-2721%2C-987%2C0.48&t=bKOpByEoYr97WXC9-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=138%3A41&show-proto-sidebar=1",
     story: [
@@ -308,6 +312,7 @@ export const CASES: Case[] = [
           "Overcrowded sleeping areas, limited supervision and the mixing of people with very different backgrounds and struggles can lead to theft, violence, harassment, or exposure to drug use and mental health crises. Residents often have little control over who they're placed near, and some shelters lack the staff or resources to respond to conflicts or emergencies.",
           "Storage is another frequently reported issue: most shelters have a one-to-two bag limit. When losing a home is already devastating, having to give up belongings adds further distress.",
         ],
+        images: [HONEYHIVE.currentShelter],
       },
       {
         id: "competitive-analysis", title: "Competitive analysis",
@@ -317,6 +322,7 @@ export const CASES: Case[] = [
           { label: "Father Joe's Bishop Maher Center", text: "Houses single adult women (18+, no families). With about 28 beds, space is more limited, but Father Joe's Village adds valuable resources like childcare, job training and meals to help residents secure income and housing." },
           { label: "Haven Interim Housing", text: "More limited: housing requires a referral with no guarantee through the application. Up to 72 beds across its apartments, prioritizing short-term transitional housing for single women and families." },
         ],
+        images: [HONEYHIVE.competitiveBoard, HONEYHIVE.researchBoard],
       },
       {
         id: "user-research", title: "User research",
@@ -324,6 +330,9 @@ export const CASES: Case[] = [
       },
       { id: "pain-points", title: "Pain points", paragraphs: ["Residents struggled most with:"], bullets: ["Disability and accessibility features", "Lack of transparency and trust", "Staff treatment and dignity", "Cleanliness and basic working living conditions"] },
       { id: "wishes", title: "Wishes and desires", paragraphs: ["Residents wanted to see:"], bullets: ["Support in case management", "Safer and cleaner environments", "A greater sense of dignity in their living environment", "More storage options", "Better accommodations for people with disabilities"] },
+      { id: "lofi-sketch", title: "Low-fidelity sketch", images: [HONEYHIVE.lofiSketch] },
+      { id: "information-architecture", title: "Information architecture", images: [HONEYHIVE.informationArchitecture] },
+      { id: "moodboard", title: "Moodboard", images: [HONEYHIVE.moodboard] },
       {
         id: "solution", title: "Solution",
         paragraphs: [
@@ -331,6 +340,7 @@ export const CASES: Case[] = [
           "Our two-tier layout was chosen for structural efficiency: stacking pods doubles resident capacity without doubling floor space, adjacent pods share walls to reduce material needs, and the uniform design enables offsite batch construction, lowering labor costs and build time.",
         ],
       },
+      { id: "final-model", title: "Final 3D model", images: [HONEYHIVE.modelPods, HONEYHIVE.modelAccessibleRoom, HONEYHIVE.modelPodInterior] },
       {
         id: "budget", title: "Budget feasibility",
         paragraphs: [
@@ -422,8 +432,8 @@ const AVATAR_LINES = [
   "Right now I'm a UX/UI Designer at PMC ✦",
   "This fall I'm a design mentor for an ACM Projects team",
   "I do qualitative research at the MiD Lab",
-  "I design for CSES — like the SanD Hacks page",
-  "Summer '26: designing & marketing at MixBash in Tokyo",
+  "I like to play Teemo Top lane in LoL",
+  "Currently on the Elbaf Arc in One Piece",
   "Off the clock? Probably getting boba or malatang",
 ];
 

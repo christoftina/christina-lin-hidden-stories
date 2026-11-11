@@ -169,8 +169,8 @@
 @keyframes drift { 0%, 100% { transform: translate(0, 0) scale(1) } 50% { transform: translate(18px, -14px) scale(1.06) } }
 @utility animate-drift { animation: drift 12s ease-in-out infinite; }
 
-/* Chunky, bubbly wordmark for the site name, with a soft pink offset shadow */
-@utility font-wordmark { font-family: var(--font-wordmark); font-weight: 400; letter-spacing: 0.01em; color: oklch(0.27 0.04 255); text-shadow: 2px 2px 0 oklch(0.84 0.075 235); }
+/* Playful wordmark for the site name */
+@utility font-wordmark { font-family: var(--font-wordmark); font-weight: 400; letter-spacing: 0.01em; color: oklch(0.27 0.04 255); }
 
 /* Small UI labels in a clean sans for contrast with the serif body */
 @utility label-ui { font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }

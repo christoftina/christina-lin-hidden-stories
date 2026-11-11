@@ -27,21 +27,53 @@ export function CaseImageViewer({ images, hasOverview = true }: { images: CaseIm
             </div>
             <div className="space-y-10">
               {images.map((image, index) => image.section === section && (
-                <figure key={image.src}>
-                  <ImageButton image={image} onClick={() => setSelected(index)} />
-                  <figcaption className="mt-3 text-sm text-muted-foreground">{image.caption}</figcaption>
-                  {image.notes && (
-                    <div className="mt-5 rounded-2xl bg-baby-soft p-5 md:p-7">
-                      <p className="label-ui text-primary-ink">My part</p>
-                      {image.notes.map((note) => <p key={note} className="mt-3 max-w-3xl text-lg leading-relaxed text-foreground/80">{note}</p>)}
-                    </div>
-                  )}
-                </figure>
+                <ImageFigure key={image.src} image={image} onOpen={() => setSelected(index)} />
               ))}
             </div>
             </div>
           </section>
         ))}
+      </div>
+      <Dialog open={current !== undefined} onOpenChange={(open) => { if (!open) setSelected(null); }}>
+        {current && (
+          <DialogContent aria-describedby={undefined} className="max-h-[95dvh] max-w-[96vw] overflow-auto rounded-lg p-4 pt-12 md:max-w-7xl">
+            <DialogTitle className="sr-only">{current.caption}</DialogTitle>
+            <img src={current.src} alt={current.alt} className="mx-auto max-h-[75dvh] w-auto object-contain" />
+            <div className="flex items-center justify-between gap-4">
+              <Button variant="outline" size="icon" aria-label="Previous image" onClick={() => setSelected((value) => value === null ? 0 : (value - 1 + images.length) % images.length)}><ChevronLeft /></Button>
+              <p className="text-center text-sm text-muted-foreground">{current.caption}<span className="mt-1 block text-xs">{(selected ?? 0) + 1} / {images.length}</span></p>
+              <Button variant="outline" size="icon" aria-label="Next image" onClick={() => setSelected((value) => value === null ? 0 : (value + 1) % images.length)}><ChevronRight /></Button>
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
+    </>
+  );
+}
+
+function ImageFigure({ image, onOpen }: { image: CaseImage; onOpen: () => void }) {
+  return (
+    <figure>
+      <ImageButton image={image} onClick={onOpen} />
+      <figcaption className="mt-3 text-sm text-muted-foreground">{image.caption}</figcaption>
+      {image.notes && (
+        <div className="mt-5 rounded-2xl bg-baby-soft p-5 md:p-7">
+          <p className="label-ui text-primary-ink">My part</p>
+          {image.notes.map((note) => <p key={note} className="mt-3 max-w-3xl text-lg leading-relaxed text-foreground/80">{note}</p>)}
+        </div>
+      )}
+    </figure>
+  );
+}
+
+/** Images inside a story section, with their own enlarge view. */
+export function InlineGallery({ images }: { images: CaseImage[] }) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const current = selected === null ? undefined : images[selected];
+  return (
+    <>
+      <div className={`mt-8 grid gap-8 ${images.length > 2 ? "md:grid-cols-2 md:[&>figure:first-child]:col-span-2" : ""}`}>
+        {images.map((image, index) => <ImageFigure key={image.src} image={image} onOpen={() => setSelected(index)} />)}
       </div>
       <Dialog open={current !== undefined} onOpenChange={(open) => { if (!open) setSelected(null); }}>
         {current && (

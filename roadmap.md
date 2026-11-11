@@ -26,3 +26,4 @@
 - [x] Baby blue palette with #CE72B2 accent (darker #A44C8B for small text); Jua headings; Chewy wordmark; sticky Jump-to navigation in case studies.
 - [x] A.R.I.A and MC HoneyHive title images; MC HoneyHive org Design Frontiers; Instacart user flows, lo-fi sketches, hi-fi screens, new key changes and a phone-only demo video; new player stats (Hobby / Playing / Drinking).
 - [ ] Upload /public/media files and inlined title images as Lovable assets if preferred.
+- [x] MC HoneyHive research, sketch, IA, moodboard and 3D model images inside their story sections; PackD phone-only demo video; key-change images on white; avatar fun facts (Teemo, Elbaf arc); wordmark without shadow.

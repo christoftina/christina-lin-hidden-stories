@@ -13,6 +13,15 @@ import financeDiscover from "@/assets/packd_finance_discover.png.asset.json";
 /** `notes`: Christina's own write-up of her part, shown in a panel under the image. */
 export type CaseImage = { src: string; alt: string; caption: string; section: string; ratio?: string; notes?: string[] };
 
+export const PACKD_DEMO = {
+  src: "/media/packd-demo.mp4",
+  poster: "/media/packd-demo-poster.webp",
+  caption: "Prototype walkthrough of the PackD home screen",
+  width: 418,
+  height: 872,
+  radius: "20% / 9.7%",
+};
+
 export const PACKD_IMAGES: CaseImage[] = [
   { src: mockups.url, alt: "PackD activity, group messaging and home screens shown on three phones", caption: "Activity, messaging and home screens", section: "Overview", ratio: "1038 / 362" },
   { src: competitive.url, alt: "PackD competitive analysis comparing Notion AI, TripIt, Google Travel and Roadtrippers", caption: "Competitive analysis", section: "Research" },

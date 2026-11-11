@@ -16,4 +16,5 @@ export const INSTACART_DEMO = {
   caption: "Prototype walkthrough: setting a budget, choosing meals and checking out",
   width: 454,
   height: 940,
+  radius: "16.5% / 8%",
 };

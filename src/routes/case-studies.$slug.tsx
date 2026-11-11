@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowUp, ArrowUpRight } from "lucide-react";
 import { CASES, type StorySection } from "@/routes/index";
 import { Button } from "@/components/ui/button";
-import { CaseImageViewer } from "@/components/case-image-viewer";
+import { CaseImageViewer, InlineGallery } from "@/components/case-image-viewer";
 
 function StoryBlock({ section }: { section: StorySection }) {
   return (
@@ -35,6 +35,7 @@ function StoryBlock({ section }: { section: StorySection }) {
           ))}
         </div>
       )}
+      {section.images && <InlineGallery images={section.images} />}
       </div>
     </section>
   );
@@ -182,7 +183,7 @@ function CaseStudyPage() {
                   preload="metadata"
                   aria-label={study.video.caption}
                   className="h-auto max-h-[80vh] w-auto max-w-full shadow-soft"
-                  style={{ borderRadius: "16.5% / 8%", aspectRatio: `${study.video.width} / ${study.video.height}` }}
+                  style={{ borderRadius: study.video.radius, aspectRatio: `${study.video.width} / ${study.video.height}` }}
                 />
                 <figcaption className="mt-4 text-sm text-muted-foreground">{study.video.caption}</figcaption>
               </figure>
