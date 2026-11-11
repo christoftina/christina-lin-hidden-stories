@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowUpRight, CupSoda, Gamepad2, Soup, Tv, type LucideIcon } from "lucide-react";
 import { PIXEL_CHRISTINA } from "@/lib/pixel-christina";
-import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE, SANDHACKS_TITLE } from "@/lib/title-images";
+import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE, MIDLAB_TITLE, MIXBASH_TITLE, SANDHACKS_TITLE } from "@/lib/title-images";
 import { HobbyStickers } from "@/components/hobby-stickers";
 import { PACKD_DEMO, PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 import { INSTACART_DEMO, INSTACART_IMAGES } from "@/lib/instacart-images";
@@ -359,6 +359,8 @@ export const CASES: Case[] = [
     slug: "mixbash",
     placeholder: true,
     kind: "Internship",
+    orgLogo: MIXBASH_TITLE,
+    prototype: "https://www.figma.com/proto/EiOwjSnASgkLDpaKyqpWUz/Redesign-333Clip-s-Website?node-id=1-2&p=f&viewport=128%2C279%2C0.2&t=vWm1wR3mesi0lMqP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A2&page-id=0%3A1",
     title: "Product design & marketing at MixBash",
     org: "MixBash · Tokyo",
     role: "Product Design & Marketing Intern",
@@ -388,6 +390,9 @@ export const CASES: Case[] = [
     slug: "mid-lab",
     placeholder: true,
     kind: "Research",
+    orgLogo: MIDLAB_TITLE,
+    prototype: "https://mentalhealthindesign.weebly.com/",
+    prototypeLabel: "Lab website",
     title: "Qualitative research at the Mental Health in Design Lab",
     org: "Mental Health in Design Lab · UC San Diego",
     role: "Research Assistant",
@@ -639,7 +644,7 @@ function SideWorkCard({ data }: { data: Case }) {
     <article onPointerMove={trackSpotlight} className="spotlight flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
       {data.orgLogo && (
         <div className="border-b border-border bg-baby-soft/50 p-4">
-          <img src={data.orgLogo.src} alt={data.orgLogo.alt} className="mx-auto max-h-36 w-auto rounded-lg object-contain" />
+          <img src={data.orgLogo.src} alt={data.orgLogo.alt} className="aspect-[776/457] w-full rounded-lg object-cover" />
         </div>
       )}
       <div className="flex flex-1 flex-col p-6">
@@ -653,7 +658,7 @@ function SideWorkCard({ data }: { data: Case }) {
           <span className="font-sans text-xs text-muted-foreground">{data.timeline ?? ""}</span>
           {data.prototype && (
             <a href={data.prototype} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-sans text-sm font-medium text-primary-ink hover:underline">
-              Figma prototype <ArrowUpRight className="size-4" />
+              {data.prototypeLabel ?? "Figma prototype"} <ArrowUpRight className="size-4" />
             </a>
           )}
         </div>

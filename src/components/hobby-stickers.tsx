@@ -19,29 +19,6 @@ function PaperFlower({ petal, fold, center }: { petal: string; fold: string; cen
   );
 }
 
-function Onigiri() {
-  return (
-    <svg viewBox="0 0 64 64">
-      <path d="M32 6c5 0 26 34 26 42 0 7-6 10-26 10S6 55 6 48C6 40 27 6 32 6z" fill="#fffdf6" stroke="#e8e1d1" strokeWidth="1.5" />
-      <rect x="20" y="40" width="24" height="18" rx="2" fill="#2f3b35" />
-      <circle cx="25" cy="31" r="2.2" fill="#2b2b2b" />
-      <circle cx="39" cy="31" r="2.2" fill="#2b2b2b" />
-      <path d="M29 35q3 3 6 0" stroke="#2b2b2b" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-      <circle cx="21" cy="35" r="2.6" fill="#f6b5c9" />
-      <circle cx="43" cy="35" r="2.6" fill="#f6b5c9" />
-    </svg>
-  );
-}
-
-function Sparkle({ color = "#ffd65a" }: { color?: string }) {
-  return (
-    <svg viewBox="0 0 64 64">
-      <path d="M32 4c3 16 12 25 28 28-16 3-25 12-28 28-3-16-12-25-28-28C20 29 29 20 32 4z" fill={color} />
-      <path d="M50 6c1 5 4 8 9 9-5 1-8 4-9 9-1-5-4-8-9-9 5-1 8-4 9-9z" fill="#fff4c2" />
-    </svg>
-  );
-}
-
 function SpeechBurst({ text }: { text: string }) {
   return (
     <svg viewBox="0 0 64 64">
@@ -109,6 +86,59 @@ function SpringRolls() {
   );
 }
 
+function PirateFlag() {
+  return (
+    <svg viewBox="0 0 64 64">
+      <rect x="6" y="4" width="4" height="58" rx="2" fill="#8a5a3b" />
+      <path d="M10 8h44c-3 6-3 12 0 18-3 6-3 12 0 18H10z" fill="#24262b" />
+      <g transform="translate(32 26)">
+        <path d="M-15 9 15 -9M-15 -9 15 9" stroke="#fff" strokeWidth="4" strokeLinecap="round" />
+        {[[-15, 9], [15, -9], [-15, -9], [15, 9]].map(([x, y]) => <circle key={`${x}${y}`} cx={x} cy={y} r="2.8" fill="#fff" />)}
+        <path d="M-9-3a9 9 0 0 1 18 0c0 4-2 6-4 7v3h-10v-3c-2-1-4-3-4-7z" fill="#fff" />
+        <circle cx="-3.5" cy="-2" r="2.4" fill="#24262b" />
+        <circle cx="3.5" cy="-2" r="2.4" fill="#24262b" />
+        <path d="M-2 5h4M0 5v2" stroke="#24262b" strokeWidth="1.2" />
+      </g>
+    </svg>
+  );
+}
+
+function BoxingGloves() {
+  const glove = (fill: string, shade: string) => (
+    <>
+      <path d="M8 26c0-11 8-18 18-18 9 0 15 6 15 14v10c0 7-5 12-12 12H18c-6 0-10-5-10-11z" fill={fill} />
+      <path d="M12 22c2-7 8-10 14-10" stroke="#fff" strokeOpacity="0.5" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      <path d="M8 30c0 5 3 8 8 8h3c3 0 4-3 2-5-3-3-8-4-13-3z" fill={shade} />
+      <rect x="15" y="42" width="20" height="10" rx="3" fill="#fff" />
+      <path d="M17 47h16" stroke={shade} strokeWidth="2" />
+    </>
+  );
+  return (
+    <svg viewBox="0 0 72 64">
+      <g transform="rotate(-14 24 32)">{glove("#e8506f", "#c23a58")}</g>
+      <g transform="translate(26 6) rotate(12 24 32)">{glove("#ce72b2", "#a44c8b")}</g>
+    </svg>
+  );
+}
+
+function Fairy() {
+  return (
+    <svg viewBox="0 0 64 64">
+      <path d="M30 26C18 8 4 12 8 24c3 8 14 8 22 4z" fill="#c9e7fb" opacity="0.95" />
+      <path d="M34 26C46 8 60 12 56 24c-3 8-14 8-22 4z" fill="#f6c6e1" opacity="0.95" />
+      <path d="M29 30C18 34 12 44 18 48c5 3 11-6 12-14z" fill="#f6c6e1" opacity="0.9" />
+      <path d="M35 30c11 4 17 14 11 18-5 3-11-6-12-14z" fill="#c9e7fb" opacity="0.9" />
+      <path d="M32 27c-4 0-6 3-7 9l-3 14h20l-3-14c-1-6-3-9-7-9z" fill="#ce72b2" />
+      <circle cx="32" cy="20" r="6.5" fill="#f7d9c4" />
+      <path d="M25 19c0-6 4-9 8-9 5 0 8 4 7 10-2-3-5-5-9-5-3 0-5 2-6 4z" fill="#f2b632" />
+      <circle cx="30" cy="20.5" r="0.9" fill="#3b2a24" />
+      <circle cx="34.5" cy="20.5" r="0.9" fill="#3b2a24" />
+      <path d="M44 10l1.4 3 3 1.4-3 1.4-1.4 3-1.4-3-3-1.4 3-1.4z" fill="#ffd65a" />
+      <path d="M13 40l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#ffd65a" />
+    </svg>
+  );
+}
+
 type Sticker = { art: ReactNode; className: string; rotate: number; size?: number };
 
 const STICKERS: Record<string, Sticker[]> = {
@@ -118,9 +148,9 @@ const STICKERS: Record<string, Sticker[]> = {
     { art: <SpeechBurst text="GG" />, className: "-bottom-7 right-6", rotate: 8 },
   ],
   "Anime & TV": [
-    { art: <Onigiri />, className: "-right-4 -top-8", rotate: 12 },
-    { art: <Sparkle />, className: "-left-4 -top-5", rotate: -8, size: 46 },
-    { art: <SpeechBurst text="!?" />, className: "-bottom-7 -left-3", rotate: -10, size: 50 },
+    { art: <PirateFlag />, className: "-right-4 -top-9", rotate: 10 },
+    { art: <BoxingGloves />, className: "-left-5 -top-6", rotate: -10, size: 60 },
+    { art: <Fairy />, className: "-bottom-8 -left-4", rotate: -6, size: 60 },
   ],
   "Food hunts": [
     { art: <Boba />, className: "-right-5 -top-9", rotate: 12, size: 64 },
