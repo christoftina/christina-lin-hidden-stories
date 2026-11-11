@@ -6,7 +6,8 @@ import { CaseImageViewer } from "@/components/case-image-viewer";
 
 function StoryBlock({ section }: { section: StorySection }) {
   return (
-    <section id={section.id} className="scroll-mt-24 border-b border-border py-12 md:py-16">
+    <section id={section.id} className="scroll-mt-24 py-3">
+      <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
       <h2 className="font-display text-3xl md:text-4xl">{section.title}</h2>
       {section.problem && (
         <p className="font-display mt-6 max-w-3xl border-l-2 border-primary pl-6 text-2xl leading-snug md:text-3xl">{section.paragraphs?.[0]}</p>
@@ -26,13 +27,14 @@ function StoryBlock({ section }: { section: StorySection }) {
       {section.items && (
         <div className="mt-6 max-w-3xl space-y-4">
           {section.items.map((item) => (
-            <div key={item.text} className="rounded-lg border border-border bg-card p-5">
+            <div key={item.text} className="rounded-2xl bg-blush-soft p-5">
               <p className="text-xs font-medium tracking-wide text-primary uppercase">{item.label}</p>
               <p className="mt-2 leading-relaxed text-muted-foreground">{item.text}</p>
             </div>
           ))}
         </div>
       )}
+      </div>
     </section>
   );
 }
@@ -67,7 +69,7 @@ function CaseStudyPage() {
     ...sections.map((section, i) => ({ href: `#process-${i}`, label: section })),
   ];
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen px-0">
       <header className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
           <Link to="/" className="font-wordmark text-2xl leading-none md:text-3xl">Christina Lin</Link>
@@ -75,7 +77,8 @@ function CaseStudyPage() {
         </div>
       </header>
       <main>
-        <section className="mx-auto max-w-6xl px-6 py-12 md:py-20">
+        <section className="mx-auto max-w-6xl px-6 pb-3 pt-10 md:pt-14">
+          <div className="rounded-3xl border border-border bg-card p-6 shadow-soft md:p-10">
           <p className="label-ui mb-6 text-primary">Case study · {study.org}</p>
           {study.orgLogo && <img src={study.orgLogo.src} alt={study.orgLogo.alt} width={585} height={367} className="mb-6 h-auto w-48 rounded-lg" />}
           {study.placeholder && <p className="label-ui mb-6 inline-flex items-center gap-2 rounded-full bg-accent px-3 py-1.5 text-accent-foreground"><span className="size-1.5 rounded-full bg-primary" /> Full case study in progress</p>}
@@ -103,6 +106,7 @@ function CaseStudyPage() {
               {nav.map((item) => <a key={item.href} href={item.href} className="hover:text-primary">{item.label}</a>)}
             </nav>
           )}
+          </div>
         </section>
         <div className="mx-auto max-w-6xl px-6">
           {(study.story ?? []).map((section) => <StoryBlock key={section.id} section={section} />)}
@@ -118,7 +122,7 @@ function CaseStudyPage() {
           </section>
         )}
       </main>
-      <footer className="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-16 sm:flex-row sm:items-center sm:justify-between">
+      <footer className="mx-auto my-12 flex max-w-6xl flex-col gap-8 rounded-3xl border border-border bg-card p-6 shadow-soft sm:flex-row sm:items-center sm:justify-between md:p-8">
         <Button variant="outline" asChild><Link to="/" hash="work"><ArrowLeft /> Back to all work</Link></Button>
         {next && <Link to="/case-studies/$slug" params={{ slug: next.slug }} className="flex items-center gap-4 text-primary"><span><span className="block text-xs text-muted-foreground">Next case study</span><span className="font-display text-2xl">{next.title}</span></span><ArrowUpRight className="size-5 shrink-0" /></Link>}
       </footer>

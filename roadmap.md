@@ -21,4 +21,5 @@
 - [x] Cartoon sky + meadow backdrop on every page; experience in date order (CSES Summer 2026 – present); side work retitled "Other things I've been up to"; Instacart role UI/UX Designer & Researcher; stats card without HP/MP.
 - [x] Replace marquee with clickable avatar speech bubble; avatar grips the Case studies panel; Experience and About on solid panels.
 - [x] Light pink accents (tokens renamed lavender -> blush); Bagel Fat One wordmark for the site name; Instacart title image; case studies in a compact 2x2 grid.
+- [x] PackD: My-part notes under lo-fi home and hi-fi home/messaging images; case-study text on solid panels; Cherry Bomb One wordmark.
 - [ ] Upload the Instacart title image as a Lovable asset (currently inlined in src/lib/title-images.ts).

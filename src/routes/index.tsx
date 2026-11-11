@@ -392,7 +392,7 @@ type Experience = {
 
 const EXPERIENCE: Experience[] = [
   { role: "UX/UI Designer", org: "Product Management Club (PMC) @ UCSD", when: "Fall 2026 – present", kind: "Design", current: true },
-  { role: "Design Mentor", org: "ACM Projects @ UCSD", when: "Fall 2026 – present", kind: "Leadership & honors", current: true, note: "Mentoring this quarter's ACM project teams on design." },
+  { role: "Design Mentor", org: "ACM Projects @ UCSD", when: "Fall 2026 – present", kind: "Leadership & honors", current: true, note: "Mentoring one of ACM Projects' design teams this quarter." },
   { role: "Product Design & Marketing Intern", org: "MixBash (YC) · Tokyo", when: "Jul – Aug 2026", kind: "Design", slug: "mixbash" },
   { role: "Project Designer", org: "CSES @ UCSD", when: "Summer 2026 – present", kind: "Design", current: true, note: "Designed a mockup SanD Hacks hackathon page.", slug: "cses" },
   { role: "Research Assistant", org: "Mental Health in Design (MiD) Lab, UCSD", when: "Spring 2026 – present", kind: "Research", current: true, note: "Qualitative analysis.", slug: "mid-lab" },
@@ -415,7 +415,7 @@ const FACTS = [
 const AVATAR_LINES = [
   "psst — my case studies are down here ↓",
   "Right now I'm a UX/UI Designer at PMC ✦",
-  "This fall I'm mentoring ACM project teams on design",
+  "This fall I'm a design mentor for an ACM Projects team",
   "I do qualitative research at the MiD Lab",
   "I design for CSES — like the SanD Hacks page",
   "Summer '26: designing & marketing at MixBash in Tokyo",
@@ -853,7 +853,7 @@ function Index() {
               I'm a 4th-year transfer student and Regents Scholar at UC San Diego, majoring in Cognitive Science with a specialization in Design &amp; Interaction. I'm drawn to product design because it sits right where my two interests meet: understanding how people think, and making things that fit how they actually behave.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-              My path runs through research labs, student design teams, hackathons and a summer in Tokyo at MixBash, a YC startup. Today I design with PMC, mentor ACM project teams and do qualitative analysis at the Mental Health in Design Lab.
+              My path runs through research labs, student design teams, hackathons and a summer in Tokyo at MixBash, a YC startup. Today I design with PMC, mentor one of ACM Projects' design teams and do qualitative analysis at the Mental Health in Design Lab.
             </p>
           </div>
           <dl className="self-start rounded-2xl bg-blush-soft px-6 py-2 md:px-8">
