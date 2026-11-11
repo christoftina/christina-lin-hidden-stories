@@ -2,10 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowUpRight, CupSoda, Gamepad2, Soup, Tv, type LucideIcon } from "lucide-react";
 import { PIXEL_CHRISTINA } from "@/lib/pixel-christina";
-import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE } from "@/lib/title-images";
+import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE, SANDHACKS_TITLE } from "@/lib/title-images";
+import { HobbyStickers } from "@/components/hobby-stickers";
 import { PACKD_DEMO, PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 import { INSTACART_DEMO, INSTACART_IMAGES } from "@/lib/instacart-images";
 import { HONEYHIVE } from "@/lib/honeyhive-images";
+import { TREE_STAMPS_DEMO } from "@/lib/side-project-media";
 import acmLogo from "@/assets/acm-projects-team.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -48,7 +50,9 @@ export type Case = {
   images?: CaseImage[];
   imagesHaveOverview?: boolean;
   /** Phone-only prototype recording shown in a "Demo video" section. */
-  video?: { src: string; poster: string; caption: string; width: number; height: number; radius: string };
+  video?: { src: string; poster: string; caption: string; width: number; height: number; radius?: string; device?: "phone" | "laptop" };
+  /** Side project page: not listed with the case studies, linked from the Playground. Its video shows first. */
+  sideProject?: boolean;
   story?: StorySection[];
   prototype?: string;
   prototypeLabel?: string;
@@ -369,6 +373,7 @@ export const CASES: Case[] = [
     placeholder: true,
     kind: "Web design",
     timeline: "Summer 2026 – present",
+    orgLogo: SANDHACKS_TITLE,
     title: "Designing the SanD Hacks webpage",
     org: "CSES · UC San Diego",
     role: "Project Designer",
@@ -390,7 +395,27 @@ export const CASES: Case[] = [
     tags: ["Qualitative analysis", "Research"],
     summary: "I support the lab's research through qualitative analysis.",
     contributions: [],
+  },  {
+    n: "08",
+    slug: "google-tree-stamps",
+    sideProject: true,
+    title: "Google Tree Stamps",
+    shortName: "Google Tree Stamps",
+    org: "Concept project",
+    tools: ["Figma"],
+    tags: ["Concept", "Sustainability", "Interaction design"],
+    summary: "This is a fun concept idea for existing users to decorate their home Google Search page and to encourage global Google usage. The user incentive would be that they would be able to enact in environmentally friendly decisions from the comfort of their own home.",
+    contributions: [],
+    prototype: "https://www.figma.com/proto/D5woPzQozfdCQa3wg0vx6n/Google-Tree-Stamps?node-id=2-5&p=f&viewport=1634%2C-1393%2C1.62&t=IJdaWMsu7tdGajhd-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A5&page-id=0%3A1",
+    video: TREE_STAMPS_DEMO,
+    story: [
+      {
+        id: "how-it-works", title: "How it works",
+        paragraphs: ["Every time users visit a new country using Google's Search Engine, they unlock the respective national tree stamp, which they can place anywhere on their Google Search page. Each time the feature is used, Google would plant one tree seed as part of environmental efforts to combat deforestation and forest fires."],
+      },
+    ],
   },
+
 ];
 
 type Kind = "Design" | "Research" | "Leadership & honors";
@@ -408,9 +433,9 @@ type Experience = {
 const EXPERIENCE: Experience[] = [
   { role: "UX/UI Designer", org: "Product Management Club (PMC) @ UCSD", when: "Fall 2026 – present", kind: "Design", current: true },
   { role: "Design Mentor", org: "ACM Projects @ UCSD", when: "Fall 2026 – present", kind: "Leadership & honors", current: true, note: "Mentoring one of ACM Projects' design teams this quarter." },
-  { role: "Product Design & Marketing Intern", org: "MixBash (YC) · Tokyo", when: "Jul – Aug 2026", kind: "Design", slug: "mixbash" },
-  { role: "Project Designer", org: "CSES @ UCSD", when: "Summer 2026 – present", kind: "Design", current: true, note: "Designed a mockup SanD Hacks hackathon page.", slug: "cses" },
-  { role: "Research Assistant", org: "Mental Health in Design (MiD) Lab, UCSD", when: "Spring 2026 – present", kind: "Research", current: true, note: "Qualitative analysis.", slug: "mid-lab" },
+  { role: "Product Design & Marketing Intern", org: "MixBash (YC) · Tokyo", when: "Jul – Aug 2026", kind: "Design" },
+  { role: "Project Designer", org: "CSES @ UCSD", when: "Summer 2026 – present", kind: "Design", current: true, note: "Designed a mockup SanD Hacks hackathon page." },
+  { role: "Research Assistant", org: "Mental Health in Design (MiD) Lab, UCSD", when: "Spring 2026 – present", kind: "Research", current: true, note: "Qualitative analysis." },
   { role: "UI/UX Designer & Researcher", org: "ACM Projects @ UCSD — PackD", when: "Spring 2026", kind: "Design", note: "Designed PackD, a group travel planning app.", slug: "packd" },
   { role: "Research Assistant", org: "Language Infant Learning (LiL) Lab, UCSD", when: "Fall 2025 – Winter 2026", kind: "Research" },
   { role: "Regents Scholar", org: "UC San Diego", when: "Fall 2025 – present", kind: "Leadership & honors" },
@@ -446,7 +471,7 @@ const HOBBIES: { icon: LucideIcon; title: string; back: string }[] = [
 
 const SIDE_PROJECTS = [
   { title: "Describe My Drawing!", status: "Work in progress", text: "A Roblox game built to expand my AI skill set. I connected Roblox's MCP servers to Codex to lay down the physical spaces, used Claude to fix bugs, add widgets and build a sub-server players can teleport into, and drew the cartoony thumbnail in Procreate.", tools: ["Codex", "Claude", "Procreate"] },
-  { title: "Google Tree Stamps", status: "Concept", text: "A concept for Google Search: each time you search a new country, you unlock its national tree stamp to place anywhere on your search page — and Google plants one tree seed to help fight deforestation and forest fires.", tools: ["Figma"], link: "https://www.figma.com/proto/D5woPzQozfdCQa3wg0vx6n/Google-Tree-Stamps?node-id=2-5&p=f&viewport=1634%2C-1393%2C1.62&t=IJdaWMsu7tdGajhd-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A5&page-id=0%3A1" },
+  { title: "Google Tree Stamps", status: "Concept", text: "A concept for Google Search: each time you search a new country, you unlock its national tree stamp to place anywhere on your search page — and Google plants one tree seed to help fight deforestation and forest fires.", tools: ["Figma"], page: "google-tree-stamps" },
 ];
 
 const SOCIALS = [
@@ -609,26 +634,31 @@ function CaseCard({ data }: { data: Case }) {
   );
 }
 
-function ComingSoonCard({ data }: { data: Case }) {
+function SideWorkCard({ data }: { data: Case }) {
   return (
-    <Link
-      to="/case-studies/$slug"
-      params={{ slug: data.slug }}
-      aria-label={`Preview ${data.title}`}
-      onPointerMove={trackSpotlight}
-      className="spotlight group flex h-full flex-col rounded-2xl border border-dashed border-border bg-card p-6 transition duration-300 hover:-translate-y-1 hover:border-baby hover:bg-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-    >
-      <span className="label-ui inline-flex items-center gap-2 text-primary-ink">
-        <span className="size-1.5 rounded-full bg-baby" /> {data.kind ?? "More soon"}
-      </span>
-      <h3 className="font-display mt-4 text-2xl leading-tight transition-colors group-hover:text-primary-ink">{data.title}</h3>
-      <p className="mt-2 text-sm text-muted-foreground">{data.role} · {data.org}</p>
-      <p className="mt-4 flex-1 leading-relaxed text-muted-foreground">{data.summary}</p>
-      <div className="mt-6 flex items-center justify-between gap-4">
-        <span className="font-sans text-xs text-muted-foreground">{data.timeline ?? ""}</span>
-        <ArrowUpRight className="size-4 text-primary-ink transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+    <article onPointerMove={trackSpotlight} className="spotlight flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
+      {data.orgLogo && (
+        <div className="border-b border-border bg-baby-soft/50 p-4">
+          <img src={data.orgLogo.src} alt={data.orgLogo.alt} className="mx-auto max-h-36 w-auto rounded-lg object-contain" />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-6">
+        <span className="label-ui inline-flex items-center gap-2 text-primary-ink">
+          <span className="size-1.5 rounded-full bg-primary" /> {data.kind ?? "Side work"}
+        </span>
+        <h3 className="font-display mt-4 text-2xl leading-tight">{data.title}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{data.role} · {data.org}</p>
+        <p className="mt-4 flex-1 leading-relaxed text-muted-foreground">{data.summary}</p>
+        <div className="mt-6 flex items-center justify-between gap-4">
+          <span className="font-sans text-xs text-muted-foreground">{data.timeline ?? ""}</span>
+          {data.prototype && (
+            <a href={data.prototype} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-sans text-sm font-medium text-primary-ink hover:underline">
+              Figma prototype <ArrowUpRight className="size-4" />
+            </a>
+          )}
+        </div>
       </div>
-    </Link>
+    </article>
   );
 }
 
@@ -738,10 +768,10 @@ function SideProjects() {
           <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">{p.text}</p>
           <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
             <Tags tags={p.tools} />
-            {p.link && (
-              <a href={p.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-primary-ink hover:underline">
-                Try it <ArrowUpRight className="size-4" />
-              </a>
+            {p.page && (
+              <Link to="/case-studies/$slug" params={{ slug: p.page }} className="inline-flex items-center gap-1.5 font-sans text-sm font-medium text-primary-ink hover:underline">
+                See the concept <ArrowUpRight className="size-4" />
+              </Link>
             )}
           </div>
         </article>
@@ -759,8 +789,9 @@ function HobbyCard({ icon: Icon, title, back }: { icon: LucideIcon; title: strin
       aria-label={`${title}: ${back}`}
       onClick={() => setFlipped((v) => !v)}
       data-flipped={flipped}
-      className="flip block h-44 w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-2xl"
+      className="flip relative block h-44 w-full rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
+      <HobbyStickers hobby={title} />
       <span className="flip-inner block">
         <span className="flip-face flex flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-soft">
           <span className="flex size-11 items-center justify-center rounded-full bg-accent text-accent-foreground"><Icon className="size-5" /></span>
@@ -778,7 +809,7 @@ function HobbyCard({ icon: Icon, title, back }: { icon: LucideIcon; title: strin
 }
 
 function Index() {
-  const featured = CASES.filter((c) => !c.placeholder);
+  const featured = CASES.filter((c) => !c.placeholder && !c.sideProject);
   const upcoming = CASES.filter((c) => c.placeholder);
 
   return (
@@ -835,10 +866,10 @@ function Index() {
           <>
             <div className="mb-6 mt-16">
               <h3 className="font-display text-3xl">Other things I've been up to</h3>
-              <p className="mt-2 text-muted-foreground">Roles and projects outside my case studies — write-ups coming soon.</p>
+              <p className="mt-2 text-muted-foreground">Roles and projects outside my case studies.</p>
             </div>
             <div className="grid gap-6 md:grid-cols-3">
-              {upcoming.map((data) => <ComingSoonCard key={data.slug} data={data} />)}
+              {upcoming.map((data) => <SideWorkCard key={data.slug} data={data} />)}
             </div>
           </>
         )}

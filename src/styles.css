@@ -188,7 +188,26 @@
 .flip[data-flipped="true"] .flip-inner { transform: rotateY(180deg); }
 @media (hover: hover) { .flip:hover .flip-inner { transform: rotateY(180deg); } }
 
+/* Hobby stickers: white die-cut outline, pop in when the card flips */
+.sticker {
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.3) rotate(var(--r, 0deg));
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d, 0ms), opacity 0.2s ease var(--d, 0ms);
+  filter: drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff) drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff) drop-shadow(0 4px 6px rgb(0 0 0 / 0.18));
+}
+.sticker svg { display: block; width: 100%; height: auto; }
+.flip[data-flipped="true"] { z-index: 10; }
+.flip[data-flipped="true"] .sticker { opacity: 1; transform: scale(1) rotate(var(--r, 0deg)); }
+@media (hover: hover) {
+  .flip:hover { z-index: 10; }
+  .flip:hover .sticker { opacity: 1; transform: scale(1) rotate(var(--r, 0deg)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .sticker { transition: opacity 0.2s ease; }
   .animate-marquee, .animate-drift, .animate-hop { animation: none; }
   .animate-cloud { animation-play-state: paused; }
   .flip-inner { transition: none; }

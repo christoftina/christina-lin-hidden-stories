@@ -8,7 +8,7 @@ import { CASES } from "@/routes/index";
 // Match routes without running loaders or rendering: loaders may need a server or
 // network the test run lacks, and jsdom never loads the stylesheets React waits on.
 describe("App routing", () => {
-  it.each(["packd", "instacart", "aria", "mc-honeyhive", "mid-lab", "cses", "mixbash"])("opens a dedicated case study page for %s", (slug) => {
+  it.each(["packd", "instacart", "aria", "mc-honeyhive", "mid-lab", "cses", "mixbash", "google-tree-stamps"])("opens a dedicated case study page for %s", (slug) => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
     const matches = router.matchRoutes(`/case-studies/${slug}`);
     expect(matches.at(-1)?.routeId).toBe("/case-studies/$slug");
