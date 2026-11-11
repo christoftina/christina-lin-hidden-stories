@@ -39,11 +39,19 @@ describe("App routing", () => {
     expect(packd?.prototype).toBe("https://www.figma.com/proto/WOFoOSwVJpeSL3k9uMkjjO/ACM-SP26-Projects?page-id=70%3A12&node-id=138-41&viewport=-2721%2C-987%2C0.48&t=bKOpByEoYr97WXC9-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=138%3A41&show-proto-sidebar=1");
   });
 
-  it("records PackD's confirmed ACM affiliation without inferring a timeline", () => {
+  it("records PackD's confirmed ACM affiliation and Spring 2026 timeline", () => {
     const packd = CASES.find((item) => item.slug === "packd");
     expect(packd?.org).toBe("ACM project");
     expect(packd?.orgLogo?.src).toMatch(/acm-projects-team\.png$/);
-    expect(packd?.timeline).toBeUndefined();
+    expect(packd?.timeline).toBe("Spring 2026");
+  });
+
+  it("keeps unfinished case studies flagged as placeholders without invented contributions", () => {
+    for (const slug of ["mixbash", "cses", "mid-lab"]) {
+      const study = CASES.find((item) => item.slug === slug);
+      expect(study?.placeholder).toBe(true);
+      expect(study?.contributions).toEqual([]);
+    }
   });
 
   it("does not invent an Instacart role, timeline or personal contributions", () => {
