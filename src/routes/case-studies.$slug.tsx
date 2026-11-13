@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowUp, ArrowUpRight } from "lucide-react";
 import { CASES, type StorySection } from "@/routes/index";
 import { Button } from "@/components/ui/button";
 import { CaseImageViewer, InlineGallery } from "@/components/case-image-viewer";
+import { SanDiegoClock } from "@/components/san-diego-clock";
 
 function StoryBlock({ section }: { section: StorySection }) {
   return (
@@ -178,7 +179,10 @@ function CaseStudyPage() {
     <div className="min-h-screen px-0">
       <header className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-          <Link to="/" className="font-wordmark text-2xl leading-none md:text-3xl">Christina Lin</Link>
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4">
+            <Link to="/" className="font-wordmark text-2xl leading-none md:text-3xl">Christina Lin</Link>
+            <SanDiegoClock className="sm:rounded-full sm:border sm:border-border sm:bg-card/80 sm:px-3 sm:py-1" />
+          </div>
           <Button variant="ghost" asChild><Link to="/" hash="work"><ArrowLeft /> All work</Link></Button>
         </div>
       </header>

@@ -4,6 +4,7 @@ import { ArrowUpRight, CupSoda, Gamepad2, Soup, Tv, type LucideIcon } from "luci
 import { PIXEL_CHRISTINA } from "@/lib/pixel-christina";
 import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE, MIDLAB_TITLE, MIXBASH_TITLE, SANDHACKS_TITLE } from "@/lib/title-images";
 import { HobbyStickers } from "@/components/hobby-stickers";
+import { SanDiegoClock } from "@/components/san-diego-clock";
 import { PACKD_DEMO, PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
 import { INSTACART_DEMO, INSTACART_IMAGES } from "@/lib/instacart-images";
 import { HONEYHIVE } from "@/lib/honeyhive-images";
@@ -832,7 +833,10 @@ function Index() {
     <div className="min-h-screen overflow-x-clip">
       <header className="sticky top-0 z-20 border-b border-border bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <a href="#" className="font-wordmark text-3xl leading-none md:text-4xl">Christina Lin</a>
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4">
+            <a href="#" className="font-wordmark text-3xl leading-none md:text-4xl">Christina Lin</a>
+            <SanDiegoClock className="sm:rounded-full sm:border sm:border-border sm:bg-card/80 sm:px-3 sm:py-1" />
+          </div>
           <nav className="flex items-center gap-5 font-sans text-sm text-muted-foreground md:gap-8">
             {[["#work", "Work"], ["#experience", "Experience"], ["#about", "About"]].map(([href, label]) => (
               <a key={href} href={href} className="relative hidden after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:text-foreground hover:after:scale-x-100 sm:inline">{label}</a>
