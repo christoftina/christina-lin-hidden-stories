@@ -743,7 +743,7 @@ function ExperienceList() {
 
 function CharacterSheet() {
   const rows: [string, string][] = [
-    ["Level", "Senior"],
+    ["Level", "Senior (expected graduation Spring 2027)"],
     ["School", "UC San Diego"],
     ["Class", "Aspiring UX/UI & Product Designer"],
     ["Skill", "Figma Design"],
