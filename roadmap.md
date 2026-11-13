@@ -32,3 +32,4 @@
 - [x] Contact jumps to footer; footer copy (cool & impactful, malatang, whimsy); ramen + chili stickers; garden-shovel cursor (dirty over clickables).\n
 - [x] Pixel trowel cursor from Christina's art (clean default, dirt on hover), served as PNGs in public/media/cursor.\n
 - [x] Instacart: My contributions (budget widget entry points, dietary preference iterations, research, user flows, sketches, final prototype).\n
+- [x] MC HoneyHive: My contributions (concept lead, 3D modeler, researcher).\n

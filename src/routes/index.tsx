@@ -310,7 +310,11 @@ export const CASES: Case[] = [
     tools: ["Figma", "FigJam", "Spline"],
     tags: ["Spatial design", "Research", "Social impact"],
     summary: "Dignify San Diego women's shelters with a sleek, innovative shelter room design that ensures comfort, privacy and — most importantly — safety.",
-    contributions: [],
+    contributions: [
+      "Led the concept for the hive pod shelter design",
+      "Built the 3D models of the pods and accessible rooms",
+      "Researched San Diego women's shelters and residents' experiences",
+    ],
     prototype: "https://app.spline.design/file/e03baf11-4e01-486a-9349-bb50a30de2a3",
     prototypeLabel: "Explore the 3D model in Spline",
     story: [
