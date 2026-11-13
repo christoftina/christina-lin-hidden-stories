@@ -54,11 +54,11 @@ describe("App routing", () => {
     }
   });
 
-  it("uses Instacart's role and timeline from Christina's portfolio without inventing contributions", () => {
+  it("uses Instacart's role, timeline and Christina's own contributions", () => {
     const instacart = CASES.find((item) => item.slug === "instacart");
     expect(instacart?.role).toBe("UI/UX Designer & Researcher");
     expect(instacart?.timeline).toBe("Spring 2026");
-    expect(instacart?.contributions).toEqual([]);
+    expect(instacart?.contributions).toHaveLength(6);
     expect(instacart?.prototype).toMatch(/^https:\/\/www\.figma\.com\/proto\//);
   });
 
