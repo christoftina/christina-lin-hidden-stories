@@ -806,7 +806,7 @@ function HobbyCard({ icon: Icon, title, back }: { icon: LucideIcon; title: strin
       aria-label={`${title}: ${back}`}
       onClick={() => setFlipped((v) => !v)}
       data-flipped={flipped}
-      className="flip relative block h-44 w-full rounded-2xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="flip relative block h-40 w-full rounded-2xl sm:h-44 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <HobbyStickers hobby={title} />
       <span className="flip-inner block">
@@ -817,8 +817,8 @@ function HobbyCard({ icon: Icon, title, back }: { icon: LucideIcon; title: strin
             <span className="label-ui text-muted-foreground">Flip me</span>
           </span>
         </span>
-        <span className="flip-face flip-back flex items-center rounded-2xl bg-primary p-5 text-primary-foreground shadow-soft">
-          <span className="font-display text-xl leading-snug">{back}</span>
+        <span className="flip-face flip-back flex items-center overflow-hidden rounded-2xl bg-primary p-5 text-primary-foreground shadow-soft">
+          <span className="font-display text-lg leading-snug lg:text-xl">{back}</span>
         </span>
       </span>
     </button>
@@ -939,7 +939,7 @@ function Index() {
           </div>
           <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
             <CharacterSheet />
-            <div className="grid grid-cols-2 gap-4 self-start">
+            <div className="grid grid-cols-1 gap-x-4 gap-y-10 self-start sm:grid-cols-2 sm:gap-y-4">
               {HOBBIES.map((h) => <HobbyCard key={h.title} {...h} />)}
             </div>
           </div>
