@@ -34,3 +34,4 @@
 - [x] Instacart: My contributions (budget widget entry points, dietary preference iterations, research, user flows, sketches, final prototype).\n
 - [x] MC HoneyHive: My contributions (concept lead, 3D modeler, researcher).\n
 - [x] Live San Diego, CA clock next to the name in the header (home and case studies).\n
+- [x] Tab icon from Christina's CL flower logo (favicon.ico 16/32/48, PNG 32/512, apple-touch-icon).\n
