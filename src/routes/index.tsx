@@ -389,7 +389,7 @@ export const CASES: Case[] = [
     imageFit: "contain",
     tools: ["Claude Code", "Gemini API", "ElevenLabs", "BrightData"],
     tags: ["Hackathon", "Accessibility", "AI"],
-    summary: "SDcohelp helps San Diego residents who lack English reading and writing skills navigate government forms and questions with ease, fostering independence so they don't have to rely on their kids as much. I vibe-coded the entire site with Claude Code, using Gemini's API, ElevenLabs and BrightData, and hand-drew the logo.",
+    summary: "SDcohelp helps San Diego residents who lack English reading and writing skills navigate government forms and questions with ease, fostering independence so they don't have to rely on their kids as much. Built with Claude Code and the Gemini, ElevenLabs and BrightData APIs.",
     contributions: [],
     links: [
       { label: "Try the prototype", href: "https://sdcohelpsandhacks26.vercel.app/" },
