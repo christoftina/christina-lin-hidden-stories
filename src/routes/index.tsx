@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowUpRight, CupSoda, Gamepad2, Soup, Tv, type LucideIcon } from "lucide-react";
 import { PIXEL_CHRISTINA } from "@/lib/pixel-christina";
-import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE, MIDLAB_TITLE, MIXBASH_TITLE, SANDHACKS_TITLE } from "@/lib/title-images";
+import { ARIA_TITLE, HONEYHIVE_TITLE, INSTACART_TITLE, MIDLAB_TITLE, MIXBASH_TITLE, SANDHACKS_TITLE, SDCOHELP_TITLE } from "@/lib/title-images";
 import { HobbyStickers } from "@/components/hobby-stickers";
 import { SanDiegoClock } from "@/components/san-diego-clock";
 import { PACKD_DEMO, PACKD_IMAGES, type CaseImage } from "@/lib/packd-images";
@@ -52,6 +52,12 @@ export type Case = {
   imagesHaveOverview?: boolean;
   /** Phone-only prototype recording shown in a "Demo video" section. */
   video?: { src: string; poster: string; caption: string; width: number; height: number; radius?: string; device?: "phone" | "laptop" };
+  /** Extra links shown on a side-work card (e.g. Devpost and live prototype). */
+  links?: { label: string; href: string }[];
+  /** Show the side-work image whole (for logos) instead of cropping it to fill the frame. */
+  imageFit?: "contain";
+  /** Order of side-work cards in "Other things I've been up to" (lower first). */
+  sideOrder?: number;
   /** Side project page: not listed with the case studies, linked from the Playground. Its video shows first. */
   sideProject?: boolean;
   story?: StorySection[];
@@ -228,6 +234,9 @@ export const CASES: Case[] = [
   {
     n: "03",
     slug: "aria",
+    placeholder: true,
+    kind: "Hackathon",
+    sideOrder: 5,
     title: "A.R.I.A — an AI Readiness Interview Assistant",
     shortName: "A.R.I.A",
     orgLogo: ARIA_TITLE,
@@ -236,7 +245,7 @@ export const CASES: Case[] = [
     timeline: "Apr 4 – 5 · 2-day hackathon",
     tools: ["Figma", "FigJam", "Claude API", "ElevenLabs"],
     tags: ["AI", "Interaction design", "Hackathon"],
-    summary: "This technical interview agent elevates your pre-interview experience — a live, voice-driven AI interviewer that watches you code and gives feedback.",
+    summary: "A live, voice-driven AI interviewer that listens as you explain your code, pushes back like a real interviewer and gives you a scorecard at the end. I led the design during the 2-day hackathon.",
     contributions: [],
     prototype: "https://youtu.be/lW5jPb4g7Nw",
     prototypeLabel: "Watch the demo video",
@@ -367,9 +376,31 @@ export const CASES: Case[] = [
     ],
   },
   {
+    n: "09",
+    slug: "sdcohelp",
+    placeholder: true,
+    sideOrder: 1,
+    kind: "Hackathon",
+    title: "SDcohelp — San Diego help, in your language",
+    org: "SanD Hacks 2026",
+    role: "Co-creator with Emily Cai",
+    timeline: "Nov 14 – 15, 2026",
+    orgLogo: SDCOHELP_TITLE,
+    imageFit: "contain",
+    tools: ["Claude Code", "Gemini API", "ElevenLabs", "BrightData"],
+    tags: ["Hackathon", "Accessibility", "AI"],
+    summary: "SDcohelp helps San Diego residents who lack English reading and writing skills navigate government forms and questions with ease, fostering independence so they don't have to rely on their kids as much. I vibe-coded the entire site with Claude Code, using Gemini's API, ElevenLabs and BrightData, and hand-drew the logo.",
+    contributions: [],
+    links: [
+      { label: "Try the prototype", href: "https://sdcohelpsandhacks26.vercel.app/" },
+      { label: "Devpost", href: "https://devpost.com/software/sdcohelp" },
+    ],
+  },
+  {
     n: "05",
     slug: "mixbash",
     placeholder: true,
+    sideOrder: 2,
     kind: "Internship",
     orgLogo: MIXBASH_TITLE,
     prototype: "https://www.figma.com/proto/EiOwjSnASgkLDpaKyqpWUz/Redesign-333Clip-s-Website?node-id=1-2&p=f&viewport=128%2C279%2C0.2&t=vWm1wR3mesi0lMqP-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A2&page-id=0%3A1",
@@ -385,6 +416,7 @@ export const CASES: Case[] = [
     n: "06",
     slug: "cses",
     placeholder: true,
+    sideOrder: 3,
     kind: "Web design",
     timeline: "Summer 2026 – present",
     orgLogo: SANDHACKS_TITLE,
@@ -401,6 +433,7 @@ export const CASES: Case[] = [
     n: "07",
     slug: "mid-lab",
     placeholder: true,
+    sideOrder: 4,
     kind: "Research",
     orgLogo: MIDLAB_TITLE,
     prototype: "https://mentalhealthindesign.weebly.com/",
@@ -656,7 +689,7 @@ function SideWorkCard({ data }: { data: Case }) {
     <article onPointerMove={trackSpotlight} className="spotlight flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
       {data.orgLogo && (
         <div className="border-b border-border bg-baby-soft/50 p-4">
-          <img src={data.orgLogo.src} alt={data.orgLogo.alt} className="aspect-[776/457] w-full rounded-lg object-cover" />
+          <img src={data.orgLogo.src} alt={data.orgLogo.alt} className={`aspect-[776/457] w-full rounded-lg ${data.imageFit === "contain" ? "bg-white object-contain p-2" : "object-cover"}`} />
         </div>
       )}
       <div className="flex flex-1 flex-col p-6">
@@ -668,11 +701,13 @@ function SideWorkCard({ data }: { data: Case }) {
         <p className="mt-4 flex-1 leading-relaxed text-muted-foreground">{data.summary}</p>
         <div className="mt-6 flex items-center justify-between gap-4">
           <span className="font-sans text-xs text-muted-foreground">{data.timeline ?? ""}</span>
-          {data.prototype && (
-            <a href={data.prototype} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-sans text-sm font-medium text-primary-ink hover:underline">
-              {data.prototypeLabel ?? "Figma prototype"} <ArrowUpRight className="size-4" />
-            </a>
-          )}
+          <div className="flex flex-col items-end gap-1.5">
+            {(data.links ?? (data.prototype ? [{ label: data.prototypeLabel ?? "Figma prototype", href: data.prototype }] : [])).map((link) => (
+              <a key={link.href} href={link.href} target="_blank" rel="noreferrer" className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap font-sans text-sm font-medium text-primary-ink hover:underline">
+                {link.label} <ArrowUpRight className="size-4" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </article>
@@ -827,7 +862,7 @@ function HobbyCard({ icon: Icon, title, back }: { icon: LucideIcon; title: strin
 
 function Index() {
   const featured = CASES.filter((c) => !c.placeholder && !c.sideProject);
-  const upcoming = CASES.filter((c) => c.placeholder);
+  const upcoming = CASES.filter((c) => c.placeholder).sort((a, b) => (a.sideOrder ?? 9) - (b.sideOrder ?? 9));
 
   return (
     <div className="min-h-screen overflow-x-clip">
@@ -879,7 +914,7 @@ function Index() {
           </div>
           <span className="font-sans text-sm text-muted-foreground">{featured.length} case studies</span>
         </div>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {featured.map((data) => <CaseCard key={data.slug} data={data} />)}
         </div>
         {upcoming.length > 0 && (
