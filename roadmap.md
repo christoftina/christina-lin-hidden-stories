@@ -36,3 +36,4 @@
 - [x] Live San Diego, CA clock next to the name in the header (home and case studies).\n
 - [x] Tab icon from Christina's CL flower logo (favicon.ico 16/32/48, PNG 32/512, apple-touch-icon).\n
 - [x] A.R.I.A moved from case studies to side work; SDcohelp (SanD Hacks 2026) added with hand-drawn logo, prototype and Devpost links; case studies three across on wide screens.\n
+- [x] Playground images: Describe Me thumbnail and Google Tree Stamps screenshot (also in the Tree Stamps page).\n

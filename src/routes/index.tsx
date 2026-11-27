@@ -462,6 +462,7 @@ export const CASES: Case[] = [
       {
         id: "how-it-works", title: "How it works",
         paragraphs: ["Every time users visit a new country using Google's Search Engine, they unlock the respective national tree stamp, which they can place anywhere on their Google Search page. Each time the feature is used, Google would plant one tree seed as part of environmental efforts to combat deforestation and forest fires."],
+        images: [{ src: "/media/tree-stamps-concept.webp", alt: "Google Search page decorated with a tree stamp, beside a Stamps panel of national tree stamps for the USA, Canada, Mexico and Belize", caption: "Placing a tree stamp from the Stamps panel in Customize Chrome", section: "How it works", ratio: "1420 / 802" }],
       },
     ],
   },
@@ -519,9 +520,9 @@ const HOBBIES: { icon: LucideIcon; title: string; back: string }[] = [
   { icon: CupSoda, title: "Crafts & scrolling", back: "Trying new crafts with friends, plus some ‘academic’ competitive analysis of TikToks and Reels." },
 ];
 
-const SIDE_PROJECTS = [
-  { title: "Describe My Drawing!", status: "Work in progress", text: "A Roblox game built to expand my AI skill set. I connected Roblox's MCP servers to Codex to lay down the physical spaces, used Claude to fix bugs, add widgets and build a sub-server players can teleport into, and drew the cartoony thumbnail in Procreate.", tools: ["Codex", "Claude", "Procreate"] },
-  { title: "Google Tree Stamps", status: "Concept", text: "A concept for Google Search: each time you search a new country, you unlock its national tree stamp to place anywhere on your search page — and Google plants one tree seed to help fight deforestation and forest fires.", tools: ["Figma"], page: "google-tree-stamps" },
+const SIDE_PROJECTS: { title: string; image?: { src: string; alt: string }; status: string; text: string; tools: string[]; page?: string }[] = [
+  { title: "Describe My Drawing!", image: { src: "/media/describe-me-thumbnail.webp", alt: "Hand-drawn Describe Me game thumbnail: two blocky characters high-fiving under a Describe Me sign with fruit and veggie icons" }, status: "Work in progress", text: "A Roblox game built to expand my AI skill set. I connected Roblox's MCP servers to Codex to lay down the physical spaces, used Claude to fix bugs, add widgets and build a sub-server players can teleport into, and drew the cartoony thumbnail in Procreate.", tools: ["Codex", "Claude", "Procreate"] },
+  { title: "Google Tree Stamps", image: { src: "/media/tree-stamps-concept.webp", alt: "Google Search page decorated with a tree stamp, beside a Stamps panel of national tree stamps for the USA, Canada, Mexico and Belize" }, status: "Concept", text: "A concept for Google Search: each time you search a new country, you unlock its national tree stamp to place anywhere on your search page — and Google plants one tree seed to help fight deforestation and forest fires.", tools: ["Figma"], page: "google-tree-stamps" },
 ];
 
 const SOCIALS = [
@@ -814,7 +815,14 @@ function SideProjects() {
   return (
     <div className="grid gap-6 md:grid-cols-2">
       {SIDE_PROJECTS.map((p) => (
-        <article key={p.title} onPointerMove={trackSpotlight} className="spotlight flex flex-col rounded-2xl border border-border bg-card p-6 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-baby md:p-8">
+        <article key={p.title} onPointerMove={trackSpotlight} className="spotlight flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-soft transition duration-300 hover:-translate-y-1 hover:border-baby">
+          {p.image && (
+            <div className="relative aspect-[16/9] overflow-hidden border-b border-border bg-baby-soft">
+              <img src={p.image.src} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full scale-110 object-cover opacity-60 blur-xl" />
+              <img src={p.image.src} alt={p.image.alt} className="relative h-full w-full object-contain" />
+            </div>
+          )}
+          <div className="flex flex-1 flex-col p-6 md:p-8">
           <span className="label-ui text-primary-ink">{p.status}</span>
           <h3 className="font-display mt-3 text-3xl">{p.title}</h3>
           <p className="mt-3 flex-1 leading-relaxed text-muted-foreground">{p.text}</p>
@@ -825,6 +833,7 @@ function SideProjects() {
                 See the concept <ArrowUpRight className="size-4" />
               </Link>
             )}
+          </div>
           </div>
         </article>
       ))}
